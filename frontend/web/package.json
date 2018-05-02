@@ -7,9 +7,12 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "antd": "^3.4.4",
+    "babel-plugin-import": "^1.7.0",
     "dva": "^2.2.3",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-draggable": "^3.0.5"
   },
   "devDependencies": {
     "babel-plugin-dva-hmr": "^0.3.2",
