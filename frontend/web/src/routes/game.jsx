@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'dva';
 import { Layout } from 'antd';
 // import styles from './game.css';
-import GameArea from '../components/gameArea/gameArea'
+import GameArea from '../components/gameArea/gameArea';
+import style from './game.less';
+
 
 const { Header, Footer, Content } = Layout;
 
