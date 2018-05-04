@@ -3,7 +3,7 @@ import { Route, Switch } from 'dva/router';
 import { connect } from 'dva';
 import { Layout } from 'antd';
 // import styles from './game.css';
-import Game from '../components/game/game';
+import Game from './game/game';
 import style from './index.less';
 
 

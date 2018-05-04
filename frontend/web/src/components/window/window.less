@@ -1,3 +1,17 @@
+@border-color:grey;
+
 .window {
-  border: 1px grey solid;
+  border: 2px @border-color solid;
+  background-color: black;
 }
+
+.titleBar{
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 5px;
+  border-bottom: 1px solid @border-color;
+}
+

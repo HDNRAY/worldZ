@@ -1,31 +1,36 @@
 import React, { Component } from 'react';
-import { connect } from 'dva';
 import Draggable from 'react-draggable';
 import { Icon } from 'antd';
-import style from './window.less';
+import windowStyle from './window.less';
 
 function getDisplayName(component) {
-  return component.displayName || component.name || 'Component';
+    return component.displayName || component.name || 'Component';
 }
 
-export default ({ title }) => (WrappedComponent) => class Window extends Component {
-  static displayName = `HOC(${getDisplayName(WrappedComponent)})`
+export default ({ title, onClose = null, width = '300px', height = '150px',show }) => (WrappedComponent) => class Window extends Component {
+    static displayName = `HOC(${getDisplayName(WrappedComponent)})`
 
-  render() {
-    const titleBar = (<div className={style.titleBar}>
-            <div className={style.title}>
+    render() {
+        const titleBar = (<div id='titleBar' className={windowStyle.titleBar}>
+            <div className={windowStyle.title}>
                 {title}
             </div>
-            <Icon type='close'/>
+            {!!onClose ? <Icon type='close' onClick={onClose} /> : null}
         </div>)
 
-    return (<Draggable defaultPosition={{x: 0, y: 0}} >
-                <div className={style.window}>
-                    {titleBar}
-                    <div className={style.content}>
-                        <WrappedComponent/>
-                    </div>
+        const props = {
+            defaultPosition: { x: 10, y: 10 },
+            bounds: 'parent',
+            handle: '#titleBar'
+        }
+        console.log(WrappedComponent)
+        return (<Draggable {...props} >
+            <div style={{ width, height }} className={windowStyle.window}>
+                {titleBar}
+                <div className={windowStyle.content}>
+                    <WrappedComponent />
                 </div>
-            </Draggable>);
-  }
+            </div>
+        </Draggable>);
+    }
 }

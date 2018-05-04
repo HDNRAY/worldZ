@@ -3,7 +3,8 @@ export default {
   namespace: 'game',
 
   state: {
-    name: 'WorldZ'
+    name: 'WorldZ',
+    showInventory:false
   },
 
   subscriptions: {
@@ -29,7 +30,8 @@ export default {
 
   reducers: {
     save(state, action) {
-      return { ...state,
+      return {
+        ...state,
         ...action.payload
       };
     },
