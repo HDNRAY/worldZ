@@ -1,12 +1,12 @@
 import React from 'react';
 import { Router, Route, Switch } from 'dva/router';
-import Game from './routes/game';
+import Index from './routes/index';
 
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
       <Switch>
-        <Route path="/" exact component={Game} />
+        <Route path="/"  component={Index} />
       </Switch>
     </Router>
   );
