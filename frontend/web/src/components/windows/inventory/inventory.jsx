@@ -17,11 +17,14 @@ const windowParams = {
     title: 'Inventory',
     onClose: ()=>{
         console.log('closing Inventory')
+
     },
 }
 
-export default connect(({ state, props }) => {
+const mapStateToProps = ({ state, props }) => {
     return {
         ...props
     }
-})(window(windowParams)(Inventory));
+}
+
+export default window(windowParams)(connect(mapStateToProps)(Inventory));

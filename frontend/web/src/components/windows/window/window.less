@@ -3,6 +3,8 @@
 .window {
   border: 2px @border-color solid;
   background-color: black;
+  display: flex;
+  flex-direction: column;
 }
 
 .titleBar{
@@ -13,5 +15,14 @@
   padding-left: 10px;
   padding-right: 5px;
   border-bottom: 1px solid @border-color;
+}
+
+.content{
+  flex: 1;
+  display: flex;
+
+  :only-child{
+    flex: 1;
+  }
 }
 

@@ -1,3 +1,5 @@
+// import immutable from 'immutable';
+
 export default {
 
   namespace: 'game',
@@ -29,6 +31,12 @@ export default {
   },
 
   reducers: {
+    switchInventory(state,action){
+      return {
+        ...state,
+        showInventory:!state.showInventory
+      }
+    },
     save(state, action) {
       return {
         ...state,
