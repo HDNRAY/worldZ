@@ -1,29 +1,32 @@
 import React from 'react';
-import { connect } from 'dva';
 import Proptypes from 'prop-types';
 import style from './clickable.less';
 
 
 class Clickable extends React.Component {
     render() {
-        const { onClick, text } = this.props;
+        const { onClick, text, className, onMouseEnter, onMouseLeave } = this.props;
 
-        return (<div onClick={onClick} className={style.clickable}>
+        return (<div onMouseEnter={onMouseEnter}
+            onMouseLeave={null}
+            onClick={onClick}
+            className={className + ' ' + style.clickable}>
             {text}
         </div>)
     }
 }
 
+Clickable.defaultProps = {
+    className: '',
+}
+
 Clickable.propTypes = {
     onClick: Proptypes.func,
-    text: Proptypes.string
-}
-
-const mapStateToProps = ({state,props})=>{
-    return {
-        ...props
-    }
+    text: Proptypes.string,
+    className: Proptypes.string,
+    onMouseEnter: Proptypes.func,
+    onMouseLeave: Proptypes.func
 }
 
 
-export default connect(mapStateToProps)(Clickable);
+export default Clickable;

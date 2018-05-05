@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'dva/router';
+import { Route, Switch, Redirect } from 'dva/router';
 import { connect } from 'dva';
 import { Layout } from 'antd';
 // import styles from './game.css';
@@ -15,6 +15,7 @@ function Index() {
           <Content className={style.content} >
               <Switch>
                   <Route path='/game' exact component={Game} />
+                  <Redirect from='/' to='/game'/>
               </Switch>
           </Content>
           <Footer className={style.footer}>footer</Footer>
