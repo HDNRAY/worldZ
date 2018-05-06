@@ -8,7 +8,7 @@ class Clickable extends React.Component {
         const { onClick, text, className, onMouseEnter, onMouseLeave } = this.props;
 
         return (<div onMouseEnter={onMouseEnter}
-            onMouseLeave={null}
+            onMouseLeave={onMouseLeave}
             onClick={onClick}
             className={className + ' ' + style.clickable}>
             {text}
