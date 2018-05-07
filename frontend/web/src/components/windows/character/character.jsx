@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import Window from '../window/window';
 import Attribute from '../../label/attribute/attribute';
+import style from './character.less';
 
 class Character extends Component {
 
@@ -22,11 +23,16 @@ class Character extends Component {
 		console.log(data)
 
 		const attributes = !!data.attributes ? (
-			<Attribute name='生命' value={data.attributes.health} detail='到0就死'/>
+			<div className={style.attributes}>
+				{Object.keys(data.attributes).map((item)=>{
+					return (<Attribute name={item} value={data.attributes[item]} detail={item}/>)
+				})}
+			</div>
+			
 		) : null
 
 		return (
-			<Window title='角色' isLoading={isLoading} onClose={() => {
+			<Window title={data.name} isLoading={isLoading} onClose={() => {
                 dispatch({
                     type: 'character/hideCharacter',
                     payload:{
@@ -34,7 +40,6 @@ class Character extends Component {
                     }
                 })
             }}>
-					{data.name}
 					{attributes}
 
             </Window>)

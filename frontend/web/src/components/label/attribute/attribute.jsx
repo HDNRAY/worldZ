@@ -17,7 +17,7 @@ class Attribute extends Component {
 
 		return (
 			<Tips content={content}>
-                <div className={style.statement}>{name} {value}</div>
+                <div className={style.attribute}>{name} {value}</div>
             </Tips>
 		)
 	}
