@@ -8,7 +8,7 @@ import windowStyle from './window.less';
 class Window extends Component {
 
 	render = () => {
-		const { onClose, title, children, style, isLoading } = this.props;
+		const { onClose, title, children, style, isLoading,show } = this.props;
 
 		const titleBar = (<div id='titleBar' className={windowStyle.titleBar}>
             <div className={windowStyle.title}>
@@ -27,7 +27,8 @@ class Window extends Component {
 		const finalStyle = {
 			height: '200px',
 			width: '300px',
-			...style
+			...style,
+			display: !!show ? 'inherit' :'none'
 		}
 
 		return (<Draggable {...draggableProps} >
