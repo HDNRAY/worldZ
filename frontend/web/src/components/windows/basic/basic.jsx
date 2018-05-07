@@ -5,26 +5,34 @@ import Clickable from '../../shared/clickable/clickable'
 
 
 class Basic extends React.Component {
-    render = () => {
-        const { dispatch } = this.props;
+	render = () => {
+		const { dispatch } = this.props;
 
-        return (<Window title='Basic'>
-            basic
-            
-            <Clickable text='Inventory' onClick={() => {
+		return (<Window title='Basic'>
+
+            <Clickable text='包裹' onClick={() => {
                 dispatch({
                     type: 'game/switchInventory',
                 })
             }} />
+
+            <Clickable text='61f' onClick={() => {
+                dispatch({
+                    type: 'character/showCharacter',
+                    payload:{
+                        id:1
+                    }
+                })
+            }} />
         </Window>)
-    }
+	}
 }
 
 
 const mapStateToProps = ({ state, props }) => {
-    return {
-        ...props
-    }
+	return {
+		...props
+	}
 }
 
 export default connect(mapStateToProps)(Basic);

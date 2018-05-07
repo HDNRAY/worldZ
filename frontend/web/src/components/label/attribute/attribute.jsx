@@ -1,21 +1,23 @@
-import React from 'react';
+import { Component } from 'react';
 import Proptypes from 'prop-types';
 import Tips from '../../shared/tips/tips';
+import style from './attribute.less';
 
-
-class Attribute extends React.Component {
+class Attribute extends Component {
 	render() {
 		const { name, value, detail } = this.props;
 
 		const content = (
-			<div>属性介绍</div>
+			<div className={style.tips}>
+				<div>属性介绍</div>
+				<div>{detail}</div>
+			</div>
+
 		);
-
-
 
 		return (
 			<Tips content={content}>
-                <div>{name} {value}</div>
+                <div className={style.statement}>{name} {value}</div>
             </Tips>
 		)
 	}

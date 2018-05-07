@@ -19,6 +19,11 @@ class Character extends Component {
 
 	render = () => {
 		const { dispatch, characterId, isLoading, data } = this.props;
+		console.log(data)
+
+		const attributes = !!data.attributes ? (
+			<Attribute name='生命' value={data.attributes.health} detail='到0就死'/>
+		) : null
 
 		return (
 			<Window title='角色' isLoading={isLoading} onClose={() => {
@@ -30,7 +35,7 @@ class Character extends Component {
                 })
             }}>
 					{data.name}
-					<Attribute name='生命' value={data.health} detail='到0就死'/>
+					{attributes}
 
             </Window>)
 	}
@@ -42,13 +47,13 @@ Character.propTypes = {
 
 const mapStateToProps = (state, props) => {
 
-	const index = state.character.shownCharacters.findIndex((item, index) => {
+	const character = state.character.shownCharacters.find((item, index) => {
 		return item.data.id === props.characterId;
 	})
 
 	return {
-		isLoading: state.character.shownCharacters[index].isLoading,
-		data: state.character.shownCharacters[index].data,
+		isLoading: character.isLoading,
+		data: character.data,
 		...props
 	}
 }
