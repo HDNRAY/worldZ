@@ -7,11 +7,10 @@ import Gear from '../../label/gear/gear';
 
 
 class Inventory extends Component {
-    render = () => {
-        const { dispatch } = this.props;
+  render = () => {
+    const { dispatch } = this.props;
 
-        return (<Window title='Inventory' onClose={() => {
-            console.log('closing Inventory')
+    return (<Window title='Inventory' onClose={() => {
             dispatch({
                 type: 'game/switchInventory'
             })
@@ -20,32 +19,16 @@ class Inventory extends Component {
                 tips={(<div>就是一瓶大红</div>)}
                 operations={[]}
                 quality={Item.qualities.NORMAL} />
-            {/* <Item name='Gorn Nova'
-                tips={(<div style={{ color: 'white', border: '1px solid grey' }}>光之剑</div>)}
-                quality={Item.qualities.LEGEND}
-                operations={[{
-                    name: '装备',
-                    action: () => {
-                        console.log('equiped')
-                    }
-                }, {
-                    name: '丢弃',
-                    confirm: '确认丢弃吗',
-                    action: () => {
-                        console.log('deleted')
-                    }
 
-                }]}
-            /> */}
             <Gear data={{ name: '光之剑',quality:'legend' }} />
         </Window>)
-    }
+  }
 }
 
 const mapStateToProps = ({ state, props }) => {
-    return {
-        ...props
-    }
+  return {
+    ...props
+  }
 }
 
 export default connect(mapStateToProps)(Inventory);
