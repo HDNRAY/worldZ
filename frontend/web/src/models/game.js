@@ -1,48 +1,50 @@
-// import immutable from 'immutable';
-
 export default {
 
-  namespace: 'game',
+	namespace: 'game',
 
-  state: {
-    name: 'WorldZ',
-    showInventory:false
-  },
+	state: {
+		name: 'WorldZ',
+		showInventory: false,
+		showMyCharacter: false
+	},
 
-  subscriptions: {
-    setup({
-      dispatch,
-      history
-    }) { // eslint-disable-line
-    },
-  },
+	subscriptions: {
+		setup({ dispatch, history }) { // eslint-disable-line
+		},
+	},
 
-  effects: {
-    * fetch({
-      payload
-    }, {
-      call,
-      put
-    }) { // eslint-disable-line
-      yield put({
-        type: 'save'
-      });
-    },
-  },
+	effects: {
+		* fetch({
+			payload
+		}, {
+			call,
+			put
+		}) { // eslint-disable-line
+			yield put({
+				type: 'save'
+			});
+		},
+	},
 
-  reducers: {
-    switchInventory(state,action){
-      return {
-        ...state,
-        showInventory:!state.showInventory
-      }
-    },
-    save(state, action) {
-      return {
-        ...state,
-        ...action.payload
-      };
-    },
-  },
+	reducers: {
+		switchMyCharacter(state, action) {
+			return {
+				...state,
+				showInventory: !state.showInventory
+			}
+		},
+		switchInventory(state, action) {
+			return {
+				...state,
+				showInventory: !state.showInventory
+			}
+		},
+		save(state, action) {
+			return {
+				...state,
+				...action.payload
+			};
+		},
+	},
 
 };

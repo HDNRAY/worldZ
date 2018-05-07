@@ -9,6 +9,7 @@ const app = dva();
 
 // 3. Model
 app.model(require('./models/game').default);
+app.model(require('./models/character').default);
 
 // 4. Router
 app.router(require('./router').default);

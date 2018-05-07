@@ -5,25 +5,25 @@ import { Popover } from 'antd';
 
 
 class Tips extends React.Component {
-    render() {
-        const { children, content,onClick } = this.props;
+	render() {
+		const { children, content, onClick } = this.props;
 
-        return (
-            <Popover content={content}
+		return (
+			<Popover content={content}
                 onClick={onClick}
                 arrowPointAtCenter={true}
                 overlayClassName={style.tips}>
                 {children}
             </Popover>
-        )
-    }
+		)
+	}
 }
 
 
 Tips.propTypes = {
-    children: Proptypes.element.isRequired,
-    content: Proptypes.element.isRequired,
-    onClick: Proptypes.func
+	children: Proptypes.element.isRequired,
+	content: Proptypes.element.isRequired,
+	onClick: Proptypes.func
 }
 
 
