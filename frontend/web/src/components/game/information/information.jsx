@@ -10,7 +10,7 @@ class Information extends Component {
 		const { logs } = this.props;
 
 		const display = logs.map((item, index) => {
-			return (<div>
+			return (<div key={index}>
                 {item.content}
             </div>)
 		})

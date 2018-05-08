@@ -14,7 +14,7 @@ class MapWindow extends React.Component {
 				windowId={4}
                 isLoading={false}
                 position={{x:100,y:50}}
-                style={{width:'800px',height:'500px'}}
+                style={{width:'600px',height:'400px'}}
                 onClose={() => dispatch({
 					type: 'game/switchWindow',
                     payload:{

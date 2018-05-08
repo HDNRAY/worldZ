@@ -4,28 +4,31 @@ import style from './clickable.less';
 
 
 class Clickable extends React.Component {
-    render() {
-        const { onClick, text, className, onMouseEnter, onMouseLeave } = this.props;
+	render() {
+		const { onClick, text, className, onMouseEnter, onMouseLeave } = this.props;
 
-        return (<div onMouseEnter={onMouseEnter}
+		return (<div onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            onClick={onClick}
+            onClick={(e)=>{
+                e.preventDefault();
+                onClick(e);
+            }}
             className={className + ' ' + style.clickable}>
             {text}
         </div>)
-    }
+	}
 }
 
 Clickable.defaultProps = {
-    className: '',
+	className: '',
 }
 
 Clickable.propTypes = {
-    onClick: Proptypes.func,
-    text: Proptypes.string,
-    className: Proptypes.string,
-    onMouseEnter: Proptypes.func,
-    onMouseLeave: Proptypes.func
+	onClick: Proptypes.func,
+	text: Proptypes.string,
+	className: Proptypes.string,
+	onMouseEnter: Proptypes.func,
+	onMouseLeave: Proptypes.func
 }
 
 

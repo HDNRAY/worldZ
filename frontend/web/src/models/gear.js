@@ -2,16 +2,12 @@ import { Map } from 'immutable';
 
 export default {
 
-	namespace: 'game',
+	namespace: 'gear',
 
 	state: {
-		topWindowId: 0,
-		name: 'WorldZ',
-		showing: {
-			inventory: false,
-			character: false,
-			map: false,
-			gear: false,
+		gears: {
+			head: null,
+
 		}
 	},
 
@@ -29,12 +25,11 @@ export default {
 	},
 
 	reducers: {
-		switchWindow(state, action) {
-			const name = action.payload.name;
-			const showing = Map(state.showing);
+		equip(state, action) {
+
+
 			return {
-				...state,
-				showing: showing.set(name, !showing.get(name)).toJSON()
+				...state
 			}
 		},
 		topWindow(state, action) {

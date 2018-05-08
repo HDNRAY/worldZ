@@ -10,7 +10,16 @@ class Basic extends React.Component {
 
 		return (<Window title='Basic' windowId={0} isLoading={true} show={true}>
 
-            <Clickable text='包裹' onClick={() => {
+            <Clickable text='角色' onClick={() => {
+                dispatch({
+					type: 'game/switchWindow',
+					payload:{
+						name:'character'
+					}
+                })
+            }} />
+
+			<Clickable text='包裹' onClick={() => {
                 dispatch({
                     type: 'game/switchWindow',
 					payload:{
@@ -19,12 +28,11 @@ class Basic extends React.Component {
                 })
             }} />
 
-
-            <Clickable text='角色' onClick={() => {
+			<Clickable text='装备' onClick={() => {
                 dispatch({
-					type: 'game/switchWindow',
+                    type: 'game/switchWindow',
 					payload:{
-						name:'character'
+						name:'inventory'
 					}
                 })
             }} />

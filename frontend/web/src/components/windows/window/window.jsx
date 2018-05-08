@@ -8,15 +8,16 @@ import windowStyle from './window.less';
 
 class Window extends Component {
 
-	componentDidMount = () => {
-		const { dispatch, windowId } = this.props;
-
-		dispatch({
-			type: 'game/topWindow',
-			payload: {
-				id: windowId
-			}
-		})
+	componentWillReceiveProps = (nextProps) => {
+		const { show, dispatch, windowId } = this.props
+		if (!show && !!nextProps.show) {
+			dispatch({
+				type: 'game/topWindow',
+				payload: {
+					id: windowId
+				}
+			})
+		}
 	}
 
 	render = () => {
