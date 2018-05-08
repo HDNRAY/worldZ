@@ -25,8 +25,8 @@ export default {
 
 	reducers: {
 		add(state, action) {
-			let logs = List(state.logs).push(action.payload);
-			if (logs.size > MAX_DISPLAY_LOG_NUMBER) logs = logs.shift()
+			let logs = List(state.logs).unshift(action.payload);
+			if (logs.size > MAX_DISPLAY_LOG_NUMBER) logs = logs.pop();
 			return {
 				...state,
 				logs: logs.toArray()
