@@ -16,41 +16,36 @@ class Character extends Component {
 	}
 
 	render = () => {
-		const { dispatch, isLoading, data, show } = this.props;
+		const { dispatch, data, window } = this.props;
 
 		const attributes = !!data.attributes ? (
 			<div className={style.attributes}>
-				{Object.keys(data.attributes).map((item,index)=>{
-					return (<Attribute key={'item' + index} name={item} value={data.attributes[item]} detail={item}/>)
+				{Object.keys(data.attributes).map((item, index) => {
+					return (<Attribute key={'item' + index} name={item} value={data.attributes[item]} detail={item} />)
 				})}
 			</div>
 
 		) : null
 
 		return (
-			<Window title={data.name} windowId={2} show={show}
-				position={{x:50,y:50}} isLoading={isLoading}
+			<Window title={data.name} {...window}
 				onClose={() =>
 					dispatch({
 						type: 'game/switchWindow',
-						payload:{
-							name:'character'
+						payload: {
+							name: 'character'
 						}
 					})}>
 				{attributes}
 
-            </Window>)
+			</Window>)
 	}
-}
-
-Character.propTypes = {
-
 }
 
 const mapStateToProps = (state, props) => {
 
 	return {
-		isLoading: state.character.myCharacter.isLoading,
+		window: state.game.windows.character,
 		data: state.character.myCharacter.data,
 		...props
 	}

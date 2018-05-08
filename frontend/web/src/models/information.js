@@ -1,4 +1,3 @@
-import { List } from 'immutable';
 
 const MAX_DISPLAY_LOG_NUMBER = 20;
 
@@ -24,12 +23,12 @@ export default {
 	},
 
 	reducers: {
-		add(state, action) {
-			let logs = List(state.logs).unshift(action.payload);
+		add(state, {payload}) {
+			let logs = state.logs.unshift(payload);
 			if (logs.size > MAX_DISPLAY_LOG_NUMBER) logs = logs.pop();
 			return {
 				...state,
-				logs: logs.toArray()
+				logs: logs
 			}
 		},
 	},

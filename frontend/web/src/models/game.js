@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import Immutable from 'immutable';
 
 export default {
 
@@ -6,12 +6,52 @@ export default {
 
 	state: {
 		topWindowId: 0,
-		name: 'WorldZ',
-		showing: {
-			inventory: false,
-			character: false,
-			map: false,
-			gear: false,
+		windows: {
+			basic: {
+				id: 0,
+				loading: true,
+				show: true,
+				position: {
+					x: 10,
+					y: 10
+				}
+			},
+			inventory: {
+				id: 4,
+				show: false,
+				loading: false,
+				position: {
+					x: 50,
+					y: 50
+				}
+			},
+			character: {
+				id: 1,
+				show: false,
+				loading: false,
+				position: {
+					x: 90,
+					y: 90
+				}
+			},
+			map: {
+				id: 2,
+				show: false,
+				loading: false,
+				position: {
+					x: 130,
+					y: 130
+				}
+			},
+			gear: {
+				id: 3,
+				show: false,
+				loading: false,
+				position: {
+					x: 170,
+					y: 170
+				}
+			},
 		}
 	},
 
@@ -29,18 +69,19 @@ export default {
 	},
 
 	reducers: {
-		switchWindow(state, action) {
-			const name = action.payload.name;
-			const showing = Map(state.showing);
+		switchWindow(state, { payload }) {
+			const windows = Immutable.fromJS(state.windows).toJSON();
+			windows[payload.name].show = !windows[payload.name].show;
+
 			return {
 				...state,
-				showing: showing.set(name, !showing.get(name)).toJSON()
+				windows
 			}
 		},
-		topWindow(state, action) {
+		topWindow(state, { payload }) {
 			return {
 				...state,
-				topWindowId: action.payload.id
+				topWindowId: payload.id
 			}
 		}
 	},

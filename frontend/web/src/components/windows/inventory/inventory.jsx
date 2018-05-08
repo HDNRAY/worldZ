@@ -8,24 +8,25 @@ import Spendable from '../../label/spendable/spendable';
 
 class Inventory extends Component {
 	render = () => {
-		const { dispatch, show } = this.props;
+		const { dispatch, window } = this.props;
 
-		return (<Window title='包裹' show={show} windowId={3} position={{x:30,y:30}} onClose={() => {
-            dispatch({
-                type: 'game/switchWindow',
-				payload:{
-					name:'inventory'
+		return (<Window title='包裹' {...window} onClose={() => {
+			dispatch({
+				type: 'game/switchWindow',
+				payload: {
+					name: 'inventory'
 				}
-            })
-        }}>
-            <Spendable data={{name:'面包',quantity:5,quality:'normal'}} />
-            <Gear data={{ name: '光之剑',quality:'legend' }} />
-        </Window>)
+			})
+		}}>
+			<Spendable data={{ name: '面包', quantity: 5, quality: 'normal' }} />
+			<Gear data={{ name: '光之剑', quality: 'legend' }} />
+		</Window>)
 	}
 }
 
 const mapStateToProps = (state, props) => {
 	return {
+		window: state.game.windows.inventory,
 		...props
 	}
 }

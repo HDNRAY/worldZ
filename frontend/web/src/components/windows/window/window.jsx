@@ -9,27 +9,27 @@ import windowStyle from './window.less';
 class Window extends Component {
 
 	componentWillReceiveProps = (nextProps) => {
-		const { show, dispatch, windowId } = this.props
+		const { show, dispatch, id } = this.props
 		if (!show && !!nextProps.show) {
 			dispatch({
 				type: 'game/topWindow',
 				payload: {
-					id: windowId
+					id: id
 				}
 			})
 		}
 	}
 
 	render = () => {
-		const { onClose, title, children, style, isLoading, show, position, dispatch, windowId, topWindowId } = this.props;
-
+		const { onClose, title, children, style, loading, show, position, dispatch, id, topWindowId } = this.props;
+		console.log(show);
 		const titleBar = (<div id='titleBar' className={windowStyle.titleBar}>
-            <div className={windowStyle.title}>
-                {title}
-            </div>
-			{!!isLoading ? <Icon type="loading-3-quarters" spin={true} /> : null}
-            {!!onClose ? <Icon type='close' onClick={onClose} /> : null}
-        </div>)
+			<div className={windowStyle.title}>
+				{title}
+			</div>
+			{!!loading ? <Icon type="loading-3-quarters" spin={true} /> : null}
+			{!!onClose ? <Icon type='close' onClick={onClose} /> : null}
+		</div>)
 
 		const draggableProps = {
 			defaultPosition: {
@@ -41,7 +41,7 @@ class Window extends Component {
 			handle: '#titleBar'
 		}
 
-		const zIndex = windowId === topWindowId ? '99' : '9'
+		const zIndex = id === topWindowId ? '99' : '9'
 
 		const finalStyle = {
 			height: '200px',
@@ -52,21 +52,21 @@ class Window extends Component {
 		}
 
 		return (
-			<Draggable {...draggableProps} onMouseDown={()=>{
+			<Draggable {...draggableProps} onMouseDown={() => {
 				dispatch({
-					type:'game/topWindow',
-					payload:{
-						id:windowId
+					type: 'game/topWindow',
+					payload: {
+						id: id
 					}
 				})
 			}}>
-		        <div style={finalStyle} className={windowStyle.window}>
-		            {titleBar}
-		            <div className={windowStyle.content}>
-		                {children}
-		            </div>
-		        </div>
-		    </Draggable>);
+				<div style={finalStyle} className={windowStyle.window}>
+					{titleBar}
+					<div className={windowStyle.content}>
+						{children}
+					</div>
+				</div>
+			</Draggable>);
 	}
 }
 
@@ -74,11 +74,11 @@ Window.propTypes = {
 	onClose: PropTypes.func,
 	title: PropTypes.string,
 	style: PropTypes.object,
-	isLoading: PropTypes.bool,
-	windowId: PropTypes.number.isRequired
+	window: PropTypes.object
 }
 
 const mapStateToProps = (state, props) => {
+	console.log(props)
 	return {
 		topWindowId: state.game.topWindowId,
 		...props

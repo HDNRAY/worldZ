@@ -6,31 +6,29 @@ import Character from '../../label/character/character';
 
 class MapWindow extends React.Component {
 	render = () => {
-		const { dispatch, show } = this.props;
+		const { dispatch, window } = this.props;
 
 		return (
 			<Window title='地图'
-                show={show}
-				windowId={4}
-                isLoading={false}
-                position={{x:100,y:50}}
-                style={{width:'600px',height:'400px'}}
-                onClose={() => dispatch({
+				{...window}
+				style={{ width: '600px', height: '400px' }}
+				onClose={() => dispatch({
 					type: 'game/switchWindow',
-                    payload:{
-                        name:'map'
-                    }
+					payload: {
+						name: 'map'
+					}
 				})}>
 
-    			<Character data={{name:'杨过'}}/>
+				<Character data={{ name: '杨过' }} />
 
-            </Window>)
+			</Window>)
 	}
 }
 
 
-const mapStateToProps = ({ state, props }) => {
+const mapStateToProps = (state, props) => {
 	return {
+		window:state.game.windows.map,
 		...props
 	}
 }

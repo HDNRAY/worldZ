@@ -8,7 +8,7 @@ class Basic extends React.Component {
 	render = () => {
 		const { dispatch } = this.props;
 
-		return (<Window title='Basic' windowId={0} isLoading={true} show={true}>
+		return (<Window title='Basic' id={-1} loading={false} show={true}>
 
             <Clickable text='角色' onClick={() => {
                 dispatch({
@@ -32,7 +32,7 @@ class Basic extends React.Component {
                 dispatch({
                     type: 'game/switchWindow',
 					payload:{
-						name:'inventory'
+						name:'gear'
 					}
                 })
             }} />
