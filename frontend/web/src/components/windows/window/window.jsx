@@ -8,7 +8,7 @@ import windowStyle from './window.less';
 class Window extends Component {
 
 	render = () => {
-		const { onClose, title, children, style, isLoading,show } = this.props;
+		const { onClose, title, children, style, isLoading, show, position } = this.props;
 
 		const titleBar = (<div id='titleBar' className={windowStyle.titleBar}>
             <div className={windowStyle.title}>
@@ -19,7 +19,11 @@ class Window extends Component {
         </div>)
 
 		const draggableProps = {
-			defaultPosition: { x: 10, y: 10 },
+			defaultPosition: {
+				x: 10,
+				y: 10,
+				...position
+			},
 			bounds: 'parent',
 			handle: '#titleBar'
 		}
@@ -28,17 +32,20 @@ class Window extends Component {
 			height: '200px',
 			width: '300px',
 			...style,
-			display: !!show ? 'inherit' :'none'
+			display: !!show ? 'inherit' : 'none'
 		}
 
-		return (<Draggable {...draggableProps} >
-            <div style={finalStyle} className={windowStyle.window}>
-                {titleBar}
-                <div className={windowStyle.content}>
-                    {children}
-                </div>
-            </div>
-        </Draggable>);
+		return (
+			<Draggable {...draggableProps} onMouseDown={()=>{
+
+			}}>
+		        <div style={finalStyle} className={windowStyle.window}>
+		            {titleBar}
+		            <div className={windowStyle.content}>
+		                {children}
+		            </div>
+		        </div>
+		    </Draggable>);
 	}
 }
 

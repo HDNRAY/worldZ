@@ -19,15 +19,20 @@ export default {
 		},
 		shownCharacters: [],
 		characters: [{
-			isLoading: false,
-			data: {
-				id: 1,
-				name: '61f',
-				attributes: {
-					agility: 10,
-					health: 100,
-					attack: 22
-				}
+			id: 1,
+			name: '61f',
+			attributes: {
+				agility: 10,
+				health: 100,
+				attack: 22
+			}
+		}, {
+			id: 1,
+			name: '杨过',
+			attributes: {
+				agility: 10,
+				health: 100,
+				attack: 22
 			}
 		}]
 	},
@@ -54,36 +59,8 @@ export default {
 	},
 
 	reducers: {
-		showCharacter(state, action) {
-			let characters = List(state.shownCharacters);
-
-			if (state.shownCharacters.every((item) => {
-					return item.data.id !== action.payload.id
-				})) {
-				characters = characters.push({
-					isLoading: false,
-					data: {
-						id: action.payload.id
-					}
-				})
-			}
-
-			if (characters.length > 3) characters.shift();
-
-			return {
-				...state,
-				shownCharacters: characters
-			}
-		},
-		hideCharacter(state, action) {
-			let characters = List(state.shownCharacters).filter((item) => {
-				return item.data.id !== action.payload.id;
-			}).toArray();
-
-			return {
-				...state,
-				shownCharacters: characters
-			}
+		getMyCharacter(state, action) {
+			return { ...state };
 		},
 		get(state, action) {
 			let character = state.characters.find((item) => {

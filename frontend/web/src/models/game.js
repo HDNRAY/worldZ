@@ -1,11 +1,16 @@
+import { Map } from 'immutable';
+
 export default {
 
 	namespace: 'game',
 
 	state: {
 		name: 'WorldZ',
-		showInventory: false,
-		showMyCharacter: false
+		showing: {
+			inventory: false,
+			character: false,
+			map: false
+		}
 	},
 
 	subscriptions: {
@@ -22,16 +27,12 @@ export default {
 	},
 
 	reducers: {
-		switchMyCharacter(state, action) {
+		switchWindow(state, action) {
+			const name = action.payload.name;
+			const showing = Map(state.showing);
 			return {
 				...state,
-				showInventory: !state.showInventory
-			}
-		},
-		switchInventory(state, action) {
-			return {
-				...state,
-				showInventory: !state.showInventory
+				showing: showing.set(name, !showing.get(name)).toJSON()
 			}
 		},
 		save(state, action) {

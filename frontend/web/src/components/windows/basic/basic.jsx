@@ -1,27 +1,40 @@
 import React from 'react';
 import { connect } from 'dva';
 import Window from '../window/window';
-import Clickable from '../../shared/clickable/clickable'
+import Clickable from '../../shared/clickable/clickable';
 
 
 class Basic extends React.Component {
 	render = () => {
 		const { dispatch } = this.props;
 
-		return (<Window title='Basic'>
+		return (<Window title='Basic' isLoading={true} show={true}>
 
             <Clickable text='包裹' onClick={() => {
                 dispatch({
-                    type: 'game/switchInventory',
+                    type: 'game/switchWindow',
+					payload:{
+						name:'inventory'
+					}
                 })
             }} />
 
-            <Clickable text='61f' onClick={() => {
+
+            <Clickable text='角色' onClick={() => {
                 dispatch({
-                    type: 'character/showCharacter',
-                    payload:{
-                        id:1
-                    }
+					type: 'game/switchWindow',
+					payload:{
+						name:'character'
+					}
+                })
+            }} />
+
+			<Clickable text='地图' onClick={() => {
+                dispatch({
+					type: 'game/switchWindow',
+					payload:{
+						name:'map'
+					}
                 })
             }} />
         </Window>)
@@ -29,7 +42,7 @@ class Basic extends React.Component {
 }
 
 
-const mapStateToProps = ({ state, props }) => {
+const mapStateToProps = (state, props) => {
 	return {
 		...props
 	}

@@ -8,57 +8,50 @@ import style from './character.less';
 class Character extends Component {
 
 	componentDidMount = () => {
-		const { dispatch, characterId } = this.props;
+		const { dispatch } = this.props;
 
 		dispatch({
-			type: 'character/get',
-			payload: {
-				id: characterId
-			}
+			type: 'character/getMyCharacter',
 		})
 	}
 
 	render = () => {
-		const { dispatch, characterId, isLoading, data } = this.props;
-		console.log(data)
+		const { dispatch, isLoading, data, show } = this.props;
 
 		const attributes = !!data.attributes ? (
 			<div className={style.attributes}>
-				{Object.keys(data.attributes).map((item)=>{
-					return (<Attribute name={item} value={data.attributes[item]} detail={item}/>)
+				{Object.keys(data.attributes).map((item,index)=>{
+					return (<Attribute key={'item' + index} name={item} value={data.attributes[item]} detail={item}/>)
 				})}
 			</div>
-			
+
 		) : null
 
 		return (
-			<Window title={data.name} isLoading={isLoading} onClose={() => {
-                dispatch({
-                    type: 'character/hideCharacter',
-                    payload:{
-                        id:characterId
-                    }
-                })
-            }}>
-					{attributes}
+			<Window title={data.name} show={show}
+				position={{x:50,y:50}} isLoading={isLoading}
+				onClose={() =>
+					dispatch({
+						type: 'game/switchWindow',
+						payload:{
+							name:'character'
+						}
+					})}>
+				{attributes}
 
             </Window>)
 	}
 }
 
 Character.propTypes = {
-	characterId: PropTypes.number.isRequired
+
 }
 
 const mapStateToProps = (state, props) => {
 
-	const character = state.character.shownCharacters.find((item, index) => {
-		return item.data.id === props.characterId;
-	})
-
 	return {
-		isLoading: character.isLoading,
-		data: character.data,
+		isLoading: state.character.myCharacter.isLoading,
+		data: state.character.myCharacter.data,
 		...props
 	}
 }

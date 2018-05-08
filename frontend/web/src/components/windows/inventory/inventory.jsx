@@ -8,11 +8,14 @@ import Spendable from '../../label/spendable/spendable';
 
 class Inventory extends Component {
 	render = () => {
-		const { dispatch } = this.props;
+		const { dispatch, show } = this.props;
 
-		return (<Window title='包裹' onClose={() => {
+		return (<Window title='包裹' show={show} position={{x:30,y:30}} onClose={() => {
             dispatch({
-                type: 'game/switchInventory'
+                type: 'game/switchWindow',
+				payload:{
+					name:'inventory'
+				}
             })
         }}>
             <Spendable data={{name:'面包',quantity:5,quality:'normal'}} />

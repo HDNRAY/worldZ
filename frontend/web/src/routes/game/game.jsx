@@ -4,23 +4,22 @@ import style from './game.less';
 import Basic from '../../components/windows/basic/basic';
 import Inventory from '../../components/windows/inventory/inventory';
 import Character from '../../components/windows/character/character';
+import MapWindow from '../../components/windows/map/map';
+import Information from '../../components/game/information/information';
 
 
 class Game extends React.Component {
 
 	render() {
-		const { showInventory, shownCharacters, showMyCharacter } = this.props;
-
-		const characterWindows = shownCharacters.reduce((result, item, index) => {
-			return [...result, (<Character key={'character' + index} characterId={item.data.id} />)];
-		}, [])
-
+		const { show } = this.props;
+		console.log(show)
 		return (
 			<div id='area' className={style.area}>
 		      	<Basic />
-		      	{showInventory ? <Inventory /> : null}
-		      	{showMyCharacter ? <Character characterId={0}/> : null}
-		      	{characterWindows}
+		      	<Inventory show={show.inventory}/>
+				<Character show={show.character}/>
+				<MapWindow show={show.map}/>
+				<Information/>
 		    </div>);
 	}
 
@@ -31,9 +30,7 @@ Game.propTypes = {};
 const mapStateToProps = (state, props) => {
 
 	return {
-		showInventory: state.game.showInventory,
-		shownCharacters: state.character.shownCharacters,
-		showMyCharacter: state.game.showMyCharacter,
+		show: state.game.showing,
 		...props
 	}
 }
