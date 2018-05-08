@@ -51,7 +51,7 @@ class Character extends Component {
 		return (
 			<Operations operations={actions}>
                 <Tips content={tips}>
-                    <Clickable text={name} />
+                    <Clickable text={name} className={style.label} />
                 </Tips>
             </Operations>
 		)

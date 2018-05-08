@@ -10,7 +10,7 @@ class Inventory extends Component {
 	render = () => {
 		const { dispatch, show } = this.props;
 
-		return (<Window title='包裹' show={show} position={{x:30,y:30}} onClose={() => {
+		return (<Window title='包裹' show={show} windowId={3} position={{x:30,y:30}} onClose={() => {
             dispatch({
                 type: 'game/switchWindow',
 				payload:{

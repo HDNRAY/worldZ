@@ -8,7 +8,7 @@ class Battle extends Component {
 	render = () => {
 		const { dispatch } = this.props;
 
-		return (<Window title='包裹' onClose={() => {
+		return (<Window title='包裹' windowId={1} onClose={() => {
             dispatch({
                 type: 'game/hideBattle'
             })

@@ -12,7 +12,7 @@ class Game extends React.Component {
 
 	render() {
 		const { show } = this.props;
-		console.log(show)
+		// console.log(show)
 		return (
 			<div id='area' className={style.area}>
 		      	<Basic />

@@ -11,7 +11,8 @@ class MapWindow extends React.Component {
 		return (
 			<Window title='地图'
                 show={show}
-                isLoading={true}
+				windowId={4}
+                isLoading={false}
                 position={{x:100,y:50}}
                 style={{width:'800px',height:'500px'}}
                 onClose={() => dispatch({

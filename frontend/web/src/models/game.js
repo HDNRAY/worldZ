@@ -5,6 +5,7 @@ export default {
 	namespace: 'game',
 
 	state: {
+		topWindowId: 0,
 		name: 'WorldZ',
 		showing: {
 			inventory: false,
@@ -35,12 +36,12 @@ export default {
 				showing: showing.set(name, !showing.get(name)).toJSON()
 			}
 		},
-		save(state, action) {
+		topWindow(state, action) {
 			return {
 				...state,
-				...action.payload
-			};
-		},
+				topWindowId: action.payload.id
+			}
+		}
 	},
 
 };

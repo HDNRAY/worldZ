@@ -28,7 +28,7 @@ class Character extends Component {
 		) : null
 
 		return (
-			<Window title={data.name} show={show}
+			<Window title={data.name} windowId={2} show={show}
 				position={{x:50,y:50}} isLoading={isLoading}
 				onClose={() =>
 					dispatch({

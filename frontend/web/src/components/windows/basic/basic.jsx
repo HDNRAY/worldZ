@@ -8,7 +8,7 @@ class Basic extends React.Component {
 	render = () => {
 		const { dispatch } = this.props;
 
-		return (<Window title='Basic' isLoading={true} show={true}>
+		return (<Window title='Basic' windowId={0} isLoading={true} show={true}>
 
             <Clickable text='包裹' onClick={() => {
                 dispatch({
