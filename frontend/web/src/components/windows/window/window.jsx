@@ -22,8 +22,8 @@ class Window extends Component {
 
 	render = () => {
 		const { onClose, title, children, style, loading, show, position, dispatch, id, topWindowId } = this.props;
-		console.log('window render title', title);
-		console.log('window render show', show);
+		// console.log('window render title', title);
+		// console.log('window render show', show);
 		const titleBar = (<div id='titleBar' className={windowStyle.titleBar}>
 			<div className={windowStyle.title}>
 				{title}

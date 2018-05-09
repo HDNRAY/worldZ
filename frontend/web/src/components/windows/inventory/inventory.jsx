@@ -19,7 +19,7 @@ class Inventory extends Component {
 			})
 		}}>
 			<Spendable data={{ name: '面包', quantity: 5, quality: 'normal' }} />
-			<Gear data={{ name: '光之剑', quality: 'legend' }} />
+			<Gear data={{ name: '光之剑', quality: 'legend',type:'剑',position:'双手',description:'Gorn Nova' }} />
 		</Window>)
 	}
 }

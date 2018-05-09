@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'dva';
-import Clickable from '../../shared/clickable/clickable';
-import Character from '../../label/character/character';
+// import Clickable from '../../shared/clickable/clickable';
+// import Character from '../../label/character/character';
 import style from './information.less';
 
 
