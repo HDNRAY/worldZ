@@ -5,7 +5,7 @@ import Window from '../window/window';
 
 class GearWindow extends Component {
 	render = () => {
-		console.log('gear render');
+
 		const { dispatch, window } = this.props;
 
 		return (<Window title='装备' {...window} onClose={() => {
@@ -24,7 +24,7 @@ class GearWindow extends Component {
 
 const mapStateToProps = (state, props) => {
 	return {
-		window:state.game.windows.gear,
+		window: state.game.get('windows').toJSON().gear,
 		...props
 	}
 }

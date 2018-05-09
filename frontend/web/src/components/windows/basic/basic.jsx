@@ -5,45 +5,32 @@ import Clickable from '../../shared/clickable/clickable';
 
 
 class Basic extends React.Component {
-	render = () => {
-		const { dispatch } = this.props;
+	switchWindow = (name) => {
+		this.props.dispatch({
+			type: 'game/switchWindow',
+			payload: { name }
+		})
+	}
 
-		return (<Window title='Basic' id={-1} loading={false} show={true}>
+	render = () => {
+		// const { dispatch } = this.props;
+
+		return (<Window title='Basic' id={0} loading={false} show={true}>
 
             <Clickable text='角色' onClick={() => {
-                dispatch({
-					type: 'game/switchWindow',
-					payload:{
-						name:'character'
-					}
-                })
+                this.switchWindow('character')
             }} />
 
 			<Clickable text='包裹' onClick={() => {
-                dispatch({
-                    type: 'game/switchWindow',
-					payload:{
-						name:'inventory'
-					}
-                })
+				this.switchWindow('inventory')
             }} />
 
 			<Clickable text='装备' onClick={() => {
-                dispatch({
-                    type: 'game/switchWindow',
-					payload:{
-						name:'gear'
-					}
-                })
+				this.switchWindow('gear')
             }} />
 
 			<Clickable text='地图' onClick={() => {
-                dispatch({
-					type: 'game/switchWindow',
-					payload:{
-						name:'map'
-					}
-                })
+				this.switchWindow('map')
             }} />
         </Window>)
 	}

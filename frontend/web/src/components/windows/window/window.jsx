@@ -22,7 +22,8 @@ class Window extends Component {
 
 	render = () => {
 		const { onClose, title, children, style, loading, show, position, dispatch, id, topWindowId } = this.props;
-		console.log(show);
+		console.log('window render title', title);
+		console.log('window render show', show);
 		const titleBar = (<div id='titleBar' className={windowStyle.titleBar}>
 			<div className={windowStyle.title}>
 				{title}
@@ -77,10 +78,11 @@ Window.propTypes = {
 	window: PropTypes.object
 }
 
+
 const mapStateToProps = (state, props) => {
-	console.log(props)
+
 	return {
-		topWindowId: state.game.topWindowId,
+		topWindowId: state.game.get('topWindowId'),
 		...props
 	}
 }

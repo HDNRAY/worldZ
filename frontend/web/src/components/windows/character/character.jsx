@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import Window from '../window/window';
 import Attribute from '../../label/attribute/attribute';
@@ -45,7 +45,7 @@ class Character extends Component {
 const mapStateToProps = (state, props) => {
 
 	return {
-		window: state.game.windows.character,
+		window: state.game.get('windows').toJSON().character,
 		data: state.character.myCharacter.data,
 		...props
 	}

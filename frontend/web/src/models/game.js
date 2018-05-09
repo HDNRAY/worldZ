@@ -4,7 +4,7 @@ export default {
 
 	namespace: 'game',
 
-	state: {
+	state: Immutable.fromJS({
 		topWindowId: 0,
 		windows: {
 			basic: {
@@ -21,8 +21,8 @@ export default {
 				show: false,
 				loading: false,
 				position: {
-					x: 50,
-					y: 50
+					x: 250,
+					y: 10
 				}
 			},
 			character: {
@@ -53,7 +53,7 @@ export default {
 				}
 			},
 		}
-	},
+	}),
 
 	subscriptions: {
 		setup({ dispatch, history }) { // eslint-disable-line
@@ -69,20 +69,11 @@ export default {
 	},
 
 	reducers: {
-		switchWindow(state, { payload }) {
-			const windows = Immutable.fromJS(state.windows).toJSON();
-			windows[payload.name].show = !windows[payload.name].show;
-
-			return {
-				...state,
-				windows
-			}
+		switchWindow: (state, { payload }) => {
+			return state.setIn(['windows', payload.name, 'show'], !state.get('windows').toJSON()[payload.name].show)
 		},
-		topWindow(state, { payload }) {
-			return {
-				...state,
-				topWindowId: payload.id
-			}
+		topWindow: (state, { payload }) => {
+			return state.set('topWindowId', payload.id)
 		}
 	},
 

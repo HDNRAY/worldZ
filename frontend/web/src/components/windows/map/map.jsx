@@ -28,7 +28,7 @@ class MapWindow extends React.Component {
 
 const mapStateToProps = (state, props) => {
 	return {
-		window:state.game.windows.map,
+		window: state.game.get('windows').toJSON().map,
 		...props
 	}
 }
