@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import Window from '../window/window';
 import Character from '../../label/character/character';
+import {Breadcrumb} from 'antd';
 
 
 class MapWindow extends React.Component {
@@ -19,8 +20,16 @@ class MapWindow extends React.Component {
 					}
 				})}>
 
+				<Breadcrumb>
+					<Breadcrumb.Item>世界</Breadcrumb.Item>
+					<Breadcrumb.Item>中原</Breadcrumb.Item>
+					<Breadcrumb.Item>荆州</Breadcrumb.Item>
+					<Breadcrumb.Item>汉口</Breadcrumb.Item>
+					<Breadcrumb.Item>牛家村</Breadcrumb.Item>
+				</Breadcrumb>
+				
 				<Character data={{ name: '杨过' }} />
-
+				
 			</Window>)
 	}
 }
