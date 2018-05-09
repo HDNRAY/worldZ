@@ -1,4 +1,3 @@
-
 export default {
 
 	namespace: 'character',
@@ -13,6 +12,9 @@ export default {
 					agility: 10,
 					health: 100,
 					attack: 22
+				},
+				gears: {
+					head: null
 				}
 			}
 		},

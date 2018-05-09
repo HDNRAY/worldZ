@@ -2,13 +2,17 @@ import React from 'react';
 import { connect } from 'dva';
 import Window from '../window/window';
 import Character from '../../label/character/character';
-import {Breadcrumb} from 'antd';
+import { Breadcrumb } from 'antd';
+
+const { Item } = Breadcrumb;
 
 
 class MapWindow extends React.Component {
-	render = () => {
-		const { dispatch, window } = this.props;
 
+
+	render = () => {
+		const { dispatch, window, currentMaps } = this.props;
+		console.log(currentMaps)
 		return (
 			<Window title='地图'
 				{...window}
@@ -20,16 +24,38 @@ class MapWindow extends React.Component {
 					}
 				})}>
 
-				<Breadcrumb>
-					<Breadcrumb.Item>世界</Breadcrumb.Item>
-					<Breadcrumb.Item>中原</Breadcrumb.Item>
-					<Breadcrumb.Item>荆州</Breadcrumb.Item>
-					<Breadcrumb.Item>汉口</Breadcrumb.Item>
-					<Breadcrumb.Item>牛家村</Breadcrumb.Item>
-				</Breadcrumb>
-				
-				<Character data={{ name: '杨过' }} />
-				
+					{!!currentMaps ? (<div>
+							<Breadcrumb>
+								{currentMaps.map((item) => {
+									return (
+										<Item><span onClick={()=>{
+											dispatch({
+												type:'map/change',
+												payload:{
+													map:item
+												}
+											})
+										}}>{item.name}</span></Item>
+									)
+								})}
+							</Breadcrumb>
+							<div>
+								{currentMaps[currentMaps.length - 1].name}
+								{currentMaps[currentMaps.length - 1].children.map((item)=>{
+									return (<div onClick={()=>dispatch({
+											type:'map/change',
+											payload:{
+												map:item
+											}
+										})}>{item.name}</div>)
+								})}
+							</div>
+						</div>
+						) :<div></div>}
+
+
+
+
 			</Window>)
 	}
 }
@@ -38,6 +64,7 @@ class MapWindow extends React.Component {
 const mapStateToProps = (state, props) => {
 	return {
 		window: state.game.get('windows').toJSON().map,
+		currentMaps: state.map.currentMaps,
 		...props
 	}
 }
