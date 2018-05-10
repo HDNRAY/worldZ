@@ -26,7 +26,7 @@ class Inventory extends Component {
 
 const mapStateToProps = (state, props) => {
 	return {
-		window: state.game.get('windows').toJSON().inventory,
+		window: state.game.get('windows').toJS().inventory,
 		...props
 	}
 }

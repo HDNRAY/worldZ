@@ -9,12 +9,9 @@ const { Item } = Breadcrumb;
 
 class MapWindow extends React.Component {
 
-
-
 	render = () => {
 		const { dispatch, window, currentMaps } = this.props;
-		console.log(currentMaps)
-
+		// console.log(currentMaps)
 
 		return (
 			<Window title='地图'
@@ -68,7 +65,7 @@ class MapWindow extends React.Component {
 
 const mapStateToProps = (state, props) => {
 	return {
-		window: state.game.get('windows').toJSON().map,
+		window: state.game.get('windows').toJS().map,
 		currentMaps: state.map.currentMaps,
 		...props
 	}

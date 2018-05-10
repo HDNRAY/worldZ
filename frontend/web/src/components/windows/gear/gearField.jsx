@@ -16,7 +16,7 @@ class GearField extends Component {
 }
 
 GearField.propTypes = {
-	name: PropTypes.string.isRequired,
+	position: PropTypes.string.isRequired,
 	insert: PropTypes.object
 }
 

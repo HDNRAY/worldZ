@@ -54,7 +54,7 @@ class Character extends Component {
 
 
 Character.propTypes = {
-	data: PropTypes.object.isRequired
+	name: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state, props) => {

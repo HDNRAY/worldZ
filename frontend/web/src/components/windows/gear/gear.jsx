@@ -20,7 +20,8 @@ class GearWindow extends Component {
 					}
 	            })
 	        }>
-				<GearField name='主手' insert={firstHand} />
+				<GearField position='head' insert={null} />
+				<GearField position='firstHand' insert={firstHand} />
 	        </Window>)
 	}
 }
@@ -28,8 +29,8 @@ class GearWindow extends Component {
 
 const mapStateToProps = (state, props) => {
 	return {
-		window: state.game.get('windows').toJSON().gear,
-		gears: state.gear.gears,
+		window: state.game.get('windows').toJS().gear,
+		gears: state.gear.get('gears').toJS(),
 		...props
 	}
 }

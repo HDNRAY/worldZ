@@ -70,7 +70,7 @@ export default {
 
 	reducers: {
 		switchWindow: (state, { payload }) => {
-			return state.setIn(['windows', payload.name, 'show'], !state.get('windows').toJSON()[payload.name].show)
+			return state.setIn(['windows', payload.name, 'show'], !state.get('windows').toJS()[payload.name].show)
 		},
 		topWindow: (state, { payload }) => {
 			return state.set('topWindowId', payload.id)

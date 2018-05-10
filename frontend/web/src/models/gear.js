@@ -1,8 +1,10 @@
+import { fromJS } from 'immutable';
+
 export default {
 
 	namespace: 'gear',
 
-	state: {
+	state: fromJS({
 		gears: {
 			head: null,
 			neck: null,
@@ -28,7 +30,7 @@ export default {
 			offHand: null,
 			fingers: [],
 		}
-	},
+	}),
 
 	subscriptions: {
 		setup({ dispatch, history }) { // eslint-disable-line
@@ -41,21 +43,25 @@ export default {
 				type: 'save'
 			});
 		},
+		* unequip(action, param) {
+			console.log(action)
+			console.log(param)
+			// try {
+			// 	const gear = yield select(state => state.gear[payload.position])
+			// 	yield put({
+			// 		type: 'inventory/add'
+			// 		payload: {
+			// 			gear
+			// 		}
+			// 	})
+			// }
+
+		},
 	},
 
 	reducers: {
-		unequip(state, action) {
-
-
-			return {
-				...state
-			}
-		},
-		topWindow(state, action) {
-			return {
-				...state,
-				topWindowId: action.payload.id
-			}
+		remove(state, { payload }) {
+			return state.setIn(['gears', payload.position], null);
 		}
 	},
 

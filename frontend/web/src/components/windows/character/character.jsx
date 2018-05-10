@@ -45,7 +45,7 @@ class Character extends Component {
 const mapStateToProps = (state, props) => {
 
 	return {
-		window: state.game.get('windows').toJSON().character,
+		window: state.game.get('windows').toJS().character,
 		data: state.character.myCharacter.data,
 		...props
 	}
