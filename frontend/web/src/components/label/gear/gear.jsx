@@ -27,28 +27,10 @@ class Gear extends Component {
 		}]
 
 		const tips = GearTips({
-			name: data.name,
-			type: data.type,
-			position: data.position,
+			...data,
 			qualityStyle: itemStyle[quality.className],
-			description: data.description,
 		})
 
-		// const tips = (<div className={style.tips}>
-		//     <div className={itemStyle[quality.className] + ' '+ style.name}>{name}</div>
-		//     <div className={style.type}>
-		//         <div>双手</div>
-		//         <div>剑</div>
-		//     </div>
-		//     <div className={style.damage}>伤害:100</div>
-		//     <div className={style.effects}>
-		//         <div>可对灵体造成伤害</div>
-		//         <div>可附着魔法，提高斩击威力</div>
-		//     </div>
-		//     <div className={style.description}>
-		//         格伦诺瓦
-		//     </div>
-		// </div>)
 
 		return (
 			<Item name={name}

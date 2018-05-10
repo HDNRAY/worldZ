@@ -8,9 +8,7 @@ import Clickable from '../../shared/clickable/clickable';
 
 class Character extends Component {
 	render() {
-		const { data, dispatch } = this.props;
-
-		const name = data.name;
+		const { name, description, dispatch } = this.props;
 
 		const actions = [{
 			name: '切磋',
@@ -38,13 +36,12 @@ class Character extends Component {
 					content: '交易也在做'
 				}
 			})
-
 		}]
 
 		const tips = (<div className={style.tips}>
-            <div className={style.name}>{data.name}</div>
+            <div className={style.name}>{name}</div>
             <div className={style.description}>
-                独臂长衫，背负一把通体深黑的大剑
+                {description}
             </div>
         </div>)
 

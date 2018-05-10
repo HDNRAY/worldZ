@@ -1,7 +1,13 @@
 import style from './gear.less';
 // import itemStyle from '../../shared/item/item.less';
 
-const gearTips = ({ name, qualityStyle, type, position, description }) => {
+const gearTips = ({ name, qualityStyle, type, position, description, effects, weight, damage }) => {
+	const gearEffects = effects.map((item, index) => {
+		return (
+			<div key={index}>{item.description}</div>
+		)
+	})
+
 	return (
 		<div className={style.tips}>
             <div className={qualityStyle + ' '+ style.name}>{name}</div>
@@ -9,10 +15,10 @@ const gearTips = ({ name, qualityStyle, type, position, description }) => {
                 <div>{position}</div>
                 <div>{type}</div>
             </div>
-            <div className={style.damage}>伤害:100</div>
+            <div className={style.damage}>伤害:{damage}</div>
+			<div className={style.weight}>重量:{weight}kg</div>
             <div className={style.effects}>
-                <div>可对灵体造成伤害</div>
-                <div>可附着魔法，提高斩击威力</div>
+				{gearEffects}
             </div>
             <div className={style.description}>
                 {description}

@@ -3,16 +3,19 @@ import { connect } from 'dva';
 import Window from '../window/window';
 import Character from '../../label/character/character';
 import { Breadcrumb } from 'antd';
-
+import style from './map.less';
 const { Item } = Breadcrumb;
 
 
 class MapWindow extends React.Component {
 
 
+
 	render = () => {
 		const { dispatch, window, currentMaps } = this.props;
 		console.log(currentMaps)
+
+
 		return (
 			<Window title='地图'
 				{...window}
@@ -40,7 +43,6 @@ class MapWindow extends React.Component {
 								})}
 							</Breadcrumb>
 							<div>
-								{currentMaps[currentMaps.length - 1].name}
 								{currentMaps[currentMaps.length - 1].children.map((item)=>{
 									return (<div onClick={()=>dispatch({
 											type:'map/change',
@@ -48,6 +50,9 @@ class MapWindow extends React.Component {
 												map:item
 											}
 										})}>{item.name}</div>)
+								})}
+								{currentMaps[currentMaps.length - 1].npcs.map((item)=>{
+									return (<Character {...item}/>)
 								})}
 							</div>
 						</div>

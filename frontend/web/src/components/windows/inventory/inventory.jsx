@@ -19,7 +19,7 @@ class Inventory extends Component {
 			})
 		}}>
 			<Spendable data={{ name: '面包', quantity: 5, quality: 'normal' }} />
-			<Gear data={{ name: '光之剑', quality: 'legend',type:'剑',position:'双手',description:'Gorn Nova' }} />
+			<Gear data={{ name: '光之剑', quality: 'legend',type:'剑',position:'双手',description:'Gorn Nova',damage:100,weight:1.5,effects:[{description:'可对灵体造成伤害'},{description:'可附着魔法，提高斩击威力'}] }} />
 		</Window>)
 	}
 }
