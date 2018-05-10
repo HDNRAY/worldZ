@@ -1,0 +1,39 @@
+.field {
+  @smallBorder: solid 1px #ffffff;
+  display: inline-block;
+
+  .corner {
+    @cornerWidth: 10px;
+    height: @cornerWidth;
+    width: @cornerWidth;
+    position: absolute;
+  }
+
+  .lt {
+    .corner();
+    border-left: @smallBorder;
+    border-top: @smallBorder;
+    align-self: flex-start;
+  }
+
+  .rt {
+    .corner();
+    border-right: @smallBorder;
+    border-top: @smallBorder;
+    align-self: flex-start;
+  }
+
+  .lb {
+    .corner();
+    border-left: @smallBorder;
+    border-bottom: @smallBorder;
+    align-self: flex-end;
+  }
+
+  .rb {
+    .corner();
+    border-right: @smallBorder;
+    border-bottom: @smallBorder;
+    align-self: flex-end;
+  }
+}

@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './spendable.less';
 import Item from '../../shared/item/item';
 import itemStyle from '../../shared/item/item.less'
@@ -47,7 +47,7 @@ class Spendable extends Component {
 
 
 Spendable.propTypes = {
-	data: Proptypes.object.isRequired
+	data: PropTypes.object.isRequired
 }
 
 

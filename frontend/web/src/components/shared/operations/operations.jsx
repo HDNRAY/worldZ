@@ -1,5 +1,5 @@
 import React from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './operations.less';
 import { Popover, Popconfirm } from 'antd';
 
@@ -59,8 +59,8 @@ class Operations extends React.Component {
 
 
 Operations.propTypes = {
-    children: Proptypes.element.isRequired,
-    operations: Proptypes.array.isRequired
+    children: PropTypes.element.isRequired,
+    operations: PropTypes.array.isRequired
 }
 
 

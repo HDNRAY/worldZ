@@ -1,23 +1,27 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import Window from '../window/window';
+import GearField from './gearField';
 
 class GearWindow extends Component {
 	render = () => {
 
-		const { dispatch, window } = this.props;
+		const { dispatch, window, gears } = this.props;
 
-		return (<Window title='装备' {...window} onClose={() => {
-            dispatch({
-                type: 'game/switchWindow',
-				payload:{
-					name:'gear'
-				}
-            })
-        }}>
+		const { firstHand } = gears;
 
-        </Window>)
+		return (
+			<Window title='装备' {...window}
+				onClose={() => dispatch({
+	                type: 'game/switchWindow',
+					payload:{
+						name:'gear'
+					}
+	            })
+	        }>
+				<GearField name='主手' insert={firstHand} />
+	        </Window>)
 	}
 }
 
@@ -25,6 +29,7 @@ class GearWindow extends Component {
 const mapStateToProps = (state, props) => {
 	return {
 		window: state.game.get('windows').toJSON().gear,
+		gears: state.gear.gears,
 		...props
 	}
 }

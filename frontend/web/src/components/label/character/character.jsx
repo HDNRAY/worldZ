@@ -1,40 +1,37 @@
 import { Component } from 'react';
 import { connect } from 'dva';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './character.less';
 import Operations from '../../shared/operations/operations';
 import Tips from '../../shared/tips/tips';
 import Clickable from '../../shared/clickable/clickable';
 
 class Character extends Component {
+	info = (payload) => {
+		this.props.dispatch({
+			type: 'information/add',
+			payload: payload
+		})
+	}
+
 	render() {
-		const { name, description, dispatch } = this.props;
+		const { name, description } = this.props;
 
 		const actions = [{
 			name: '切磋',
-			action: () => dispatch({
-				type: 'information/add',
-				payload: {
-					content: '切磋中(敬请期待)'
-				}
+			action: () => this.info({
+				content: '切磋中(敬请期待)'
 			})
 		}, {
 			name: '决斗',
 			confirm: '至死方休？',
-			action: () => dispatch({
-				type: 'information/add',
-				payload: {
-					content: '决斗中(敬请期待)'
-				}
+			action: () => this.info({
+				content: '决斗中(敬请期待)'
 			})
-
 		}, {
 			name: '交易',
-			action: () => dispatch({
-				type: 'information/add',
-				payload: {
-					content: '交易也在做'
-				}
+			action: () => this.info({
+				content: '交易也在做'
 			})
 		}]
 
@@ -57,7 +54,7 @@ class Character extends Component {
 
 
 Character.propTypes = {
-	data: Proptypes.object.isRequired
+	data: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, props) => {

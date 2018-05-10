@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Tips from '../../shared/tips/tips';
 import style from './attribute.less';
 
@@ -25,9 +25,9 @@ class Attribute extends Component {
 
 
 Attribute.propTypes = {
-	name: Proptypes.string.isRequired,
-	detail: Proptypes.string,
-	value: Proptypes.number,
+	name: PropTypes.string.isRequired,
+	detail: PropTypes.string,
+	value: PropTypes.number,
 }
 
 

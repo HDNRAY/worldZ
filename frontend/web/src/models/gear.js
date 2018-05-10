@@ -1,4 +1,3 @@
-
 export default {
 
 	namespace: 'gear',
@@ -6,7 +5,28 @@ export default {
 	state: {
 		gears: {
 			head: null,
-
+			neck: null,
+			shoulders: null,
+			torso: null,
+			wrists: null,
+			hands: null,
+			waist: null,
+			legs: null,
+			feets: null,
+			firstHand: {
+				name: '玄铁剑',
+				quality: 'epic',
+				weight: 10,
+				damage: 110,
+				type: '剑',
+				position: 'twoHand',
+				description: '重剑无锋，大巧不工',
+				effects: [{
+					description: ''
+				}]
+			},
+			offHand: null,
+			fingers: [],
 		}
 	},
 

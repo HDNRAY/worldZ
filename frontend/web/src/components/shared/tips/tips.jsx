@@ -1,5 +1,5 @@
 import React from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './tips.less';
 import { Popover } from 'antd';
 
@@ -21,9 +21,9 @@ class Tips extends React.Component {
 
 
 Tips.propTypes = {
-	children: Proptypes.element.isRequired,
-	content: Proptypes.element.isRequired,
-	onClick: Proptypes.func
+	children: PropTypes.element.isRequired,
+	content: PropTypes.element.isRequired,
+	onClick: PropTypes.func
 }
 
 

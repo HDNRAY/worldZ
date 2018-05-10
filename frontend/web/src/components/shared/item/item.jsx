@@ -1,5 +1,5 @@
 import React from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './item.less';
 import Clickable from '../clickable/clickable';
 import Tips from '../tips/tips';
@@ -32,10 +32,10 @@ Item.defaultProps = {
 }
 
 Item.propTypes = {
-	tips: Proptypes.element.isRequired,
-	name: Proptypes.string.isRequired,
-	quality: Proptypes.oneOf(Object.values(Item.qualities)).isRequired,
-	operations: Proptypes.array.isRequired
+	tips: PropTypes.element.isRequired,
+	name: PropTypes.string.isRequired,
+	quality: PropTypes.oneOf(Object.values(Item.qualities)).isRequired,
+	operations: PropTypes.array.isRequired
 }
 
 

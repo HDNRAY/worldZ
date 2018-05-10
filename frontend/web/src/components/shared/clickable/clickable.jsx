@@ -1,5 +1,5 @@
 import React from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './clickable.less';
 
 
@@ -24,11 +24,11 @@ Clickable.defaultProps = {
 }
 
 Clickable.propTypes = {
-	onClick: Proptypes.func,
-	text: Proptypes.string,
-	className: Proptypes.string,
-	onMouseEnter: Proptypes.func,
-	onMouseLeave: Proptypes.func
+	onClick: PropTypes.func,
+	text: PropTypes.string,
+	className: PropTypes.string,
+	onMouseEnter: PropTypes.func,
+	onMouseLeave: PropTypes.func
 }
 
 
