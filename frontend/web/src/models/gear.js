@@ -44,7 +44,7 @@ export default {
 	},
 
 	reducers: {
-		equip(state, action) {
+		unequip(state, action) {
 
 
 			return {

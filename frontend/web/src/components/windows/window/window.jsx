@@ -48,7 +48,7 @@ class Window extends Component {
 			height: '200px',
 			width: '300px',
 			...style,
-			display: !!show ? 'inherit' : 'none',
+			display: !!show ? 'flex' : 'none',
 			zIndex: zIndex
 		}
 

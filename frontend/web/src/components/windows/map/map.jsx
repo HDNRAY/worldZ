@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import Window from '../window/window';
 import Character from '../../label/character/character';
 import { Breadcrumb } from 'antd';
-// import style from './map.less';
+import style from './map.less';
 const { Item } = Breadcrumb;
 
 

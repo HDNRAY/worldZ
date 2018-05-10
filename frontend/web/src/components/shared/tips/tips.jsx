@@ -11,7 +11,6 @@ class Tips extends React.Component {
 		return (
 			<Popover content={content}
                 onClick={onClick}
-                arrowPointAtCenter={true}
                 overlayClassName={style.tips}>
                 {children}
             </Popover>

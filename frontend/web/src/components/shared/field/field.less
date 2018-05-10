@@ -1,9 +1,28 @@
 .field {
-  @smallBorder: solid 1px #ffffff;
+  @smallBorder: solid 1px #aaaaaa;
   display: inline-block;
+  position: relative;
+  height: 25px;
+  margin: 2px;
+
+  &:hover {
+    > div {
+      border-color: white;
+    }
+  }
+
+  .insert {
+    height: 25px;
+    line-height: 25px;
+    padding: 0 2px;
+
+    > div {
+      border: none;
+    }
+  }
 
   .corner {
-    @cornerWidth: 10px;
+    @cornerWidth: 8px;
     height: @cornerWidth;
     width: @cornerWidth;
     position: absolute;
@@ -13,27 +32,31 @@
     .corner();
     border-left: @smallBorder;
     border-top: @smallBorder;
-    align-self: flex-start;
+    left: 0;
+    top: 0;
   }
 
   .rt {
     .corner();
     border-right: @smallBorder;
     border-top: @smallBorder;
-    align-self: flex-start;
+    right: 0;
+    top: 0;
   }
 
   .lb {
     .corner();
+    left: 0;
+    bottom: 0;
     border-left: @smallBorder;
     border-bottom: @smallBorder;
-    align-self: flex-end;
   }
 
   .rb {
     .corner();
+    right: 0;
+    bottom: 0;
     border-right: @smallBorder;
     border-bottom: @smallBorder;
-    align-self: flex-end;
   }
 }

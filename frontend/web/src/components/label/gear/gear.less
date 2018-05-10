@@ -1,30 +1,46 @@
 .tips {
-  width: 200px;
+  display: flex;
 
-  .oneLine {
-    height: 16px;
-    line-height: 16px;
-    display: flex;
-    align-items: center;
+  .equiped {
+    color: #777777;
+    height: 15px;
+    line-height: 15px;
+    font-size: 12px;
+    text-align: center;
+    border: 1px solid #777777;
+    border-bottom: none;
   }
 
-  .name {
-    .oneLine();
-  }
+  .tip {
+    width: 200px;
+    background-color: #000000dd;
+    border: 1px solid #777777;
 
-  .type {
-    .oneLine();
-    justify-content: space-between;
-  }
-
-  .effects {
-    div {
-      .oneLine()
+    .oneLine {
+      height: 16px;
+      line-height: 16px;
+      display: flex;
+      align-items: center;
     }
-  }
 
-  .description {
-    padding: 5px;
-    color: goldenrod;
+    .name {
+      .oneLine();
+    }
+
+    .type {
+      .oneLine();
+      justify-content: space-between;
+    }
+
+    .effects {
+      div {
+        .oneLine()
+      }
+    }
+
+    .description {
+      padding: 5px;
+      color: goldenrod;
+    }
   }
 }
