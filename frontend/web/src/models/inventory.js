@@ -5,7 +5,9 @@ export default {
 	namespace: 'inventory',
 
 	state: fromJS({
-		gear: [{ id: 0, name: '光之剑', quality: 'legend', type: '剑', position: 'twoHand', description: 'Gorn Nova', damage: 100, weight: 1.5, effects: [{ description: '可对灵体造成伤害' }, { description: '可附着魔法，提高斩击威力' }] }],
+		gear: [{
+			id:2,name:'银铃胸甲',quality:'magic',type:'胸甲',position:'torso',description:'银铃胸甲，五金一件',effects:[],weight:3
+		},{ id: 0, name: '光之剑', quality: 'legend', type: '剑', position: 'twoHand', description: 'Gorn Nova', damage: 100, weight: 1.5, effects: [{ description: '可对灵体造成伤害' }, { description: '可附着魔法，提高斩击威力' }] }],
 		spendable: [{ id: 0, name: '面包', quantity: 5, quality: 'normal' }]
 	}),
 
@@ -23,12 +25,12 @@ export default {
 		* equip({ payload }, { put }) {
 			try {
 				const { gear } = payload;
-				yield put({
-					type: 'gear/unequip',
-					payload: {
-						position: payload.gear.position
-					},
-				});
+				// yield put({
+				// 	type: 'gear/unequip',
+				// 	payload: {
+				// 		position: payload.gear.position
+				// 	},
+				// });
 				yield put({
 					type: 'gear/update',
 					payload: {
