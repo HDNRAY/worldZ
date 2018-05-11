@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 
 export default {
 
@@ -15,7 +15,7 @@ export default {
 			waist: null,
 			legs: null,
 			feets: null,
-			firstHand: {
+			twoHand: {
 				name: '玄铁剑',
 				quality: 'epic',
 				weight: 10,
@@ -27,6 +27,7 @@ export default {
 					description: ''
 				}]
 			},
+			firstHand: null,
 			offHand: null,
 			fingers: [],
 		}
@@ -38,18 +39,13 @@ export default {
 	},
 
 	effects: {
-		* fetch({ payload }, { call, put }) { // eslint-disable-line
-			yield put({
-				type: 'save'
-			});
-		},
 		* unequip({ payload }, { select, put, }) {
-
 			try {
+				const { position } = payload;
 				const gear = yield select(state => {
-					console.log(state)
-					return state.gear.get('gears').get(payload.position).toJS()
-				});
+					return state.gear.get('gears').get(position).toJS()
+				})
+				console.log(gear)
 				yield put({
 					type: 'inventory/add',
 					payload: {
@@ -57,10 +53,11 @@ export default {
 						data: gear
 					}
 				})
+
 				yield put({
 					type: 'remove',
 					payload: {
-						position: payload.position
+						gear: gear
 					}
 				})
 			} catch (err) {
@@ -71,8 +68,12 @@ export default {
 	},
 
 	reducers: {
+		update(state, { payload }) {
+			console.log(state.setIn(['gears', payload.gear.position], Map(payload.gear)).toJS())
+			return state.setIn(['gears', payload.gear.position], Map(payload.gear));
+		},
 		remove(state, { payload }) {
-			return state.setIn(['gears', payload.position], null);
+			return state.setIn(['gears', payload.gear.position], null);
 		}
 	},
 

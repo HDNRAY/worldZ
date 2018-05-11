@@ -2,7 +2,12 @@ import dva from 'dva';
 import './index.css';
 
 // 1. Initialize
-const app = dva();
+const app = dva({
+	onStateChange: (state => {
+		console.log('gear', state.gear.toJS())
+		console.log('inventory', state.inventory.toJS())
+	})
+});
 
 // 2. Plugins
 // app.use({});

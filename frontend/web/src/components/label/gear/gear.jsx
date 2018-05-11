@@ -15,12 +15,17 @@ class Gear extends Component {
 	}
 
 	actions = () => {
-		const { where, dispatch, data } = this.props;
+		const { where, dispatch, gear } = this.props;
 
 		const actionEquip = {
 			name: '装备',
 			action: () => {
-
+				dispatch({
+					type: 'inventory/equip',
+					payload: {
+						gear: gear
+					}
+				})
 				this.info({
 					content: 'equiped'
 				})
@@ -30,11 +35,10 @@ class Gear extends Component {
 		const actionUnequip = {
 			name: '卸下',
 			action: () => {
-				const position = data.position === 'twoHand' ? 'firstHand' : data.position;
 				dispatch({
 					type: 'gear/unequip',
 					payload: {
-						position: position
+						position: gear.position
 					}
 				})
 				this.info({
@@ -99,9 +103,9 @@ class Gear extends Component {
 	}
 
 	gearTips = () => {
-		const { data, compareGears, where } = this.props;
+		const { gear, compareGears, where } = this.props;
 		return (<div className={style.tips}>
-			{this.gearTip(data)}
+			{this.gearTip(gear)}
 			{where !== 'equiped' ? compareGears.map((item,index)=>{
 				return !!item ? (<div key={index}>
 					<div className={style.equiped}>穿戴中的装备</div>
@@ -112,11 +116,11 @@ class Gear extends Component {
 	}
 
 	render() {
-		const { data } = this.props;
+		const { gear } = this.props;
 
-		const name = data.name;
+		const name = gear.name;
 
-		const quality = Item.qualities[data.quality.toUpperCase()];
+		const quality = Item.qualities[gear.quality.toUpperCase()];
 
 		const actions = this.actions()
 
@@ -133,7 +137,7 @@ class Gear extends Component {
 
 
 Gear.propTypes = {
-	data: PropTypes.object.isRequired,
+	gear: PropTypes.object.isRequired,
 	where: PropTypes.string.isRequired
 }
 
@@ -151,16 +155,17 @@ Gear.positions = {
 	firstHand: '主手',
 	offHand: '副手',
 	twoHand: '双手',
+	oneHand: '单手',
 	fingers: '戒指',
 }
 
 const mapStateToProps = (state, props) => {
 	let gears = state.gear.get('gears').toJS();
 	let compareGears = [];
-	if (props.data.position === 'twoHand') {
-		compareGears = [gears.firstHand, gears.offHand]
+	if (['twoHand', 'oneHand'].includes(props.gear.position)) {
+		compareGears = [gears.twoHand, gears.firstHand, gears.offHand]
 	} else {
-		compareGears = [gears[props.data.position]]
+		compareGears = [gears[props.gear.position]]
 	}
 
 	return {

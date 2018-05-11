@@ -16,7 +16,7 @@ class Inventory extends Component {
 		})
 
 		const gears = gear.map((item, index) => {
-			return <Gear key={item.name + index} where='inventory' data={item}/>
+			return <Gear key={item.name + index} where='inventory' gear={item}/>
 		})
 
 		return (<Window title='包裹' {...window} onClose={() => {

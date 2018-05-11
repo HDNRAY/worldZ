@@ -10,17 +10,23 @@ class GearWindow extends Component {
 
 		const { dispatch, window, gears } = this.props;
 
-		const gearFields = Object.keys(gears).map((key, index) => {
+		const gearFields = Object.keys(gears).reduce((result, key) => {
 			const gear = gears[key];
 			if (key === 'fingers') {
-				return null
-			} else if (key === 'offHand' && !!gears.firstHand && gears.firstHand.position === 'twoHand') {
-				return <GearField key={key} invalid style={style[key]} position={key} insert={gears.firstHand} />
+				// return result;
+			} else if (key === 'twoHand') {
+				// return result;
+			} else if (key === 'offHand' && !!gears.twoHand) {
+				result.push(<GearField key={key} invalid style={style[key]} position={key} insert={gears.twoHand} />)
+			} else if (key === 'firstHand' && !!gears.twoHand) {
+				result.push(<GearField key={key} style={style[key]} position={key} insert={gears.twoHand} />)
 			} else {
-				return <GearField key={key} style={style[key]} position={key} insert={gear} />
+				result.push(<GearField key={key} style={style[key]} position={key} insert={gear} />);
 			}
 
-		})
+
+			return result;
+		}, [])
 
 		return (
 			<Window title='装备' {...window}

@@ -9,7 +9,7 @@ class GearField extends Component {
 
 		return (
 			<Field style={style} invalid={!!invalid} name={Gear.positions[position]}>
-                {!!insert ? <Gear where='equiped' data={insert}/> : null}
+                {!!insert ? <Gear where='equiped' gear={insert}/> : null}
             </Field>
 		)
 	}
