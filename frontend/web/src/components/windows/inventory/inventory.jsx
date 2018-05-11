@@ -4,11 +4,20 @@ import { connect } from 'dva';
 import Window from '../window/window';
 import Gear from '../../label/gear/gear';
 import Spendable from '../../label/spendable/spendable';
+import style from './inventory.less';
 
 
 class Inventory extends Component {
 	render = () => {
-		const { dispatch, window } = this.props;
+		const { dispatch, window, spendable, gear } = this.props;
+
+		const spendables = spendable.map((item, index) => {
+			return <Spendable key={item.name + index} data={item}/>
+		})
+
+		const gears = gear.map((item, index) => {
+			return <Gear key={item.name + index} where='inventory' data={item}/>
+		})
 
 		return (<Window title='包裹' {...window} onClose={() => {
 			dispatch({
@@ -18,15 +27,20 @@ class Inventory extends Component {
 				}
 			})
 		}}>
-			<Spendable data={{ name: '面包', quantity: 5, quality: 'normal' }} />
-			<Gear where='inventory' data={{ name: '光之剑', quality: 'legend',type:'剑',position:'twoHand',description:'Gorn Nova',damage:100,weight:1.5,effects:[{description:'可对灵体造成伤害'},{description:'可附着魔法，提高斩击威力'}] }} />
-		</Window>)
+			<div className={style.list}>
+				{spendables}
+				{gears}
+			</div>
+			</Window>)
 	}
 }
 
 const mapStateToProps = (state, props) => {
+	const inventory = state.inventory.toJS();
 	return {
 		window: state.game.get('windows').toJS().inventory,
+		spendable: inventory.spendable,
+		gear: inventory.gear,
 		...props
 	}
 }

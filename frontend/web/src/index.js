@@ -8,7 +8,7 @@ const app = dva();
 // app.use({});
 
 // 3. Model
-const models = ['game', 'character', 'information', 'map', 'gear'];
+const models = ['game', 'character', 'information', 'map', 'gear', 'inventory'];
 models.map(name => app.model(require('./models/' + name).default))
 // app.model(require('./models/game').default);
 // app.model(require('./models/character').default);

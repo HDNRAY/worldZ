@@ -4,15 +4,19 @@ import style from './field.less';
 
 class Field extends Component {
 	render() {
-		const { name, children } = this.props;
+		const { name, children, invalid } = this.props;
+
+		const invalidStyle = !!invalid ? style.invalid + ' ' : '';
+
+		const center = !!children ?
+			(<div className={style.insert}>{children}</div>) :
+			(<div className={style.name}>{name}</div>)
 
 		return (
-			<div className={style.field}>
+			<div className={ invalidStyle + style.field}>
                 <div className={style.lt}></div>
                 <div className={style.rt}></div>
-                <div className={style.insert}>
-                    {!!children ? children : name}
-                </div>
+                {center}
                 <div className={style.lb}></div>
                 <div className={style.rb}></div>
             </div>

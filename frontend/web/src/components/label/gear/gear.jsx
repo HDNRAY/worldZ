@@ -30,10 +30,11 @@ class Gear extends Component {
 		const actionUnequip = {
 			name: '卸下',
 			action: () => {
+				const position = data.position === 'twoHand' ? 'firstHand' : data.position;
 				dispatch({
 					type: 'gear/unequip',
 					payload: {
-						position: data.position
+						position: position
 					}
 				})
 				this.info({

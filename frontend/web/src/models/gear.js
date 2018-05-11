@@ -43,18 +43,29 @@ export default {
 				type: 'save'
 			});
 		},
-		* unequip(action, param) {
-			console.log(action)
-			console.log(param)
-			// try {
-			// 	const gear = yield select(state => state.gear[payload.position])
-			// 	yield put({
-			// 		type: 'inventory/add'
-			// 		payload: {
-			// 			gear
-			// 		}
-			// 	})
-			// }
+		* unequip({ payload }, { select, put, }) {
+
+			try {
+				const gear = yield select(state => {
+					console.log(state)
+					return state.gear.get('gears').get(payload.position).toJS()
+				});
+				yield put({
+					type: 'inventory/add',
+					payload: {
+						type: 'gear',
+						data: gear
+					}
+				})
+				yield put({
+					type: 'remove',
+					payload: {
+						position: payload.position
+					}
+				})
+			} catch (err) {
+				console.log(err)
+			}
 
 		},
 	},

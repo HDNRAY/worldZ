@@ -5,10 +5,10 @@ import Field from '../../shared/field/field';
 
 class GearField extends Component {
 	render() {
-		const { position, insert } = this.props;
+		const { position, insert, invalid, style } = this.props;
 
 		return (
-			<Field name={Gear.positions[position]}>
+			<Field style={style} invalid={!!invalid} name={Gear.positions[position]}>
                 {!!insert ? <Gear where='equiped' data={insert}/> : null}
             </Field>
 		)
