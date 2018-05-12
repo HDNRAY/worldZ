@@ -9,11 +9,11 @@ export default {
 		windows: {
 			basic: {
 				id: 0,
-				loading: true,
+				loading: false,
 				show: true,
 				position: {
-					x: 10,
-					y: 10
+					x: 1,
+					y: 1
 				}
 			},
 			inventory: {
@@ -21,8 +21,8 @@ export default {
 				show: false,
 				loading: false,
 				position: {
-					x: 250,
-					y: 10
+					x: 320,
+					y: 0
 				}
 			},
 			character: {
@@ -39,8 +39,8 @@ export default {
 				show: false,
 				loading: false,
 				position: {
-					x: 130,
-					y: 130
+					x: 300,
+					y: 180
 				}
 			},
 			gear: {
@@ -48,8 +48,8 @@ export default {
 				show: false,
 				loading: false,
 				position: {
-					x: 170,
-					y: 170
+					x: 0,
+					y: 210
 				}
 			},
 		}

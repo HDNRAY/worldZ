@@ -13,9 +13,9 @@ class Basic extends React.Component {
 	}
 
 	render = () => {
-		// const { dispatch } = this.props;
+		const { window } = this.props;
 
-		return (<Window title='Basic' id={0} loading={false} show={true}>
+		return (<Window title='Basic' {...window}>
 
             <Clickable text='角色' onClick={() => {
                 this.switchWindow('character')
@@ -39,6 +39,7 @@ class Basic extends React.Component {
 
 const mapStateToProps = (state, props) => {
 	return {
+		window: state.game.get('windows').toJS().basic,
 		...props
 	}
 }

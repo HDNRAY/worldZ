@@ -19,7 +19,7 @@ class Inventory extends Component {
 			return <Gear key={item.name + index} where='inventory' gear={item}/>
 		})
 
-		return (<Window title='包裹' {...window} onClose={() => {
+		return (<Window title='包裹' style={{width:'400px',height:'160px'}} {...window} onClose={() => {
 			dispatch({
 				type: 'game/switchWindow',
 				payload: {

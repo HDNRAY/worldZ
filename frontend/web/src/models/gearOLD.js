@@ -5,7 +5,7 @@ export default {
 	namespace: 'gear',
 
 	state: fromJS({
-		gears: {
+		wearings: {
 			head: null,
 			neck: null,
 			shoulders: null,

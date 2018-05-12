@@ -15,7 +15,7 @@ class Gear extends Component {
 	}
 
 	actions = () => {
-		const { where, dispatch, gear } = this.props;
+		const { where, dispatch, gear,unequip,equip,drop } = this.props;
 
 		const actionEquip = {
 			name: '装备',
@@ -34,11 +34,11 @@ class Gear extends Component {
 
 		const actionUnequip = {
 			name: '卸下',
-			action: () => {
+			action: ()=>{
 				dispatch({
-					type: 'gear/unequip',
+					type: 'inventory/unequip',
 					payload: {
-						position: gear.position
+						gear: gear
 					}
 				})
 				this.info({
@@ -160,12 +160,12 @@ Gear.positions = {
 }
 
 const mapStateToProps = (state, props) => {
-	let gears = state.gear.get('gears').toJS();
+	let wearings = state.inventory.get('wearings').toJS();
 	let compareGears = [];
 	if (['twoHand', 'oneHand'].includes(props.gear.position)) {
-		compareGears = [gears.twoHand, gears.firstHand, gears.offHand]
+		compareGears = [wearings.twoHand, wearings.firstHand, wearings.offHand]
 	} else {
-		compareGears = [gears[props.gear.position]]
+		compareGears = [wearings[props.gear.position]]
 	}
 
 	return {

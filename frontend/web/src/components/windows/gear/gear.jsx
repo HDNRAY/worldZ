@@ -8,18 +8,18 @@ import style from './gear.less';
 class GearWindow extends Component {
 	render = () => {
 
-		const { dispatch, window, gears } = this.props;
+		const { dispatch, window, wearings } = this.props;
 
-		const gearFields = Object.keys(gears).reduce((result, key) => {
-			const gear = gears[key];
+		const gearFields = Object.keys(wearings).reduce((result, key) => {
+			const gear = wearings[key];
 			if (key === 'fingers') {
 				// return result;
 			} else if (key === 'twoHand') {
 				// return result;
-			} else if (key === 'offHand' && !!gears.twoHand) {
-				result.push(<GearField key={key} invalid style={style[key]} position={key} insert={gears.twoHand} />)
-			} else if (key === 'firstHand' && !!gears.twoHand) {
-				result.push(<GearField key={key} style={style[key]} position={key} insert={gears.twoHand} />)
+			} else if (key === 'offHand' && !!wearings.twoHand) {
+				result.push(<GearField key={key} invalid style={style[key]} position={key} insert={wearings.twoHand} />)
+			} else if (key === 'firstHand' && !!wearings.twoHand) {
+				result.push(<GearField key={key} style={style[key]} position={key} insert={wearings.twoHand} />)
 			} else {
 				result.push(<GearField key={key} style={style[key]} position={key} insert={gear} />);
 			}
@@ -29,7 +29,7 @@ class GearWindow extends Component {
 		}, [])
 
 		return (
-			<Window title='装备' {...window}
+			<Window title='装备' style={{width:'200px',height:'320px'}} {...window}
 				onClose={() => dispatch({
 	                type: 'game/switchWindow',
 					payload:{
@@ -46,7 +46,7 @@ class GearWindow extends Component {
 const mapStateToProps = (state, props) => {
 	return {
 		window: state.game.get('windows').toJS().gear,
-		gears: state.gear.get('gears').toJS(),
+		wearings: state.inventory.get('wearings').toJS(),
 		...props
 	}
 }
