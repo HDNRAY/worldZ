@@ -15,7 +15,7 @@ class Gear extends Component {
 	}
 
 	actions = () => {
-		const { where, dispatch, gear,unequip,equip,drop } = this.props;
+		const { where, dispatch, gear } = this.props;
 
 		const actionEquip = {
 			name: '装备',

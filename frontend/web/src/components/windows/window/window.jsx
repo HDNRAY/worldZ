@@ -54,12 +54,15 @@ class Window extends Component {
 
 		return (
 			<Draggable {...draggableProps} onMouseDown={() => {
-				dispatch({
-					type: 'game/topWindow',
-					payload: {
-						id: id
-					}
-				})
+				if(id !== topWindowId){
+					dispatch({
+						type: 'game/topWindow',
+						payload: {
+							id: id
+						}
+					})
+				}
+				
 			}}>
 				<div style={finalStyle} className={windowStyle.window}>
 					{titleBar}
