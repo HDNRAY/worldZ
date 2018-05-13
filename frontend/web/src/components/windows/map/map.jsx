@@ -27,6 +27,7 @@ class MapWindow extends React.Component {
 					{!!currentMaps ? (<div>
 							<Breadcrumb>
 								{currentMaps.map((item,index) => {
+									console.log(currentMaps);
 									return (
 										<Item key={item.name + index}><span onClick={()=>{
 											dispatch({

@@ -4,7 +4,7 @@ import Mock from 'mockjs';
 export default {
 
 	'GET /api/map': (req, res) => {
-		console.log('GET /api/map')
+		console.log('GET /api/map',!!Mock)
 		let data = Mock.mock({
 			id: 0,
 			name: '世界',

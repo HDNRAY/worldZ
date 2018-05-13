@@ -14,16 +14,11 @@ class GearWindow extends Component {
 			const gear = wearings[key];
 			if (key === 'fingers') {
 				// return result;
-			} else if (key === 'twoHand') {
-				// return result;
-			} else if (key === 'offHand' && !!wearings.twoHand) {
-				result.push(<GearField key={key} invalid style={style[key]} position={key} insert={wearings.twoHand} />)
-			} else if (key === 'firstHand' && !!wearings.twoHand) {
-				result.push(<GearField key={key} style={style[key]} position={key} insert={wearings.twoHand} />)
-			} else {
+			} else if (key === 'offHand' && !!wearings.firstHand && wearings.firstHand.types.includes('twoHand')) {
+				result.push(<GearField key={key} invalid style={style[key]} position={key} insert={wearings.firstHand} />)
+			}  else {
 				result.push(<GearField key={key} style={style[key]} position={key} insert={gear} />);
 			}
-
 
 			return result;
 		}, [])

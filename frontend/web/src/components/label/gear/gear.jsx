@@ -15,7 +15,19 @@ class Gear extends Component {
 	}
 
 	actions = () => {
-		const { where, dispatch, gear } = this.props;
+		const { where, dispatch, gear, position } = this.props;
+
+		const switchHand = {
+			name: '换手',
+			action: () => {
+				dispatch({
+					type: 'inventory/switchHand',
+				})
+				this.info({
+					content: 'switched'
+				})
+			}
+		}
 
 		const actionEquip = {
 			name: '装备',
@@ -34,11 +46,11 @@ class Gear extends Component {
 
 		const actionUnequip = {
 			name: '卸下',
-			action: ()=>{
+			action: () => {
 				dispatch({
 					type: 'inventory/unequip',
 					payload: {
-						gear: gear
+						position: position
 					}
 				})
 				this.info({
@@ -59,7 +71,8 @@ class Gear extends Component {
 
 		switch (where) {
 			case 'equiped':
-				actions = [actionUnequip];
+				if (gear.position.size > 0) actions.push(switchHand);
+				actions.push(actionUnequip);
 				break;
 			case 'inventory':
 				actions = [actionEquip, actionDrop];
@@ -73,9 +86,19 @@ class Gear extends Component {
 
 	gearTip = (gear) => {
 		if (!gear) return null;
-		const { name, quality, type, position, description, effects, weight, damage } = gear;
+		const { name, quality, types, position, description, effects, weight, damage } = gear;
 
 		const qualityStyle = itemStyle[Item.qualities[quality.toUpperCase()].className];
+
+		const displayPosition = position.map(item => Gear.positions[item]).join(',');
+
+		const displayTypes = types.reduce((result, item) => {
+			const displayType = Gear.displayTypes[item];
+			if (!!displayType) {
+				result.push(displayType);
+			}
+			return result;
+		}, []).join(',');
 
 		const gearEffects = effects.map((item, index) => {
 			return (
@@ -85,12 +108,12 @@ class Gear extends Component {
 
 		return (
 			<div className={style.tip}>
-				<div className={qualityStyle + ' '+ style.name}>{name}</div>
+				<div className={qualityStyle + ' ' + style.name}>{name}</div>
 				<div className={style.type}>
-					<div>{Gear.positions[position]}</div>
-					<div>{type}</div>
+					<div>{displayPosition}</div>
+					<div>{displayTypes}</div>
 				</div>
-				<div className={style.damage}>伤害:{damage}</div>
+				{!!damage ? <div className={style.damage}>伤害:{damage}</div> : null}
 				<div className={style.weight}>重量:{weight}kg</div>
 				<div className={style.effects}>
 					{gearEffects}
@@ -106,12 +129,12 @@ class Gear extends Component {
 		const { gear, compareGears, where } = this.props;
 		return (<div className={style.tips}>
 			{this.gearTip(gear)}
-			{where !== 'equiped' ? compareGears.map((item,index)=>{
+			{where !== 'equiped' ? compareGears.map((item, index) => {
 				return !!item ? (<div key={index}>
 					<div className={style.equiped}>穿戴中的装备</div>
 					{this.gearTip(item)}
 				</div>) : null
-			}):null}
+			}) : null}
 		</div>)
 	}
 
@@ -128,9 +151,9 @@ class Gear extends Component {
 
 		return (
 			<Item name={name}
-            tips={tips}
-            quality={quality}
-            operations={actions}/>
+				tips={tips}
+				quality={quality}
+				operations={actions} />
 		)
 	}
 }
@@ -154,19 +177,28 @@ Gear.positions = {
 	feets: '脚',
 	firstHand: '主手',
 	offHand: '副手',
-	twoHand: '双手',
-	oneHand: '单手',
+	// twoHand: '双手',
+	// oneHand: '单手',
 	fingers: '戒指',
 }
 
+Gear.displayTypes = {
+	twoHand: '双手',
+	sword: '剑',
+	dagger: '匕首'
+}
+
 const mapStateToProps = (state, props) => {
-	let wearings = state.inventory.get('wearings').toJS();
-	let compareGears = [];
-	if (['twoHand', 'oneHand'].includes(props.gear.position)) {
-		compareGears = [wearings.twoHand, wearings.firstHand, wearings.offHand]
-	} else {
-		compareGears = [wearings[props.gear.position]]
-	}
+	const wearings = state.inventory.get('wearings').toJS();
+
+	const comparePositions = props.gear.types.includes('twoHand') ? ['firstHand', 'offHand'] : props.gear.position;
+
+	const compareGears = comparePositions.reduce((result, item) => {
+		if (!!wearings[item]) {
+			result.push(wearings[item]);
+		}
+		return result;
+	}, []);
 
 	return {
 		compareGears,
