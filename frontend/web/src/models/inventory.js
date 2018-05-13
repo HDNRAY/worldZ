@@ -31,9 +31,9 @@ export default {
 			fingers: [],
 		},
 		gear: [{
-			id: 4, name: '短匕', quality: 'normal', types: ['dagger'], position: ['firstHand', 'offHand'], description: '', effects: [], weight: 1, damage: 1
+			id: 4, name: '短匕4', quality: 'normal', types: ['dagger'], position: ['firstHand', 'offHand'], description: '', effects: [], weight: 1, damage: 1
 		}, {
-			id: 3, name: '短匕', quality: 'normal', types: ['dagger'], position: ['firstHand', 'offHand'], description: '', effects: [], weight: 1, damage: 1
+			id: 3, name: '短匕3', quality: 'normal', types: ['dagger'], position: ['firstHand', 'offHand'], description: '', effects: [], weight: 1, damage: 1
 		}, {
 			id: 2, name: '银铃胸甲', quality: 'magic', types: ['torso'], position: ['torso'], description: '银铃胸甲，五金一件', effects: [], weight: 3
 		}, {
@@ -62,8 +62,28 @@ export default {
 				return items.push(state.getIn(['wearings', payload.position]))
 			}).setIn(['wearings', payload.position], null)
 		},
-		switchHand(state,{payload}){
-			return state;
+		switchHand(state, { payload }) {
+
+			const hands = {
+				firstHand: state.getIn(['wearings', 'firstHand']),
+				offHand: state.getIn(['wearings', 'offHand'])
+			}
+
+			return ['firstHand', 'offHand'].reduce((newState, fromHand) => {
+				let toHand = fromHand === 'firstHand' ? 'offHand' : 'firstHand';
+
+				if (!!hands[fromHand]) {
+					if (hands[fromHand].get('position').size > 1) {
+						return newState.setIn(['wearings', toHand], hands[fromHand]);
+					} else {
+						return newState.updateIn(['gear'], items => {
+							return items.push(hands[fromHand])
+						}).setIn(['wearings', toHand], null);
+					}
+				} else {
+					return newState.setIn(['wearings', toHand], null);
+				}
+			}, state)
 		},
 		equip(state, { payload }) {
 

@@ -71,7 +71,7 @@ class Gear extends Component {
 
 		switch (where) {
 			case 'equiped':
-				if (gear.position.size > 0) actions.push(switchHand);
+				if (gear.position.length > 1) actions.push(switchHand);
 				actions.push(actionUnequip);
 				break;
 			case 'inventory':
