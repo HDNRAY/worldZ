@@ -147,7 +147,7 @@ export default {
 		},
 		remove(state, { payload }) {
 			const { type, gear } = payload;
-			return state.updateIn([type], (items) => {
+			return state.update(type, (items) => {
 				const index = items.findIndex((item) => {
 					return item.get('id') === gear.id;
 				})

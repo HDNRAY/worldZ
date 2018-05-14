@@ -62,9 +62,18 @@ class Gear extends Component {
 		const actionDrop = {
 			name: '丢弃',
 			confirm: '确认丢弃吗',
-			action: () => this.info({
-				content: 'deleted'
-			})
+			action: () => {
+				dispatch({
+					type: 'inventory/remove',
+					payload: {
+						type: 'gear',
+						gear: gear
+					}
+				})
+				this.info({
+					content: 'deleted'
+				})
+			}
 		}
 
 		let actions = []

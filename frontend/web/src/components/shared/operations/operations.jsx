@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import style from './operations.less';
-import { Popover, Popconfirm } from 'antd';
+import { Popover } from 'antd';
+import Confirm from '../confirm/confirm';
 
 
 class Operations extends React.Component {
@@ -26,14 +27,14 @@ class Operations extends React.Component {
             }
 
             const listItem = !!item.confirm ? (
-                <Popconfirm
+                <Confirm
                     title={item.confirm}
                     key={'action' + index}
                     onConfirm={onClick}>
                     <div className={style.action}>
                         {item.name}
                     </div>
-                </Popconfirm>
+                </Confirm>
             ) : (
                     <div className={style.action} key={'action' + index} onClick={onClick}>{
                         item.name}
