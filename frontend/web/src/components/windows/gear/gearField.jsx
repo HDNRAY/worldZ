@@ -15,9 +15,9 @@ class GearField extends Component {
 	}
 }
 
-GearField.propTypes = {
-	position: PropTypes.string.isRequired,
-	insert: PropTypes.object
-}
+// GearField.propTypes = {
+// 	position: PropTypes.string.isRequired,
+// 	insert: PropTypes.object
+// }
 
 export default GearField;

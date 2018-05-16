@@ -12,14 +12,14 @@ class Inventory extends Component {
 		const { dispatch, window, spendable, gear } = this.props;
 
 		const spendables = spendable.map((item, index) => {
-			return <Spendable key={item.name + index} data={item}/>
+			return <Spendable key={item.get('name') + index} name={item.get('name')} quality={item.get('quality')} quantity={item.get('quantity')} />
 		})
 
 		const gears = gear.map((item, index) => {
-			return <Gear key={item.name + index} where='inventory' gear={item}/>
+			return <Gear key={item.get('name') + index} where='inventory' gear={item} />
 		})
 
-		return (<Window title='包裹' style={{width:'400px',height:'160px'}} {...window} onClose={() => {
+		return (<Window title='包裹' id={4} position={{x:320,y:0}} style={{ width: '400px', height: '160px' }} window={window} onClose={() => {
 			dispatch({
 				type: 'game/switchWindow',
 				payload: {
@@ -31,16 +31,16 @@ class Inventory extends Component {
 				{spendables}
 				{gears}
 			</div>
-			</Window>)
+		</Window>)
 	}
 }
 
 const mapStateToProps = (state, props) => {
-	const inventory = state.inventory.toJS();
+	const inventory = state.inventory;
 	return {
-		window: state.game.get('windows').toJS().inventory,
-		spendable: inventory.spendable,
-		gear: inventory.gear,
+		window: state.game.getIn(['windows', 'inventory']),
+		spendable: state.inventory.get('spendable'),
+		gear: inventory.get('gear'),
 		...props
 	}
 }

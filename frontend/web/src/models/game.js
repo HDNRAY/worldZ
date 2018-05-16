@@ -1,56 +1,31 @@
-import Immutable from 'immutable';
+import {fromJS} from 'immutable';
 
 export default {
 
 	namespace: 'game',
 
-	state: Immutable.fromJS({
+	state: fromJS({
 		topWindowId: 0,
 		windows: {
 			basic: {
-				id: 0,
 				loading: false,
 				show: true,
-				position: {
-					x: 1,
-					y: 1
-				}
 			},
 			inventory: {
-				id: 4,
 				show: false,
 				loading: false,
-				position: {
-					x: 320,
-					y: 0
-				}
 			},
 			character: {
-				id: 1,
 				show: false,
 				loading: false,
-				position: {
-					x: 90,
-					y: 90
-				}
 			},
 			map: {
-				id: 2,
 				show: false,
 				loading: false,
-				position: {
-					x: 300,
-					y: 180
-				}
 			},
 			gear: {
-				id: 3,
 				show: false,
 				loading: false,
-				position: {
-					x: 0,
-					y: 210
-				}
 			},
 		}
 	}),
@@ -70,6 +45,7 @@ export default {
 
 	reducers: {
 		switchWindow: (state, { payload }) => {
+			console.log(state.mergeIn(payload))
 			return state.setIn(['windows', payload.name, 'show'], !state.get('windows').toJS()[payload.name].show)
 		},
 		topWindow: (state, { payload }) => {

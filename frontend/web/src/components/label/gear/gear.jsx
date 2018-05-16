@@ -5,6 +5,7 @@ import style from './gear.less';
 import Item from '../../shared/item/item';
 import itemStyle from '../../shared/item/item.less';
 // import GearTips from '../../tips/gear/gear';
+import { types, positions } from './constant.js';
 
 class Gear extends Component {
 	info = (payload) => {
@@ -95,21 +96,20 @@ class Gear extends Component {
 
 	gearTip = (gear) => {
 		if (!gear) return null;
-		const { name, quality, types, position, description, effects, weight, damage } = gear;
 
-		const qualityStyle = itemStyle[Item.qualities[quality.toUpperCase()].className];
+		const qualityStyle = itemStyle[Item.qualities[gear.get('quality').toUpperCase()].className];
 
-		const displayPosition = position.map(item => Gear.positions[item]).join(',');
+		const displayPosition = gear.get('position').map(item => positions[item]).join(',');
 
-		const displayTypes = types.reduce((result, item) => {
-			const displayType = Gear.displayTypes[item];
+		const displayTypes = gear.get('types').reduce((result, item) => {
+			const displayType = types[item];
 			if (!!displayType) {
 				result.push(displayType);
 			}
 			return result;
 		}, []).join(',');
 
-		const gearEffects = effects.map((item, index) => {
+		const gearEffects = gear.get('effects').map((item, index) => {
 			return (
 				<div key={index}>{item.description}</div>
 			)
@@ -117,18 +117,18 @@ class Gear extends Component {
 
 		return (
 			<div className={style.tip}>
-				<div className={qualityStyle + ' ' + style.name}>{name}</div>
+				<div className={qualityStyle + ' ' + style.name}>{gear.get('name')}</div>
 				<div className={style.type}>
 					<div>{displayPosition}</div>
 					<div>{displayTypes}</div>
 				</div>
-				{!!damage ? <div className={style.damage}>伤害:{damage}</div> : null}
-				<div className={style.weight}>重量:{weight}kg</div>
+				{!!gear.get('damage') ? <div className={style.damage}>伤害:{gear.get('damage')}</div> : null}
+				<div className={style.weight}>重量:{gear.get('weight')}kg</div>
 				<div className={style.effects}>
 					{gearEffects}
 				</div>
 				<div className={style.description}>
-					{description}
+					{gear.get('damage')}
 				</div>
 			</div>
 		)
@@ -150,9 +150,9 @@ class Gear extends Component {
 	render() {
 		const { gear } = this.props;
 
-		const name = gear.name;
+		const name = gear.get('name');
 
-		const quality = Item.qualities[gear.quality.toUpperCase()];
+		const quality = Item.qualities[gear.get('quality').toUpperCase()];
 
 		const actions = this.actions()
 
@@ -168,43 +168,22 @@ class Gear extends Component {
 }
 
 
-Gear.propTypes = {
-	gear: PropTypes.object.isRequired,
-	where: PropTypes.string.isRequired
-}
+// Gear.propTypes = {
+// 	gear: PropTypes.object.isRequired,
+// 	where: PropTypes.string.isRequired
+// }
 
-Gear.positions = {
-	head: '头部',
-	neck: '颈部',
-	shoulders: '肩部',
-	torso: '胸部',
-	back: '背部',
-	wrists: '腰',
-	hands: '手',
-	waist: '手臂',
-	legs: '腿',
-	feets: '脚',
-	firstHand: '主手',
-	offHand: '副手',
-	// twoHand: '双手',
-	// oneHand: '单手',
-	fingers: '戒指',
-}
-
-Gear.displayTypes = {
-	twoHand: '双手',
-	sword: '剑',
-	dagger: '匕首'
-}
+Gear.types = types;
+Gear.positions = positions
 
 const mapStateToProps = (state, props) => {
-	const wearings = state.inventory.get('wearings').toJS();
+	const wearings = state.inventory.get('wearings');
 
-	const comparePositions = props.gear.types.includes('twoHand') ? ['firstHand', 'offHand'] : props.gear.position;
+	const comparePositions = props.gear.get('types').includes('twoHand') ? ['firstHand', 'offHand'] : props.gear.get('position');
 
 	const compareGears = comparePositions.reduce((result, item) => {
-		if (!!wearings[item]) {
-			result.push(wearings[item]);
+		if (!!wearings.get(item)) {
+			result.push(wearings.get(item));
 		}
 		return result;
 	}, []);

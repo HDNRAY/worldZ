@@ -4,7 +4,7 @@ import style from './game.less';
 import Basic from '../../components/windows/basic/basic';
 import Inventory from '../../components/windows/inventory/inventory';
 import Character from '../../components/windows/character/character';
-import MapWindow from '../../components/windows/map/map';
+// import MapWindow from '../../components/windows/map/map';
 import Gear from '../../components/windows/gear/gear';
 import Information from '../../components/game/information/information';
 
@@ -19,7 +19,6 @@ class Game extends React.Component {
 				<Basic />
 				<Inventory />
 				<Character />
-				<MapWindow />
 				<Gear />
 				<Information />
 			</div>);

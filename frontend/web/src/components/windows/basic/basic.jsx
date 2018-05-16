@@ -15,31 +15,27 @@ class Basic extends React.Component {
 	render = () => {
 		const { window } = this.props;
 
-		return (<Window title='Basic' {...window}>
+		return (<Window title='Basic' id={0} position={{ x: 0, y: 0 }} window={window}>
 
-            <Clickable text='角色' onClick={() => {
-                this.switchWindow('character')
-            }} />
+			<Clickable text='角色' onClick={() => {
+				this.switchWindow('character')
+			}} />
 
 			<Clickable text='包裹' onClick={() => {
 				this.switchWindow('inventory')
-            }} />
+			}} />
 
 			<Clickable text='装备' onClick={() => {
 				this.switchWindow('gear')
-            }} />
-
-			<Clickable text='地图' onClick={() => {
-				this.switchWindow('map')
-            }} />
-        </Window>)
+			}} />
+		</Window>)
 	}
 }
 
 
 const mapStateToProps = (state, props) => {
 	return {
-		window: state.game.get('windows').toJS().basic,
+		window: state.game.get(['windows', 'basic']),
 		...props
 	}
 }

@@ -1,10 +1,11 @@
 import { Component } from 'react';
 import { connect } from 'dva';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import Draggable from 'react-draggable';
 import { Icon } from 'antd';
 import windowStyle from './window.less';
-
+import {is} from 'immutable';
 
 class Window extends Component {
 
@@ -20,17 +21,29 @@ class Window extends Component {
 		}
 	}
 
+	shouldComponentUpdate =(nextProps)=>{
+		const { window, id, topWindowId } = this.props;
+
+		if (!is(window,nextProps.window)) return true;
+
+		if(topWindowId !== nextProps.topWindowId && (nextProps.topWindowId === id || topWindowId === id)) return true;
+
+		return false;
+	}
+
 	render = () => {
-		const { onClose, title, children, style, loading, show, position, dispatch, id, topWindowId } = this.props;
+		
+		const { onClose, title, children, style, window, position, dispatch, id, topWindowId } = this.props;
+		console.log('rendering window:',id);
 		// console.log('window render title', title);
 		// console.log('window render style', style);
 		const titleBar = (<div id='titleBar' className={windowStyle.titleBar}>
 			<div className={windowStyle.title}>
 				{title}
 			</div>
-			{!!loading ? <Icon type="loading-3-quarters" spin={true} /> : null}
+			{!!window.get('loading') ? <Icon type="loading-3-quarters" spin={true} /> : null}
 			{!!onClose ? <Icon type='close' onClick={onClose} /> : null}
-		</div>)
+		</div>) 
 
 		const draggableProps = {
 			defaultPosition: {
@@ -48,7 +61,7 @@ class Window extends Component {
 			height: '200px',
 			width: '300px',
 			...style,
-			display: !!show ? 'flex' : 'none',
+			display: !!window.get('show') ? 'flex' : 'none',
 			zIndex: zIndex
 		}
 
@@ -78,7 +91,7 @@ Window.propTypes = {
 	onClose: PropTypes.func,
 	title: PropTypes.string,
 	style: PropTypes.object,
-	window: PropTypes.object
+	window: ImmutablePropTypes.map
 }
 
 

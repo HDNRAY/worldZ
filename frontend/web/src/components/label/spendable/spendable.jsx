@@ -6,17 +6,17 @@ import itemStyle from '../../shared/item/item.less'
 
 class Spendable extends Component {
 	render() {
-		const { data } = this.props;
+		const { name, quantity, quality } = this.props;
 
-		const name = `${data.name}${!!data.quantity ? ('\(' + data.quantity + '\)') : ''}`;
+		const display = `${name}${!!quantity ? ('\(' + quantity + '\)') : ''}`;
 
-		const quality = Item.qualities[data.quality.toUpperCase()];
+		const qualityStyle = itemStyle[Item.qualities[quality.toUpperCase()].className];
 
 		const actions = [{
 			name: '使用',
 			action: () => {
 				console.log('used')
-				if (!!data.quantity) console.log('spended')
+				if (!!quantity) console.log('spended')
 			}
 		}, {
 			name: '丢弃',
@@ -27,28 +27,28 @@ class Spendable extends Component {
 		}]
 
 		const tips = (<div className={style.tips}>
-            <div className={itemStyle[quality.className] + ' '+ style.name}>{data.name}</div>
-            <div className={style.quantity}>
-                数量 {data.quantity}
+			<div className={qualityStyle + ' ' + style.name}>{display}</div>
+			<div className={style.quantity}>
+				数量 {quantity}
+			</div>
+			<div className={style.description}>
+				回血用的
             </div>
-            <div className={style.description}>
-                回血用的
-            </div>
-        </div>)
+		</div>)
 
 		return (
 			<Item name={name}
-            tips={tips}
-            quality={quality}
-            operations={actions}/>
+				tips={tips}
+				quality={Item.qualities[quality.toUpperCase()]}
+				operations={actions} />
 		)
 	}
 }
 
 
-Spendable.propTypes = {
-	data: PropTypes.object.isRequired
-}
+// Spendable.propTypes = {
+// 	name: PropTypes.object.isRequired
+// }
 
 
 export default Spendable;

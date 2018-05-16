@@ -14,8 +14,8 @@ class MapWindow extends React.Component {
 		// console.log(currentMaps)
 
 		return (
-			<Window title='地图'
-				{...window}
+			<Window id={2} position={{x:300,y:180}} title='地图'
+				window={window}
 				style={{ width: '600px', height: '400px' }}
 				onClose={() => dispatch({
 					type: 'game/switchWindow',
@@ -66,7 +66,7 @@ class MapWindow extends React.Component {
 
 const mapStateToProps = (state, props) => {
 	return {
-		window: state.game.get('windows').toJS().map,
+		window: state.game.get('windows').map,
 		currentMaps: state.map.currentMaps,
 		...props
 	}
