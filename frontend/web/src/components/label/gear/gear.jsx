@@ -6,8 +6,16 @@ import Item from '../../shared/item/item';
 import itemStyle from '../../shared/item/item.less';
 // import GearTips from '../../tips/gear/gear';
 import { types, positions } from './constant.js';
+import ImmmutablePropTypes from 'react-immutable-proptypes';
+import {is} from 'immutable';
 
 class Gear extends Component {
+
+	shouldComponentUpdate(nextProps){
+		const {position, gear} = this.props;
+		return !is(gear,nextProps.gear) || position !== nextProps.position;
+	}
+
 	info = (payload) => {
 		this.props.dispatch({
 			type: 'information/add',
@@ -16,7 +24,9 @@ class Gear extends Component {
 	}
 
 	actions = () => {
+	
 		const { where, dispatch, gear, position } = this.props;
+		console.log('rendring gear', gear)
 
 		const switchHand = {
 			name: '换手',
@@ -81,7 +91,7 @@ class Gear extends Component {
 
 		switch (where) {
 			case 'equiped':
-				if (gear.position.length > 1) actions.push(switchHand);
+				if (gear.get('position').size > 1) actions.push(switchHand);
 				actions.push(actionUnequip);
 				break;
 			case 'inventory':
@@ -128,7 +138,7 @@ class Gear extends Component {
 					{gearEffects}
 				</div>
 				<div className={style.description}>
-					{gear.get('damage')}
+					{gear.get('description')}
 				</div>
 			</div>
 		)
@@ -168,10 +178,10 @@ class Gear extends Component {
 }
 
 
-// Gear.propTypes = {
-// 	gear: PropTypes.object.isRequired,
-// 	where: PropTypes.string.isRequired
-// }
+Gear.propTypes = {
+	gear: ImmmutablePropTypes.map ,
+	where: PropTypes.string.isRequired
+}
 
 Gear.types = types;
 Gear.positions = positions

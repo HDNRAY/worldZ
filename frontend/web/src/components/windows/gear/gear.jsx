@@ -10,14 +10,13 @@ class Gear extends Component {
 
 		const { dispatch, window, wearings } = this.props;
 
-		const gearFields = Object.keys(wearings).reduce((result, key) => {
-			const gear = wearings.get(key);
+		const gearFields = wearings.reduce((result, gear,key) => {
 			if (key === 'fingers') {
 				// return result;
 			} else if (key === 'offHand' && !!wearings.get('firstHand') && wearings.getIn(['firstHand','types']).includes('twoHand')) {
-				result.push(<GearField key={key} invalid style={style[key]} position={key} insert={wearings.get('firstHand')} />)
+				result.push(<GearField key={key} invalid className={style[key]} position={key} insert={wearings.get('firstHand')} />)
 			}  else {
-				result.push(<GearField key={key} style={style[key]} position={key} insert={gear} />);
+				result.push(<GearField key={key} className={style[key]} position={key} insert={gear} />);
 			}
 
 			return result;

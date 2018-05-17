@@ -5,13 +5,13 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Draggable from 'react-draggable';
 import { Icon } from 'antd';
 import windowStyle from './window.less';
-import {is} from 'immutable';
+// import {is} from 'immutable';
 
 class Window extends Component {
 
 	componentWillReceiveProps = (nextProps) => {
-		const { show, dispatch, id } = this.props
-		if (!show && !!nextProps.show) {
+		const { window, dispatch, id } = this.props
+		if (!window.get('show') && !!nextProps.window.get('show')) {
 			dispatch({
 				type: 'game/topWindow',
 				payload: {
@@ -21,15 +21,15 @@ class Window extends Component {
 		}
 	}
 
-	shouldComponentUpdate =(nextProps)=>{
-		const { window, id, topWindowId } = this.props;
+	// shouldComponentUpdate =(nextProps)=>{
+	// 	const { window, id, topWindowId } = this.props;
 
-		if (!is(window,nextProps.window)) return true;
+	// 	if (!is(window,nextProps.window)) return true;
 
-		if(topWindowId !== nextProps.topWindowId && (nextProps.topWindowId === id || topWindowId === id)) return true;
+	// 	if(topWindowId !== nextProps.topWindowId && (nextProps.topWindowId === id || topWindowId === id)) return true;
 
-		return false;
-	}
+	// 	return false;
+	// }
 
 	render = () => {
 		

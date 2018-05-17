@@ -5,8 +5,17 @@ import style from './attribute.less';
 import {attributes} from './constant';
 
 class Attribute extends Component {
+
+	shouldComponentUpdate(nextProps){
+		const { attribute, value } = this.props;
+		if(attribute !== nextProps.attribute) return true;
+		if(value !== nextProps.value)return true;
+		return false
+	}
+
 	render() {
-		const { attribute, value, detail } = this.props;
+		const { attribute, value } = this.props;
+		console.log('rendring attribute', attribute)
 		const content = (
 			<div className={style.tips}>
 				<div>{attributes[attribute].name}</div>
@@ -27,7 +36,6 @@ class Attribute extends Component {
 
 Attribute.propTypes = {
 	attribute: PropTypes.string.isRequired,
-	detail: PropTypes.string,
 	value: PropTypes.number,
 }
 

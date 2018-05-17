@@ -45,8 +45,9 @@ export default {
 
 	reducers: {
 		switchWindow: (state, { payload }) => {
-			console.log(state.mergeIn(payload))
-			return state.setIn(['windows', payload.name, 'show'], !state.get('windows').toJS()[payload.name].show)
+			return state.updateIn(['windows', payload.name, 'show'], (show)=>{
+				return !show;
+			})
 		},
 		topWindow: (state, { payload }) => {
 			return state.set('topWindowId', payload.id)

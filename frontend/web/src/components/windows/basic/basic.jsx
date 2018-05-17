@@ -5,6 +5,7 @@ import Clickable from '../../shared/clickable/clickable';
 
 
 class Basic extends React.Component {
+	
 	switchWindow = (name) => {
 		this.props.dispatch({
 			type: 'game/switchWindow',
@@ -35,7 +36,7 @@ class Basic extends React.Component {
 
 const mapStateToProps = (state, props) => {
 	return {
-		window: state.game.get(['windows', 'basic']),
+		window: state.game.getIn(['windows', 'basic']),
 		...props
 	}
 }

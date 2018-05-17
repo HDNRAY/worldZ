@@ -39,7 +39,7 @@ export default {
 		}, {
 			id: 0, name: '光之剑', quality: 'legend', types: ['twoHand', 'sword',], position: ['firstHand'], description: 'Gorn Nova', damage: 100, weight: 1.5, effects: [{ description: '可对灵体造成伤害' }, { description: '可附着魔法，提高斩击威力' }]
 		}],
-		spendable: [{ id: 0, name: '面包', quantity: 5, quality: 'normal' }]
+		spendable: [{ id: 0, name: '面包', quantity: 5, quality: 'normal', description: '回复体力' }]
 	}),
 
 	subscriptions: {

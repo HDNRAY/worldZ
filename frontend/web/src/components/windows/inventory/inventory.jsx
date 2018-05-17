@@ -12,7 +12,7 @@ class Inventory extends Component {
 		const { dispatch, window, spendable, gear } = this.props;
 
 		const spendables = spendable.map((item, index) => {
-			return <Spendable key={item.get('name') + index} name={item.get('name')} quality={item.get('quality')} quantity={item.get('quantity')} />
+			return <Spendable key={item.get('name') + index} spendable={item} />
 		})
 
 		const gears = gear.map((item, index) => {

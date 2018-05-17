@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import Window from '../window/window';
 import Attribute from '../../label/attribute/attribute';
 import style from './character.less';
-import { is,List } from 'immutable';
+import { is } from 'immutable';
 
 class Character extends Component {
 
@@ -18,22 +18,20 @@ class Character extends Component {
 
 	shouldComponentUpdate = (nextProps) => {
 		const { window, attributes } = this.props;
-		return !is(window, nextProps.window) || is(attributes, nextProps.attributes);
+		return !is(window, nextProps.window) || !is(attributes, nextProps.attributes);
 	}
 
 
 	render = () => {
 		const { dispatch, attributes, window, name } = this.props;
 
-		const attributesDisplay = List(attributes.get('basic')).map((item, index) => {
-			console.log(item)
-			return (<Attribute key={'attribute' + index} attribute={item[0]} value={item[1]} />)
-		})
-
-		console.log(attributesDisplay);
+		const attributesDisplay = attributes.get('basic').reduce((result, value, attribute) => {
+			result.push(<Attribute key={'attribute' + result.length} attribute={attribute} value={value} />)
+			return result;
+		}, [])
 
 		return (
-			<Window title={name} id={1} position={{x:90,y:90}} window={window}
+			<Window title={name} id={1} position={{ x: 90, y: 90 }} window={window}
 				onClose={() =>
 					dispatch({
 						type: 'game/switchWindow',
@@ -44,7 +42,7 @@ class Character extends Component {
 
 				<div className={style.attributes}>
 					{attributesDisplay}
-				</div>)
+				</div>
 			</Window>)
 	}
 }
