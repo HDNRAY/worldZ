@@ -23,26 +23,49 @@ class Character extends Component {
 
 
 	render = () => {
-		const { dispatch, attributes, window, name } = this.props;
+		const { attributes, window, name } = this.props;
 
-		const attributesDisplay = attributes.get('basic').reduce((result, value, attribute) => {
+		const basicAttributes = attributes.get('basic').reduce((result, value, attribute) => {
 			result.push(<Attribute key={'attribute' + result.length} attribute={attribute} value={value} />)
 			return result;
 		}, [])
 
-		return (
-			<Window title={name} id={1} position={{ x: 90, y: 90 }} window={window}
-				onClose={() =>
-					dispatch({
-						type: 'game/switchWindow',
-						payload: {
-							name: 'character'
-						}
-					})}>
+		const powerAttributes = attributes.get('power').reduce((result,value,attribute)=>{
+			result.push(<Attribute key={'attribute' + result.length} attribute={attribute} value={value} />)
+			return result;
+		},[])
 
+		const advancedAttributes = attributes.get('advanced').reduce((result, value, attribute) => {
+			result.push(<Attribute key={'attribute' + result.length} attribute={attribute} value={value} />)
+			return result;
+		},[])
+
+		return (
+			<Window title={name} id={1} position={{ x: 90, y: 90 }} windowClassName={style.characterWindow} window={window}
+				nameToClose='character'>
 				<div className={style.attributes}>
-					{attributesDisplay}
+					<div className={style.basicAttributes}>
+						<div className={style.subTitle}>
+							基础属性
+						</div>
+						{basicAttributes}
+					</div>
+					<div className={style.powerAttributes}>
+						<div className={style.subTitle}>
+							念能属性
+						</div>
+						{powerAttributes}
+					</div>
+					<div className={style.advancedAttributes}>
+						<div className={style.subTitle}>
+							进阶属性
+						</div>
+						{advancedAttributes}
+					</div>
+
+
 				</div>
+				
 			</Window>)
 	}
 }

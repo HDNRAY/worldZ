@@ -6,11 +6,12 @@ import { Popover } from 'antd';
 
 class Tips extends React.Component {
 	render() {
-		const { children, content, onClick } = this.props;
+		const { children, content, onClick,placement } = this.props;
 
 		return (
 			<Popover content={content}
-                onClick={onClick}
+				onClick={onClick}
+				placement={placement}
                 overlayClassName={style.tips}>
                 {children}
             </Popover>

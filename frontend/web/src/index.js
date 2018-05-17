@@ -4,7 +4,7 @@ import './index.css';
 // 1. Initialize
 const app = dva({
 	onStateChange: (state => {
-		console.log('inventory', state.inventory)
+		
 	})
 });
 

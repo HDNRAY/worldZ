@@ -10,15 +10,30 @@ import windowStyle from './window.less';
 class Window extends Component {
 
 	componentWillReceiveProps = (nextProps) => {
-		const { window, dispatch, id } = this.props
+		const { window } = this.props
 		if (!window.get('show') && !!nextProps.window.get('show')) {
-			dispatch({
-				type: 'game/topWindow',
-				payload: {
-					id: id
-				}
-			})
+			this.topWindow()
 		}
+	}
+
+	topWindow = () => {
+		const { dispatch, id } = this.props
+		dispatch({
+			type: 'game/topWindow',
+			payload: {
+				id: id
+			}
+		})
+	}
+
+	onClose = () => {
+		const { dispatch, nameToClose } = this.props
+		dispatch({
+			type: 'game/switchWindow',
+			payload: {
+				name: nameToClose
+			}
+		})
 	}
 
 	// shouldComponentUpdate =(nextProps)=>{
@@ -32,18 +47,17 @@ class Window extends Component {
 	// }
 
 	render = () => {
-		
-		const { onClose, title, children, style, window, position, dispatch, id, topWindowId } = this.props;
-		console.log('rendering window:',id);
-		// console.log('window render title', title);
-		// console.log('window render style', style);
+
+		const { nameToClose, title, children, windowClassName, window, position, id, topWindowId } = this.props;
+		console.log('rendering window:', id);
+
 		const titleBar = (<div id='titleBar' className={windowStyle.titleBar}>
 			<div className={windowStyle.title}>
 				{title}
 			</div>
 			{!!window.get('loading') ? <Icon type="loading-3-quarters" spin={true} /> : null}
-			{!!onClose ? <Icon type='close' onClick={onClose} /> : null}
-		</div>) 
+			{!!nameToClose ? <Icon type='close' onClick={this.onClose} /> : null}
+		</div>)
 
 		const draggableProps = {
 			defaultPosition: {
@@ -55,29 +69,21 @@ class Window extends Component {
 			handle: '#titleBar'
 		}
 
-		const zIndex = id === topWindowId ? '99' : '9'
+		const zIndex = id === topWindowId ? '99' : '90'
 
 		const finalStyle = {
-			height: '200px',
-			width: '300px',
-			...style,
 			display: !!window.get('show') ? 'flex' : 'none',
 			zIndex: zIndex
 		}
 
 		return (
 			<Draggable {...draggableProps} onMouseDown={() => {
-				if(id !== topWindowId){
-					dispatch({
-						type: 'game/topWindow',
-						payload: {
-							id: id
-						}
-					})
+				if (id !== topWindowId) {
+					this.topWindow()
 				}
-				
+
 			}}>
-				<div style={finalStyle} className={windowStyle.window}>
+				<div style={finalStyle} className={windowClassName + ' ' + windowStyle.window}>
 					{titleBar}
 					<div className={windowStyle.content}>
 						{children}

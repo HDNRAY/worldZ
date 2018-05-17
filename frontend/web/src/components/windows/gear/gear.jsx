@@ -8,14 +8,14 @@ import style from './gear.less';
 class Gear extends Component {
 	render = () => {
 
-		const { dispatch, window, wearings } = this.props;
+		const { window, wearings } = this.props;
 
-		const gearFields = wearings.reduce((result, gear,key) => {
+		const gearFields = wearings.reduce((result, gear, key) => {
 			if (key === 'fingers') {
 				// return result;
-			} else if (key === 'offHand' && !!wearings.get('firstHand') && wearings.getIn(['firstHand','types']).includes('twoHand')) {
+			} else if (key === 'offHand' && !!wearings.get('firstHand') && wearings.getIn(['firstHand', 'types']).includes('twoHand')) {
 				result.push(<GearField key={key} invalid className={style[key]} position={key} insert={wearings.get('firstHand')} />)
-			}  else {
+			} else {
 				result.push(<GearField key={key} className={style[key]} position={key} insert={gear} />);
 			}
 
@@ -23,23 +23,17 @@ class Gear extends Component {
 		}, [])
 
 		return (
-			<Window title='装备' id={3} position={{x:0,y:210}} style={{width:'200px',height:'320px'}} window={window}
-				onClose={() => dispatch({
-	                type: 'game/switchWindow',
-					payload:{
-						name:'gear'
-					}
-	            })
-	        }>
+			<Window title='装备' id={3} position={{ x: 0, y: 210 }} windowClassName={style.gearWindow} window={window}
+				nameToClose='gear'>
 				{gearFields}
-	        </Window>)
+			</Window>)
 	}
 }
 
 
 const mapStateToProps = (state, props) => {
 	return {
-		window: state.game.getIn(['windows','gear']),
+		window: state.game.getIn(['windows', 'gear']),
 		wearings: state.inventory.get('wearings'),
 		...props
 	}

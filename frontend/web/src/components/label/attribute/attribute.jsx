@@ -18,16 +18,19 @@ class Attribute extends Component {
 		console.log('rendring attribute', attribute)
 		const content = (
 			<div className={style.tips}>
-				<div>{attributes[attribute].name}</div>
-				<div>{attributes[attribute].decription}</div>
+				<div className={style.oneLine}>{attributes[attribute].name}</div>
+				<div className={style.description}>{attributes[attribute].decription}</div>
 			</div>
 		);
 
-		const display = `${attributes[attribute].name} ${value}`;
+		// const display = `${attributes[attribute].name} ${value}`;
 
 		return (
 			<Tips content={content}>
-				<div className={style.attribute}>{display}</div>
+				<div className={style.attribute}>
+					<label>{attributes[attribute].name}</label>
+					<span>{value}</span>
+				</div>
             </Tips>
 		)
 	}

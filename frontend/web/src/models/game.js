@@ -27,6 +27,10 @@ export default {
 				show: false,
 				loading: false,
 			},
+			ability:{
+				show: false,
+				loading: false,
+			}
 		}
 	}),
 

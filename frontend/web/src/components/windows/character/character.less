@@ -1,4 +1,31 @@
-
-.attributes{
+.attributes {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 100%;
+    .subAttributes {
+        width: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .subTitle {
+            width: 100px;
+            padding: 10px;
+            font-weight: bold;
+        }
+    }
+    .basicAttributes {
+        .subAttributes();
+    }
+    .advancedAttributes {
+        .subAttributes();
+    }
+    .powerAttributes {
+        .subAttributes();
+    }
+}
+
+.characterWindow {
+    height: 400px;
+    width: 260px;
 }

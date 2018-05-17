@@ -7,7 +7,7 @@ import Character from '../../components/windows/character/character';
 // import MapWindow from '../../components/windows/map/map';
 import Gear from '../../components/windows/gear/gear';
 import Information from '../../components/game/information/information';
-
+import Scene from '../../components/game/scene/scene';
 
 class Game extends React.Component {
 
@@ -16,6 +16,7 @@ class Game extends React.Component {
 		// console.log(show)
 		return (
 			<div id='area' className={style.area}>
+				<Scene />
 				<Basic />
 				<Inventory />
 				<Character />

@@ -1,26 +1,26 @@
-@border-color:grey;
-@titleBarHeight:30px;
-
+@border-color: grey;
+@titleBarHeight: 30px;
 .window {
-  border: 2px @border-color solid;
-  background-color: black;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
+    height: 200px;
+    width: 300px;
+    border: 2px @border-color solid;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
 }
 
-.titleBar{
-  height: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 10px;
-  padding-right: 5px;
-  border-bottom: 1px solid @border-color;
-  cursor: pointer;
+.titleBar {
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 5px;
+    border-bottom: 1px solid @border-color;
+    cursor: pointer;
 }
 
-.content{
-  height: calc(~'100%' - @titleBarHeight);
+.content {
+    height: calc(~'100%' - @titleBarHeight);
 }
-
