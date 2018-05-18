@@ -1,7 +1,6 @@
 {
     "theme":"./src/theme.js",
     "extraBabelPlugins": [
-      "babel-plugin-transform-decorators-legacy",
        ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }]
      ]
 }

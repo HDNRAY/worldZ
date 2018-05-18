@@ -4,7 +4,7 @@ import './index.css';
 // 1. Initialize
 const app = dva({
 	onStateChange: (state => {
-		
+
 	})
 });
 
@@ -12,7 +12,7 @@ const app = dva({
 // app.use({});
 
 // 3. Model
-const models = ['game', 'character', 'information', 'inventory'];
+const models = ['game', 'character', 'information', 'inventory', 'ability'];
 models.map(name => app.model(require('./models/' + name).default))
 // app.model(require('./models/game').default);
 // app.model(require('./models/character').default);

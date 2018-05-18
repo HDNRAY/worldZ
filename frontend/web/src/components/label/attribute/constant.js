@@ -19,8 +19,8 @@ export const attributes = {
     resistance: { name: '阻力', description: '' },//念力 精神
     bearing: { name: '负重', description: '' },//力量 耐力
     learning: { name: '学习', description: '' },//智慧 经验 精神
-    regeneration: { name: '回复', description: '' },
-    restore: { name: '养神', description: '' },
+    regeneration: { name: '生血', description: '' },
+    restore: { name: '回魂', description: '' },
 
     burnning: { name: '燃烧', description: '' },//念力 精神 智慧
     voltage: { name: '电压', description: '' },//念力 精神 智慧
