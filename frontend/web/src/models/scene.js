@@ -9,7 +9,7 @@ export default {
             x: -1,
             y: -1
         },
-        moveables: {},
+        moveables: new Map(),
         attackables: new Map(),
         terrain: new Set(),
         enemies: new Set(),
@@ -41,20 +41,20 @@ export default {
             const movement = character.movement
             const origin = character.coordinate
 
-            const moveables = {}
+            const moveables = new Map()
             let lastSteps = [origin];
             for (let step = 0; step < movement; step++) {
                 lastSteps = lastSteps.reduce((nextSteps, lastStep) => {
                     let directions = [[0, -1], [-1, 0], [1, 0], [0, 1]];
                     directions = lastStep.y % 2 ? [...directions, [1, 1], [1, -1]] : [...directions, [-1, 1], [-1, -1]];
                     directions.map(direction => {
-                        let nextStep = {
+                        const nextStep = {
                             x: lastStep.x + direction[0],
                             y: lastStep.y + direction[1],
                         };
-                        if (!(nextStep in moveables)) {
+                        if (!moveables.has(nextStep)) {
                             nextSteps.push(nextStep);
-                            moveables[nextStep] = lastStep;
+                            moveables.set(nextStep, lastStep);
                         }
                         // return null
                     });
