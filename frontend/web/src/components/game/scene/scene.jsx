@@ -10,38 +10,63 @@ const sqt3 = Math.sqrt(3)
 
 class Scene extends Component {
 
-    getXYByCoorinate = (coordinateX, coordinateY) => {
+    getXYByCoorinate = ({ x, y }) => {
         const radius = metrics.MAP_NODE_RADIUS
         const distance = metrics.MAP_NODE_DISTANCE
         const { sideLength } = this.props
-        console.log(coordinateX,coordinateY)
-        const x = 2 * coordinateX * distance + (1 - ((sideLength % 2) + (coordinateY % 2)) % 2) * distance + distance  
-        const y = radius * (1 + (2 - sqt3) * (sideLength * 2 - 1 - 1) / 2) + sqt3 * distance * coordinateY
-        return { x, y }
+
+        return {
+            x: 2 * x * distance + (1 - ((sideLength % 2) + (y % 2)) % 2) * distance + distance,
+            y: radius * (1 + (2 - sqt3) * (sideLength * 2 - 1 - 1) / 2) + sqt3 * distance * y
+        }
     }
 
-    renderReachable = () => {
-        const radius = metrics.MARK_NODE_RADIUS
-        const { reacables, dispatch } = this.props
+    renderCharacter = () => {
+        const { character, dispatch } = this.props
+        const radius = metrics.MAP_NODE_RADIUS
+        const { coordinate } = character
+        const { x, y } = this.getXYByCoorinate(coordinate)
 
-        console.log(reacables)
-        const nodes = reacables.map((reachable) => {
-            const coordinateX = reachable.get('x')
-            const coordinateY = reachable.get('y')
-            const { x, y } = this.getXYByCoorinate(coordinateX, coordinateY)
+        const nodeProps = {
+            coordinateX: coordinate.x,
+            coordinateY: coordinate.y,
+            key: 'character' + coordinate.x + '' + coordinate.y,
+            radius, x, y,
+            color: '#ffffff',
+            // onClick: ({ coordinateX, coordinateY }) => {
+            //     console.log('character clicked', coordinateX, coordinateY)
+            //     dispatch({
+            //         type: 'scene/showMoveables',
+            //     })
+            // }
+        }
+
+        return (<Layer>
+            <MarkNode {...nodeProps} />
+        </Layer>)
+    }
+
+    renderMoveables = () => {
+        const radius = metrics.MARK_NODE_RADIUS
+        const { moveables } = this.props
+        // console.log('moveables', moveables)
+        if (moveables.size === 0) return null
+        const nodes = []
+
+        moveables.forEach((moveable) => {
+            const { x, y } = this.getXYByCoorinate(moveable)
 
             const nodeProps = {
-                coordinateX,
-                coordinateY,
-                key: coordinateX + '' + coordinateY,
+                coordinateX: moveable.x,
+                coordinateY: moveable.y,
+                key: 'moveable' + moveable.x + '' + moveable.y,
                 radius, x, y,
-                color: '#ff0000',
-
+                color: '#00ff00'
             }
 
-            return (<MarkNode {...nodeProps} />)
+            nodes.push(<MarkNode {...nodeProps} />)
         })
-
+        console.log(nodes)
         return (<Layer>
             {nodes}
         </Layer>)
@@ -50,7 +75,7 @@ class Scene extends Component {
     renderMap = () => {
         const radius = metrics.MAP_NODE_RADIUS
         const distance = metrics.MAP_NODE_DISTANCE
-        const { sideLength, dispatch } = this.props
+        const { sideLength } = this.props
         const nodes = []
 
         //共几排
@@ -78,18 +103,8 @@ class Scene extends Component {
                 const nodeProps = {
                     coordinateX,
                     coordinateY,
-                    key: x + y,
+                    key: 'map' + x + y,
                     radius, x, y,
-                    onClick: ({ coordinateX, coordinateY }) => {
-                        console.log(coordinateX, coordinateY)
-                        dispatch({
-                            type: 'scene/clickOnMap',
-                            payload: {
-                                x: coordinateX,
-                                y: coordinateY
-                            }
-                        })
-                    }
                 }
                 nodes.push(<MapNode {...nodeProps} />)
             }
@@ -103,18 +118,21 @@ class Scene extends Component {
 
     render = () => {
         console.log('rendering map')
-        const { sideLength, distance } = this.props
+        const { sideLength } = this.props
+        const distance = metrics.MAP_NODE_DISTANCE
         // console.log(new Date().getTime())
         const mapLayer = this.renderMap();
-        const reacableLayer = this.renderReachable();
+        const characterLayer = this.renderCharacter()
+        const moveableLayer = this.renderMoveables()
         // console.log(new Date().getTime())
         const width = 2 * (sideLength * 2 - 1) * distance
         const height = 2 * (sideLength * 2 - 1) * distance
-
+        // console.log(mapLayer)
         return (<SceneWrapper>
             <Stage container='#scene' listening={true} width={width} height={height}>
                 {mapLayer}
-                {reacableLayer}
+                {characterLayer}
+                {moveableLayer}
             </Stage>
 
         </SceneWrapper>)
@@ -122,14 +140,13 @@ class Scene extends Component {
 }
 
 Scene.defaultProps = {
-    radius: 30,
-    distance: 28,
     sideLength: 7
 }
 
 const mapStateToProps = (state, props) => {
     return {
-        reacables: state.scene.get('reachables'),
+        character: state.scene.get('character'),
+        moveables: state.scene.get('moveables'),
         ...props
     }
 }
