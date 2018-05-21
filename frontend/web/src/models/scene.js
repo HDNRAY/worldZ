@@ -1,15 +1,18 @@
 import Immutable from 'immutable';
+// import MovePath from '../services/battle/movePaths'
 
 export default {
 
     namespace: 'scene',
 
     state: Immutable.Map({
+        sideLength: 7,
         clicked: {
             x: -1,
             y: -1
         },
-        moveables: new Map(),
+        moveables: {},
+        paths: [],
         attackables: new Map(),
         terrain: new Set(),
         enemies: new Set(),
@@ -36,32 +39,29 @@ export default {
 
     reducers: {
 
+        showPath: (state, { payload }) => {
+            if (!payload.x || !payload.y) return state.set('paths', [])
+            const { getPaths } = require('../services/battle/movePaths')
+
+            const character = state.get('character')
+            const origin = character.coordinate
+            const destination = payload
+            const moveables = state.get('moveables')
+
+            const paths = getPaths(origin, moveables, destination)
+
+            return state.set('paths', paths)
+        },
+
         showMoveables: (state, { payload }) => {
+            const { getReachables } = require('../services/battle/movePaths')
+
             const character = state.get('character')
             const movement = character.movement
             const origin = character.coordinate
 
-            const moveables = new Map()
-            let lastSteps = [origin];
-            for (let step = 0; step < movement; step++) {
-                lastSteps = lastSteps.reduce((nextSteps, lastStep) => {
-                    let directions = [[0, -1], [-1, 0], [1, 0], [0, 1]];
-                    directions = lastStep.y % 2 ? [...directions, [1, 1], [1, -1]] : [...directions, [-1, 1], [-1, -1]];
-                    directions.map(direction => {
-                        const nextStep = {
-                            x: lastStep.x + direction[0],
-                            y: lastStep.y + direction[1],
-                        };
-                        if (!moveables.has(nextStep)) {
-                            nextSteps.push(nextStep);
-                            moveables.set(nextStep, lastStep);
-                        }
-                        // return null
-                    });
-                    return nextSteps;
-                }, []);
-            }
-            console.log(moveables)
+            const moveables = getReachables(origin, movement)
+
             return state.set('moveables', moveables)
         }
     },

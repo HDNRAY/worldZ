@@ -6,34 +6,42 @@ class MarkNode extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            pointed: false
+            hovered: false
         }
     }
 
     onMouseLeave = (e) => {
-        this.setState({
-            pointed: false
-        })
+        // this.setState({
+        //     hovered: false
+        // })
+        const { onHover } = this.props
+
+        !!onHover && onHover({})
     }
 
     onMouseEnter = (e) => {
-        this.setState({
-            pointed: true
-        })
+        // this.setState({
+        //     hovered: true
+        // })
+
+        const { coordinateX, coordinateY, onHover } = this.props
+
+        !!onHover && onHover({ x: coordinateX, y: coordinateY })
     }
 
     onClick = (e) => {
         // console.log('click', e.target.attrs)
         const { coordinateX, coordinateY, onClick } = this.props
 
-        !!onClick && onClick({ coordinateX, coordinateY })
+        !!onClick && onClick({ x: coordinateX, y: coordinateY })
     }
 
     render = () => {
-        // console.log('rendring', new Date().getTime())
-        const { x, y, color } = this.props
 
-        const fill = this.state.pointed ? color + '80' : color + '20'
+        const { x, y, color } = this.props
+        console.log('rendring', x, y)
+        // const fill = this.state.hovered ? color + '80' : color + '20'
+        const fill = color + '20'
 
         return (<RegularPolygon
             onMouseEnter={this.onMouseEnter}

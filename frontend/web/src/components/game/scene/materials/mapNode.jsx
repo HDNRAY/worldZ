@@ -11,12 +11,14 @@ class MapNode extends Component {
     }
 
     onMouseLeave = (e) => {
+        console.log('leave map node')
         this.setState({
             pointed: false
         })
     }
 
     onMouseEnter = (e) => {
+        console.log('enter map node')
         this.setState({
             pointed: true
         })
