@@ -23,7 +23,7 @@ class CharacterLayer extends PureComponent {
             coordinateY: coordinate.y,
             key: 'character' + coordinate.x + '' + coordinate.y,
             radius, x, y,
-            color: '#ffffff',
+            color: '#ffffff20',
             onClick: ({ x, y }) => {
                 console.log('character clicked', x, y)
                 dispatch({

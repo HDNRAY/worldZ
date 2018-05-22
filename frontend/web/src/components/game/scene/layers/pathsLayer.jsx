@@ -12,9 +12,7 @@ class PathLayer extends PureComponent {
         const { paths, dispatch, sideLength } = this.props
         // console.log('moveables', moveables)
         if (paths.size === 0) return null
-        const nodes = []
-
-        paths.forEach((step) => {
+        const nodes = paths.map((step) => {
             const { x, y } = getXYByCoorinate({
                 ...step,
                 radius,
@@ -28,6 +26,7 @@ class PathLayer extends PureComponent {
                 key: 'step' + step.x + '' + step.y,
                 radius, x, y,
                 color: '#00ff00',
+                onHover: null,
                 onClick: ({ x, y }) => {
                     console.log('step clicked', x, y)
                     dispatch({
@@ -39,7 +38,7 @@ class PathLayer extends PureComponent {
                 }
             }
 
-            nodes.push(<MarkNode {...nodeProps} />)
+            return (<MarkNode {...nodeProps} />)
         })
         // console.log(nodes)
         return <Layer>

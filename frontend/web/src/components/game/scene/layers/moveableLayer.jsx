@@ -8,14 +8,24 @@ import MarkNode from '../materials/markNode'
 
 class MoveableLayer extends PureComponent {
 
+    onHover = ({ x, y }) => {
+        console.log('moveable hovered', x, y)
+        this.props.dispatch({
+            type: 'scene/showPath',
+            payload: {
+                x, y
+            }
+        })
+    }
+
     render = () => {
         const radius = metrics.MARK_NODE_RADIUS
-        const { moveables, dispatch, sideLength } = this.props
+        const { moveables, dispatch, sideLength, paths } = this.props
         // console.log('moveables', moveables)
         if (moveables.size === 0) return null
-        const nodes = []
 
-        Object.keys(moveables).forEach((moveableString) => {
+        const nodes = Object.keys(moveables).reduce((result, moveableString) => {
+
             const moveable = JSON.parse(moveableString)
             const { x, y } = getXYByCoorinate({
                 ...moveable,
@@ -23,25 +33,21 @@ class MoveableLayer extends PureComponent {
                 distance: metrics.MAP_NODE_DISTANCE,
                 sideLength
             })
+
+            const color = '#00ff00' + (paths.some(path => JSON.stringify(path) === moveableString) ? '80' : '20')
+
             const nodeProps = {
                 coordinateX: moveable.x,
                 coordinateY: moveable.y,
                 key: 'moveable' + moveable.x + '' + moveable.y,
-                radius, x, y,
-                color: '#00ff00',
-                onHover: ({ x, y }) => {
-                    console.log('moveable hovered', x, y)
-                    dispatch({
-                        type: 'scene/showPath',
-                        payload: {
-                            x, y
-                        }
-                    })
-                }
+                radius, x, y, color,
+                onHover: this.onHover
             }
 
-            nodes.push(<MarkNode {...nodeProps} />)
-        })
+            result.push(<MarkNode {...nodeProps} />)
+
+            return result
+        }, [])
         return (
             <Layer>
                 {nodes}
@@ -54,6 +60,7 @@ const mapStateToProps = (state, props) => {
     return {
         moveables: state.scene.get('moveables'),
         sideLength: state.scene.get('sideLength'),
+        paths: state.scene.get('paths'),
         ...props
     }
 }

@@ -22,12 +22,13 @@ class MapLayer extends PureComponent {
             //这一排的y坐标
             const y = radius * (1 + (2 - metrics.sqrt3) * (vertical - 1) / 2) + metrics.sqrt3 * distance * i
             //这一排的起点
-            const offsetX = radius * 2 * sideLength - (horizontal + 1) * distance
+            //（总个数 - 这一排个数）* 直径 / 2
+            const offsetX = distance * 2 * (2 * sideLength - 1 - horizontal) / 2
 
             //遍历列
             for (let j = 0; j < horizontal; j++) {
                 //这一个的x坐标
-                const x = offsetX + 2 * distance * j
+                const x = offsetX + 2 * distance * j + distance
 
                 //坐标系里的横坐标
                 const coordinateX = j + Math.floor((vertical - horizontal) / 2)

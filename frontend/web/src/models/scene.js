@@ -6,7 +6,7 @@ export default {
     namespace: 'scene',
 
     state: Immutable.Map({
-        sideLength: 7,
+        sideLength:9,
         clicked: {
             x: -1,
             y: -1

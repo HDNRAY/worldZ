@@ -1,29 +1,16 @@
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import { RegularPolygon } from 'react-konva'
 import { metrics } from '../constant'
 
-class MarkNode extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            hovered: false
-        }
-    }
+class MarkNode extends PureComponent {
 
     onMouseLeave = (e) => {
-        // this.setState({
-        //     hovered: false
-        // })
         const { onHover } = this.props
 
         !!onHover && onHover({})
     }
 
     onMouseEnter = (e) => {
-        // this.setState({
-        //     hovered: true
-        // })
-
         const { coordinateX, coordinateY, onHover } = this.props
 
         !!onHover && onHover({ x: coordinateX, y: coordinateY })
@@ -39,17 +26,14 @@ class MarkNode extends Component {
     render = () => {
 
         const { x, y, color } = this.props
-        console.log('rendring', x, y)
-        // const fill = this.state.hovered ? color + '80' : color + '20'
-        const fill = color + '20'
-
+      
         return (<RegularPolygon
             onMouseEnter={this.onMouseEnter}
             onMouseLeave={this.onMouseLeave}
             onClick={this.onClick}
             sides={6}
             radius={metrics.MARK_NODE_RADIUS}
-            fill={fill}
+            fill={color}
             x={x}
             y={y}
         />)

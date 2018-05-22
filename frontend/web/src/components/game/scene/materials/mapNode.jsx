@@ -1,8 +1,8 @@
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import { RegularPolygon } from 'react-konva'
 import { metrics } from '../constant'
 
-class MapNode extends Component {
+class MapNode extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
