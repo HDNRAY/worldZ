@@ -5,7 +5,7 @@ import { Stage } from 'react-konva'
 import { metrics } from './constant'
 import MapLayer from './layers/mapLayer'
 import CharacterLayer from './layers/characterLayer'
-import MoveableLayer from './layers/mapLayer'
+import MoveableLayer from './layers/moveableLayer'
 import PathLayer from './layers/pathsLayer'
 
 

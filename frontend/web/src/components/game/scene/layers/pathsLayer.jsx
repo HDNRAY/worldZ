@@ -9,13 +9,18 @@ class PathLayer extends PureComponent {
 
     render = () => {
         const radius = metrics.MARK_NODE_RADIUS
-        const { paths, dispatch } = this.props
+        const { paths, dispatch, sideLength } = this.props
         // console.log('moveables', moveables)
         if (paths.size === 0) return null
         const nodes = []
 
         paths.forEach((step) => {
-            const { x, y } = getXYByCoorinate(step)
+            const { x, y } = getXYByCoorinate({
+                ...step,
+                radius,
+                distance: metrics.MAP_NODE_DISTANCE,
+                sideLength
+            })
 
             const nodeProps = {
                 coordinateX: step.x,
@@ -47,6 +52,7 @@ const mapStateToProps = (state, props) => {
     return {
         moveables: state.scene.get('moveables'),
         paths: state.scene.get('paths'),
+        sideLength: state.scene.get('sideLength'),
         ...props
     }
 }

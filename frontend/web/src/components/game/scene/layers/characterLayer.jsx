@@ -8,10 +8,15 @@ import MarkNode from '../../scene/materials/markNode'
 class CharacterLayer extends PureComponent {
 
     render = () => {
-        const { character, dispatch, paths } = this.props
+        const { character, dispatch, paths, sideLength } = this.props
         const radius = metrics.MAP_NODE_RADIUS
         const { coordinate } = character
-        const { x, y } = getXYByCoorinate(coordinate)
+        const { x, y } = getXYByCoorinate({
+            ...coordinate,
+            radius,
+            distance: metrics.MAP_NODE_DISTANCE,
+            sideLength
+        })
 
         const nodeProps = {
             coordinateX: coordinate.x,
@@ -28,7 +33,7 @@ class CharacterLayer extends PureComponent {
         }
 
         return (<Layer>
-            {!!paths.length ? null : <MarkNode {...nodeProps} />}
+            {!paths.length ? <MarkNode {...nodeProps} /> : null}
         </Layer>)
     }
 }
@@ -37,6 +42,7 @@ const mapStateToProps = (state, props) => {
     return {
         character: state.scene.get('character'),
         paths: state.scene.get('paths'),
+        sideLength: state.scene.get('sideLength'),
         ...props
     }
 }
