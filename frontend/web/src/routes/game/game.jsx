@@ -8,12 +8,12 @@ import Character from '../../components/windows/character/character';
 import Gear from '../../components/windows/gear/gear';
 import Information from '../../components/game/information/information';
 import Scene from '../../components/game/scene/scene';
+import Menu from '../../components/game/menu/menu'
 
 class Game extends React.Component {
 
 	render() {
-		// const { show } = this.props;
-		// console.log(show)
+		
 		return (
 			<div id='area' className={style.area}>
 				<Scene />
@@ -22,6 +22,7 @@ class Game extends React.Component {
 				<Character />
 				<Gear />
 				<Information />
+				<Menu />
 			</div>);
 	}
 

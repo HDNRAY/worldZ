@@ -11,22 +11,26 @@ class MarkNode extends PureComponent {
     }
 
     onMouseEnter = (e) => {
-        const { coordinateX, coordinateY, onHover } = this.props
+        const { coordinate, onHover } = this.props
 
-        !!onHover && onHover({ x: coordinateX, y: coordinateY })
+        !!onHover && onHover(coordinate)
     }
 
     onClick = (e) => {
-        // console.log('click', e.target.attrs)
-        const { coordinateX, coordinateY, onClick } = this.props
+        console.log('click', e)
 
-        !!onClick && onClick({ x: coordinateX, y: coordinateY })
+        const { coordinate, onClick } = this.props
+        const position = {
+            x: e.evt.clientX,
+            y: e.evt.clientY
+        }
+        !!onClick && onClick({ coordinate, position })
     }
 
     render = () => {
 
         const { x, y, color } = this.props
-      
+
         return (<RegularPolygon
             onMouseEnter={this.onMouseEnter}
             onMouseLeave={this.onMouseLeave}

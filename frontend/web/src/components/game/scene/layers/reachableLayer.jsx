@@ -18,13 +18,11 @@ class ReachableLayer extends PureComponent {
         })
     }
 
-    onMoveableClick = ({ x, y }) => {
-        console.log('moveable clicked', x, y)
+    onMoveableClick = ({ coordinate, position }) => {
+        console.log('moveable clicked', coordinate)
         this.props.dispatch({
             type: 'scene/move',
-            payload: {
-                x, y
-            }
+            payload: coordinate
         })
     }
 
@@ -47,8 +45,7 @@ class ReachableLayer extends PureComponent {
             const color = '#00ff00' + (paths.some(path => JSON.stringify(path) === moveableString) ? '80' : '20')
 
             const nodeProps = {
-                coordinateX: moveable.x,
-                coordinateY: moveable.y,
+                coordinate: moveable,
                 key: 'moveable' + moveable.x + '' + moveable.y,
                 radius, x, y, color,
                 onHover: this.onMoveableHover,
@@ -61,28 +58,33 @@ class ReachableLayer extends PureComponent {
         }, [])
     }
 
-    renderAttackalbles = () =>{
+    onAttackableClick = ({ coordinate, poistion }) => {
+
+    }
+
+    renderAttackalbles = () => {
         const radius = metrics.MARK_NODE_RADIUS
-        const { attackables, sideLength, paths } = this.props
+        const { attackables, sideLength, effectables } = this.props
         // console.log('moveables', moveables)
         if (attackables.size === 0) return null
 
-        return Object.keys(moveables).reduce((result, moveableString) => {
+        return attackables.reduce((result, positionString) => {
 
-            const moveable = JSON.parse(moveableString)
+            if (effectables.includes(positionString)) return result
+
+            const attackable = JSON.parse(positionString)
             const { x, y } = getXYByCoorinate({
-                ...moveable,
+                ...attackable,
                 radius,
                 distance: metrics.MAP_NODE_DISTANCE,
                 sideLength
             })
 
-            const color = '#ff0000' + (paths.some(path => JSON.stringify(path) === moveableString) ? '80' : '20')
+            const color = '#ff000020'
 
             const nodeProps = {
-                coordinateX: moveable.x,
-                coordinateY: moveable.y,
-                key: 'moveable' + moveable.x + '' + moveable.y,
+                coordinate: attackable,
+                key: 'attackable' + attackable.x + '' + attackable.y,
                 radius, x, y, color,
                 onHover: this.onHover,
                 onClick: this.onClick
@@ -94,21 +96,21 @@ class ReachableLayer extends PureComponent {
         }, [])
     }
 
-    renderEffectables = ()=>{
+    renderEffectables = () => {
 
     }
 
     render = () => {
         const moveableNodes = this.renderMoveables()
-        //const attackableNodes = this.renderAttackalbles()
-        //const effectableNodes = this.renderEffectables()
+        const attackableNodes = this.renderAttackalbles()
+        const effectableNodes = this.renderEffectables()
 
 
         return (
             <Layer>
                 {moveableNodes}
-                {/* {attackableNodes}
-                {effectableNodes} */}
+                {attackableNodes}
+                {effectableNodes}
             </Layer>
         )
     }
@@ -117,6 +119,8 @@ class ReachableLayer extends PureComponent {
 const mapStateToProps = (state, props) => {
     return {
         moveables: state.scene.get('moveables'),
+        attackables: state.scene.get('attackables'),
+        effectables: state.scene.get('effectables'),
         sideLength: state.scene.get('sideLength'),
         paths: state.scene.get('paths'),
         ...props
