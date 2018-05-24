@@ -5,7 +5,7 @@ import { Stage } from 'react-konva'
 import { metrics } from './constant'
 import MapLayer from './layers/mapLayer'
 import CharacterLayer from './layers/characterLayer'
-import MoveableLayer from './layers/moveableLayer'
+import ReachableLayer from './layers/reachableLayer'
 // import PathLayer from './layers/pathsLayer'
 
 class Scene extends Component {
@@ -21,7 +21,7 @@ class Scene extends Component {
             <Stage container='#scene' listening={true} width={width} height={height}>
                 <MapLayer />
                 <CharacterLayer />
-                <MoveableLayer />
+                <ReachableLayer />
             </Stage>
         </SceneWrapper>)
     }

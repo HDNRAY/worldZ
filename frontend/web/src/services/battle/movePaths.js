@@ -1,6 +1,6 @@
 'user strict'
 
-export const getReachables = (origin, movement) => {
+export const getReachables = ({origin, movement}) => {
     const reachables = {};
     // let lastPoints = [this.origin]
     let lastSteps = [origin];

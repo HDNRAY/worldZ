@@ -6,13 +6,10 @@ export default {
     namespace: 'scene',
 
     state: Immutable.Map({
-        sideLength:9,
-        clicked: {
-            x: -1,
-            y: -1
-        },
+        sideLength: 9,
         moveables: {},
         paths: [],
+        movingPaths: [],
         attackables: new Map(),
         terrain: new Set(),
         enemies: new Set(),
@@ -39,6 +36,16 @@ export default {
 
     reducers: {
 
+        move: (state, { payload }) => {
+            const character = state.get('character')
+            character.coordinate = payload
+            return state.merge({
+                movingPaths: state.get('paths'),
+                moveables: [],
+                paths: []
+            }).set('character', character)
+        },
+
         showPath: (state, { payload }) => {
             if (!payload.x || !payload.y) return state.set('paths', [])
             const { getPaths } = require('../services/battle/movePaths')
@@ -60,7 +67,7 @@ export default {
             const movement = character.movement
             const origin = character.coordinate
 
-            const moveables = getReachables(origin, movement)
+            const moveables = getReachables({origin, movement})
 
             return state.set('moveables', moveables)
         }

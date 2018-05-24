@@ -7,10 +7,20 @@ import MarkNode from '../../scene/materials/markNode'
 
 class CharacterLayer extends PureComponent {
 
+    onClick = ({ x, y }) => {
+        console.log('character clicked', x, y)
+        this.props.dispatch({
+            type: 'scene/showMoveables',
+        })
+    }
+
     render = () => {
-        const { character, dispatch, paths, sideLength } = this.props
+        const { character, paths, sideLength } = this.props
+        console.log(character)
+
         const radius = metrics.MAP_NODE_RADIUS
         const { coordinate } = character
+        const key = 'character' + coordinate.x + '|' + coordinate.y
         const { x, y } = getXYByCoorinate({
             ...coordinate,
             radius,
@@ -18,18 +28,15 @@ class CharacterLayer extends PureComponent {
             sideLength
         })
 
+
+
         const nodeProps = {
             coordinateX: coordinate.x,
             coordinateY: coordinate.y,
-            key: 'character' + coordinate.x + '' + coordinate.y,
-            radius, x, y,
+            key, radius, x, y,
             color: '#ffffff20',
-            onClick: ({ x, y }) => {
-                console.log('character clicked', x, y)
-                dispatch({
-                    type: 'scene/showMoveables',
-                })
-            }
+            ref: (node => this[key] = node),
+            onClick: this.onClick
         }
 
         return (<Layer>
