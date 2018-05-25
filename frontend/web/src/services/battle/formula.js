@@ -43,7 +43,7 @@ export const getPaths = ({ origin, reachables, destination }) => {
     return findLastStep(destination, []);
 }
 
-export const getAttackables = ({ origin, min = 0, max }) => {
+export const getAttackables = ({ origin, min = 0, max = 1 }) => {
     const attackableSet = new Set()
 
     let lastSteps = [origin];

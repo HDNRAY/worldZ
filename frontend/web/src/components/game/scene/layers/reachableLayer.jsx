@@ -19,10 +19,16 @@ class ReachableLayer extends PureComponent {
     }
 
     onMoveableClick = ({ coordinate, position }) => {
-        console.log('moveable clicked', coordinate)
+        console.log('moveable clicked', coordinate, position)
         this.props.dispatch({
             type: 'scene/move',
             payload: coordinate
+        })
+        this.props.dispatch({
+            type: 'menu/config',
+            payload: {
+                position
+            }
         })
     }
 

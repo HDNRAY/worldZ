@@ -31,7 +31,12 @@ export default {
             return state.set('show', false)
         },
         config: (state, { payload }) => {
-            return state.set('operations', payload.operations)
+            console.log(payload)
+            let newState = state
+            if(payload.operations) newState = newState.set('operations',payload.operations)
+            if(payload.position) newState = newState.set('position',payload.position)
+            
+            return newState
         }
     },
 
