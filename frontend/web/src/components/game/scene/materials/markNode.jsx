@@ -7,13 +7,21 @@ class MarkNode extends PureComponent {
     onMouseLeave = (e) => {
         const { onHover } = this.props
 
-        !!onHover && onHover({})
+        const coordinate = null
+        const position = {
+            x: e.evt.clientX,
+            y: e.evt.ClientY
+        }
+        !!onHover && onHover({ coordinate, position })
     }
 
     onMouseEnter = (e) => {
         const { coordinate, onHover } = this.props
-
-        !!onHover && onHover(coordinate)
+        const position = {
+            x: e.evt.clientX,
+            y: e.evt.clientY
+        }
+        !!onHover && onHover({ coordinate, position })
     }
 
     onClick = (e) => {

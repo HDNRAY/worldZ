@@ -26,7 +26,10 @@ class CharacterLayer extends PureComponent {
 
         operations.push({
             name: '取消',
-            action: () => dispatch({ type: 'menu/hide' })
+            action: () => {
+                dispatch({ type: 'scene/cancel' })
+                dispatch({ type: 'menu/hide' })
+            }
         })
 
         dispatch({
@@ -35,6 +38,30 @@ class CharacterLayer extends PureComponent {
                 operations,
                 position
             }
+        })
+
+    }
+
+    renderEnemies = () => {
+        const { enemies, sideLength } = this.props
+
+        return enemies.map((enemy, index) => {
+            const radius = metrics.MAP_NODE_RADIUS
+            const { coordinate } = enemy
+            const key = 'enemy' + coordinate.x + '|' + coordinate.y
+            const { x, y } = getXYByCoorinate({
+                ...coordinate,
+                radius,
+                distance: metrics.MAP_NODE_DISTANCE,
+                sideLength
+            })
+
+            const nodeProps = {
+                coordinate, key, radius, x, y,
+                color: 'purple'
+            }
+
+            return <MarkNode {...nodeProps} />
         })
 
     }
@@ -53,11 +80,8 @@ class CharacterLayer extends PureComponent {
             sideLength
         })
 
-
-
         const nodeProps = {
-            coordinateX: coordinate.x,
-            coordinateY: coordinate.y,
+            coordinate,
             key, radius, x, y,
             color: '#ffffff20',
             ref: (node => this[key] = node),
@@ -66,6 +90,7 @@ class CharacterLayer extends PureComponent {
 
         return (<Layer>
             {!paths.length ? <MarkNode {...nodeProps} /> : null}
+            {this.renderEnemies()}
         </Layer>)
     }
 }
@@ -77,6 +102,7 @@ const mapStateToProps = (state, props) => {
         attackables: state.scene.get('attackables'),
         paths: state.scene.get('paths'),
         sideLength: state.scene.get('sideLength'),
+        enemies: state.scene.get('enemies'),
         ...props
     }
 }

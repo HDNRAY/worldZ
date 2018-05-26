@@ -3,18 +3,17 @@ import { connect } from 'dva'
 import { Layer } from 'react-konva'
 import { metrics } from '../constant'
 import { getXYByCoorinate } from '../util/util'
+import { logTypes } from '../../information/constant'
 import MarkNode from '../materials/markNode'
 
 
 class ReachableLayer extends PureComponent {
 
-    onMoveableHover = ({ x, y }) => {
-        console.log('moveable hovered', x, y)
+    onMoveableHover = ({ coordinate, position }) => {
+        console.log('moveable hovered', coordinate)
         this.props.dispatch({
             type: 'scene/showPath',
-            payload: {
-                x, y
-            }
+            payload: { coordinate }
         })
     }
 
@@ -22,7 +21,7 @@ class ReachableLayer extends PureComponent {
         console.log('moveable clicked', coordinate, position)
         this.props.dispatch({
             type: 'scene/move',
-            payload: coordinate
+            payload: { coordinate }
         })
         this.props.dispatch({
             type: 'menu/config',
@@ -47,7 +46,8 @@ class ReachableLayer extends PureComponent {
                 distance: metrics.MAP_NODE_DISTANCE,
                 sideLength
             })
-
+            console.log('render moveable moeablestring', moveableString)
+            console.log('render moveable path', paths)
             const color = '#00ff00' + (paths.some(path => JSON.stringify(path) === moveableString) ? '80' : '20')
 
             const nodeProps = {
@@ -64,8 +64,43 @@ class ReachableLayer extends PureComponent {
         }, [])
     }
 
-    onAttackableClick = ({ coordinate, poistion }) => {
+    onAttackableHover = ({ coordinate, position }) => {
+        console.log('on attackable hover', coordinate)
+        this.props.dispatch({
+            type: 'scene/showEffectables',
+            payload: { coordinate }
 
+        })
+    }
+
+    onEffectableClick = ({ coordinate, position }) => {
+        const { dispatch, enemies, effectables } = this.props
+        const enemyCoordinateStringArray = enemies.map(enemy => JSON.stringify(enemy.coordinate))
+        const tempSet = new Set([...enemyCoordinateStringArray, ...effectables])
+        if (tempSet.size < enemyCoordinateStringArray.length + effectables.length) {
+            // if (enemies.some(enemy => JSON.stringify(enemy.coordinate) === JSON.stringify(coordinate))) {
+            dispatch({
+                type: 'information/add',
+                payload: {
+                    content: '攻击成功',
+                    type: logTypes.BENEFIT
+                }
+            })
+            dispatch({
+                type: 'menu/hide'
+            })
+            dispatch({
+                type: 'scene/cancel'
+            })
+        } else {
+            dispatch({
+                type: 'information/add',
+                payload: {
+                    content: '必须指定一名敌人',
+                    type: logTypes.ALERT
+                }
+            })
+        }
     }
 
     renderAttackalbles = () => {
@@ -76,7 +111,7 @@ class ReachableLayer extends PureComponent {
 
         return attackables.reduce((result, positionString) => {
 
-            if (effectables.includes(positionString)) return result
+            const onHover = effectables.includes(positionString) ? null : this.onAttackableHover
 
             const attackable = JSON.parse(positionString)
             const { x, y } = getXYByCoorinate({
@@ -91,9 +126,8 @@ class ReachableLayer extends PureComponent {
             const nodeProps = {
                 coordinate: attackable,
                 key: 'attackable' + attackable.x + '' + attackable.y,
-                radius, x, y, color,
-                onHover: this.onHover,
-                onClick: this.onClick
+                radius, x, y, color, onHover,
+                onClick: null
             }
 
             result.push(<MarkNode {...nodeProps} />)
@@ -102,8 +136,49 @@ class ReachableLayer extends PureComponent {
         }, [])
     }
 
-    renderEffectables = () => {
+    onEffectableHover = ({ coordinate, position }) => {
+        const { attackables } = this.props
+        console.log('onEffectablesHover', attackables)
+        let newCoordinate = null
+        if (attackables.some(attackable => attackable === JSON.stringify(coordinate))) {
+            newCoordinate = coordinate
+        }
+        this.props.dispatch({
+            type: 'scene/showEffectables',
+            payload: {
+                coordinate: newCoordinate
+            }
+        })
+    }
 
+    renderEffectables = () => {
+        const radius = metrics.MARK_NODE_RADIUS
+        const { sideLength, effectables } = this.props
+        // console.log('moveables', moveables)
+        if (effectables.size === 0) return null
+
+        return effectables.map((positionString) => {
+
+            const effectable = JSON.parse(positionString)
+            const { x, y } = getXYByCoorinate({
+                ...effectable,
+                radius,
+                distance: metrics.MAP_NODE_DISTANCE,
+                sideLength
+            })
+
+            const color = '#ff000080'
+
+            const nodeProps = {
+                coordinate: effectable,
+                key: 'effectable' + effectable.x + '' + effectable.y,
+                radius, x, y, color,
+                onHover: this.onEffectableHover,
+                onClick: this.onEffectableClick
+            }
+
+            return (<MarkNode {...nodeProps} />)
+        })
     }
 
     render = () => {
@@ -127,6 +202,7 @@ const mapStateToProps = (state, props) => {
         moveables: state.scene.get('moveables'),
         attackables: state.scene.get('attackables'),
         effectables: state.scene.get('effectables'),
+        enemies: state.scene.get('enemies'),
         sideLength: state.scene.get('sideLength'),
         paths: state.scene.get('paths'),
         ...props

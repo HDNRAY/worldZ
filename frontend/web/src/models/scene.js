@@ -12,8 +12,12 @@ export default {
         movingPaths: [],
         attackables: [],
         effectables: [],
-        terrain: new Set(),
-        enemies: [],
+        terrain: [],
+        enemies: [{
+            coordinate: {
+                x: 5, y: 5
+            }
+        }],
         character: {
             movement: 4,
             coordinate: {
@@ -39,7 +43,7 @@ export default {
 
         move: (state, { payload }) => {
             const character = state.get('character')
-            character.coordinate = payload
+            character.coordinate = payload.coordinate
             return state.merge({
                 movingPaths: state.get('paths'),
                 moveables: [],
@@ -48,13 +52,14 @@ export default {
         },
 
         showEffectables: (state, { payload }) => {
-            const character = state.get('character')
-            const origin = character.coordinate
-            const radius = 2
+            if (!payload.coordinate) return state.set('effectables', [])
+            console.log(payload)
+            const origin = payload.coordinate
+            const radius = 1
 
-            const { getAttackables } = require('../services/battle/formula')
+            const { getEffectables } = require('../services/battle/formula')
 
-            return state.set('effectables', getAttackables({
+            return state.set('effectables', getEffectables({
                 origin,
                 max: radius
             }))
@@ -64,7 +69,7 @@ export default {
             const character = state.get('character')
             const origin = character.coordinate
             const minDistance = 1;
-            const maxDistance = 3;
+            const maxDistance = 2;
 
             const { getAttackables } = require('../services/battle/formula')
 
@@ -76,12 +81,12 @@ export default {
         },
 
         showPath: (state, { payload }) => {
-            if (!payload.x || !payload.y) return state.set('paths', [])
+            if (!payload.coordinate) return state.set('paths', [])
             const { getPaths } = require('../services/battle/formula')
 
             const character = state.get('character')
             const origin = character.coordinate
-            const destination = payload
+            const destination = payload.coordinate
             const moveables = state.get('moveables')
 
             const paths = getPaths({
@@ -106,6 +111,15 @@ export default {
 
         hideMoveables: (state, { payload }) => {
             return state.set('moveables', {})
+        },
+
+        cancel: (state) => {
+            return state.merge({
+                moveables: {},
+                attackables: [],
+                effectables: [],
+                paths: []
+            })
         }
     },
 

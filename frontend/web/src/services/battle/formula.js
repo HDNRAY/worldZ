@@ -43,7 +43,7 @@ export const getPaths = ({ origin, reachables, destination }) => {
     return findLastStep(destination, []);
 }
 
-export const getAttackables = ({ origin, min = 0, max = 1 }) => {
+export const getAttackables = ({ origin, min = 1, max = 1 }) => {
     const attackableSet = new Set()
 
     let lastSteps = [origin];
@@ -69,4 +69,32 @@ export const getAttackables = ({ origin, min = 0, max = 1 }) => {
     }
 
     return [...attackableSet]
+}
+
+export const getEffectables = ({ origin, min = 1, max = 1 }) => {
+    const effectableSet = new Set([JSON.stringify(origin)])
+
+    let lastSteps = [origin];
+    for (let step = 0; step < max; step++) {
+        lastSteps = lastSteps.reduce((nextSteps, lastStep) => {
+            let directions = [[0, -1], [-1, 0], [1, 0], [0, 1]];
+            directions = lastStep.y % 2 ? [...directions, [1, 1], [1, -1]] : [...directions, [-1, 1], [-1, -1]];
+            directions.forEach(direction => {
+
+                const nextStep = {
+                    x: lastStep.x + direction[0],
+                    y: lastStep.y + direction[1],
+                };
+                const nextStepString = JSON.stringify(nextStep);
+
+                if (!effectableSet.has(nextStepString)) {
+                    nextSteps.push(nextStep);
+                    if (step + 1 >= min) effectableSet.add(nextStepString)
+                }
+            });
+            return nextSteps;
+        }, []);
+    }
+
+    return [...effectableSet]
 }

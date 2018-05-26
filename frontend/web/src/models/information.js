@@ -1,4 +1,4 @@
-import {List} from 'immutable';
+import immutable from 'immutable';
 
 const MAX_DISPLAY_LOG_NUMBER = 20;
 
@@ -6,9 +6,9 @@ export default {
 
 	namespace: 'information',
 
-	state: {
+	state: immutable.fromJS({
 		logs: []
-	},
+	}),
 
 	subscriptions: {
 		setup({ dispatch, history }) { // eslint-disable-line
@@ -24,13 +24,12 @@ export default {
 	},
 
 	reducers: {
-		add(state, {payload}) {
-			let logs = List(state.logs).unshift(payload);
-			if (logs.size > MAX_DISPLAY_LOG_NUMBER) logs = logs.pop();
-			return {
-				...state,
-				logs: logs.toArray()
-			}
+		add(state, { payload }) {
+			return state.update('logs', logs => {
+				let newLogs = logs.unshift(payload)
+				if (newLogs.size > MAX_DISPLAY_LOG_NUMBER) newLogs = newLogs.pop()
+				return newLogs
+			})
 		},
 	},
 
