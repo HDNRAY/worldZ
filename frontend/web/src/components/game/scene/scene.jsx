@@ -1,36 +1,38 @@
 import { Component } from 'react'
 import { connect } from 'dva'
-import SceneWrapper from './wrapper'
-import { Stage } from 'react-konva'
-import { metrics } from './constant'
-import MapLayer from './layers/mapLayer'
-import CharacterLayer from './layers/characterLayer'
-import ReachableLayer from './layers/reachableLayer'
-// import PathLayer from './layers/pathsLayer'
+import Draggable from 'react-draggable';
+import style from './scene.less'
+import Instance from '../../scenes/instance/instance'
 
 class Scene extends Component {
 
     render = () => {
-        console.log('rendering map')
-        const { sideLength } = this.props
-        const distance = metrics.MAP_NODE_DISTANCE
-        const width = 2 * (sideLength * 2 - 1) * distance
-        const height = 2 * (sideLength * 2 - 1) * distance
-        // console.log(mapLayer)
-        return (<SceneWrapper>
-            <Stage container='#scene' listening={true} width={width} height={height}>
-                <MapLayer />
-                <CharacterLayer />
-                <ReachableLayer />
-            </Stage>
-        </SceneWrapper>)
+        // const { children } = this.props
+
+        const draggableProps = {
+            defaultPosition: {
+                x: 0,
+                y: 0,
+            },
+            handle: '#scene'
+        }
+
+        const currentScene = null// (<Instance />)
+
+        return (<div id="sceneWrapper" className={style.sceneWrapper}>
+            <Draggable {...draggableProps}>
+                <div id='scene' className={style.scene}>
+                    {currentScene}
+                </div>
+            </Draggable>
+        </div>)
     }
+
 }
 
 
 const mapStateToProps = (state, props) => {
     return {
-        sideLength: state.scene.get('sideLength'),
         ...props
     }
 }

@@ -6,13 +6,36 @@ import style from './ability.less';
 
 
 class Ability extends Component {
+    onAbilityNameClick = ()=>{
+        this.props.dispatch({
+            type:'ability/showDetail',
+            payload:{
+                id
+            }
+        })
+    }
     render = () => {
-        const { window, skills } = this.props;
+        const { window, abilities } = this.props;
+
+        const abilityList = abilities.map(ability=>{
+            return <div onClick={this.onAbilityNameClick}>{ability.name}</div>
+        })
+
+        const detail = (<div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>)
 
         return (<Window title='能力' id={5} position={{ x: 320, y: 300 }} windowClassName={style.abilityWindow} window={window} nameToClose='ability'>
-            <div className={style.list}>
-                {spendables}
-                {gears}
+            <div className={style.wrapper}>
+                <div className={style.abilityList}>
+                    {abilityList}
+                </div>
+                <div className={style.abilityDetail}>
+                    {detail}
+                </div>
             </div>
         </Window>)
     }
@@ -21,7 +44,7 @@ class Ability extends Component {
 const mapStateToProps = (state, props) => {
     return {
         window: state.game.getIn(['windows', 'ability']),
-        skills: state.ability.get('skills'),
+        abilities: state.ability.get('abilities'),
         ...props
     }
 }

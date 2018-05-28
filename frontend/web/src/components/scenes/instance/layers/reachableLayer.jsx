@@ -3,7 +3,7 @@ import { connect } from 'dva'
 import { Layer } from 'react-konva'
 import { metrics } from '../constant'
 import { getXYByCoorinate } from '../util/util'
-import { logTypes } from '../../information/constant'
+import { logTypes } from '../../../game/information/constant'
 import MarkNode from '../materials/markNode'
 
 

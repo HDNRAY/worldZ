@@ -3,7 +3,7 @@ import { connect } from 'dva'
 import { Layer } from 'react-konva'
 import { metrics } from '../constant'
 import { getXYByCoorinate } from '../util/util'
-import MarkNode from '../../scene/materials/markNode'
+import MarkNode from '../materials/markNode'
 
 class CharacterLayer extends PureComponent {
 

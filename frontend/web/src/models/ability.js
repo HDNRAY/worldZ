@@ -5,8 +5,16 @@ export default {
     namespace: 'ability',
 
     state: fromJS({
-        skills: [{
-            skill: {
+        abilities: [{
+            ability: {
+                id: 10,
+                name: '凌波微步',
+                target: ['self'],
+                effects: []
+            },
+            proficiencies: 100
+        }, {
+            ability: {
                 id: 0,
                 name: '英勇打击',
                 target: ['enemy'],//enemy ,self ,ally
@@ -30,7 +38,7 @@ export default {
             },
             proficiencies: 1,
         }, {
-            skill: {
+            ability: {
                 id: 1,
                 name: '灼热',
                 target: ['enemy'],

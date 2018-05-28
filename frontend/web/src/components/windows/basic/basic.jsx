@@ -29,6 +29,16 @@ class Basic extends React.Component {
 			<Clickable text='装备' onClick={() => {
 				this.switchWindow('gear')
 			}} />
+
+			<Clickable text='能力' onClick={() => {
+				this.switchWindow('ability')
+			}} />
+
+			<Clickable text='副本' onClick={() => {
+				this.props.dispatch({
+					type:'scene/showInstance'
+				})
+			}} />
 		</Window>)
 	}
 }
