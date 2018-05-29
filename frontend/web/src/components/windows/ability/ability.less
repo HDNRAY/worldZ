@@ -1,13 +1,25 @@
-
 .wrapper {
     display: flex;
     width: 600px;
     height: 400px;
-
     .abilityList {
-        width: 200px;
+        padding-left: 10px;
+        width: 120px;
+        overflow-x: hidden;
+        border-right: 1px solid white;
+        min-height: 400px;
+        // overflow-y: scroll;
+
+        .abilityItem{
+            margin-top: 5px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 18px;
+        }
     }
     .abilityDetail {
         width: 400px;
+        overflow-x: hidden;
+        // overflow-y: scroll;
     }
 }

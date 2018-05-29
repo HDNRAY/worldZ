@@ -55,8 +55,8 @@ class Window extends Component {
 			<div className={windowStyle.title}>
 				{title}
 			</div>
-			{!!window.get('loading') ? <Icon type="loading-3-quarters" spin={true} /> : null}
-			{!!nameToClose ? <Icon type='close' onClick={this.onClose} /> : null}
+			{window.get('loading') ? <Icon type="loading-3-quarters" spin={true} /> : null}
+			{nameToClose ? <Icon type='close' onClick={this.onClose} /> : null}
 		</div>)
 
 		const draggableProps = {

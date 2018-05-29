@@ -9,11 +9,12 @@ import Gear from '../../components/windows/gear/gear';
 import Information from '../../components/game/information/information';
 import Scene from '../../components/game/scene/scene';
 import Menu from '../../components/game/menu/menu'
+import Ability from '../../components/windows/ability/ability'
 
 class Game extends React.Component {
 
 	render() {
-		
+
 		return (
 			<div id='area' className={style.area}>
 				<Scene />
@@ -21,6 +22,7 @@ class Game extends React.Component {
 				<Inventory />
 				<Character />
 				<Gear />
+				<Ability />
 				<Information />
 				<Menu />
 			</div>);
