@@ -21,8 +21,13 @@ class Ability extends Component {
 
         const abilityList = abilities.map(ability => {
             const detail = ability.ability
-            if (detail.id === showId) showAbility = ability
-            return <div className={style.abilityItem} key={'ability' + detail.id} onClick={() => this.onAbilityNameClick(detail.id)}>{detail.name}</div>
+            let abilityClassName = style.abilityItem
+            if (detail.id === showId) {
+                abilityClassName = style.selectedAbilityItem
+                showAbility = ability
+            }
+
+            return <div className={abilityClassName} key={'ability' + detail.id} onClick={() => this.onAbilityNameClick(detail.id)}>{detail.name}</div>
         })
 
         const detail = (<div>
