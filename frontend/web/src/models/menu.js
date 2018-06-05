@@ -1,4 +1,5 @@
 import immutable from 'immutable'
+import { menuTypes } from '../components/game/menu/constant'
 
 export default {
 
@@ -7,7 +8,8 @@ export default {
     state: immutable.Map({
         show: false,
         operations: [],
-        position: {}
+        position: {},
+        menus: []
     }),
 
     subscriptions: {
@@ -25,19 +27,25 @@ export default {
 
     reducers: {
         show: (state, { payload }) => {
-            return state.set('show', true).set('position', payload.position).set('operations', payload.operations)
+            return state.set('show', true).set('position', payload.position).set('operations', payload.operations).set('menus', [menuTypes.OPERATION])
         },
         hide: (state) => {
+            console.log('hide')
             return state.set('show', false)
         },
-        config: (state, { payload }) => {
-            console.log(payload)
-            let newState = state
-            if(payload.operations) newState = newState.set('operations',payload.operations)
-            if(payload.position) newState = newState.set('position',payload.position)
-            
-            return newState
+        push: (state, { payload }) => {
+            // let menus = state.get('menus')
+            // menus.unshift(payload.type)
+            return state.update('menus', menus => {
+                return [payload.type, ...menus]
+            })
+        },
+        back: (state, { payload }) => {
+            let menus = state.get('menus')
+            menus.shift()
+            return state.set('menus', menus)
         }
+
     },
 
 };

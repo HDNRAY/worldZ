@@ -23,7 +23,7 @@ class Gear extends Component {
 		}, [])
 
 		return (
-			<Window title='装备' id={3} position={{ x: 0, y: 210 }} windowClassName={style.gearWindow} window={window}
+			<Window title='装备' id={3} position={{ x: 0, y: 210 }} window={window}
 				nameToClose='gear'>
 				<div className={style.list}>
 					{gearFields}

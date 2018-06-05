@@ -6,14 +6,15 @@ import Item from '../../shared/item/item';
 import itemStyle from '../../shared/item/item.less';
 // import GearTips from '../../tips/gear/gear';
 import { types, positions } from './constant.js';
+import { menuTypes } from '../../game/menu/constant'
 import ImmmutablePropTypes from 'react-immutable-proptypes';
-import {is} from 'immutable';
+import { is } from 'immutable';
 
 class Gear extends Component {
 
-	shouldComponentUpdate(nextProps){
-		const {position, gear} = this.props;
-		return !is(gear,nextProps.gear) || position !== nextProps.position;
+	shouldComponentUpdate(nextProps) {
+		const { position, gear } = this.props;
+		return !is(gear, nextProps.gear) || position !== nextProps.position;
 	}
 
 	info = (payload) => {
@@ -24,7 +25,7 @@ class Gear extends Component {
 	}
 
 	actions = () => {
-	
+
 		const { where, dispatch, gear, position } = this.props;
 		console.log('rendring gear', gear)
 
@@ -72,6 +73,7 @@ class Gear extends Component {
 
 		const actionDrop = {
 			name: '丢弃',
+			type: menuTypes.CONFIRM,
 			confirm: '确认丢弃吗',
 			action: () => {
 				dispatch({
@@ -179,7 +181,7 @@ class Gear extends Component {
 
 
 Gear.propTypes = {
-	gear: ImmmutablePropTypes.map ,
+	gear: ImmmutablePropTypes.map,
 	where: PropTypes.string.isRequired
 }
 

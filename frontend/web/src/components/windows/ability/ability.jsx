@@ -37,7 +37,7 @@ class Ability extends Component {
             <div>{showAbility.ability.difficulty}</div>
         </div>)
 
-        return (<Window title='能力' id={5} position={{ x: 320, y: 300 }} windowClassName={style.abilityWindow} window={window} nameToClose='ability'>
+        return (<Window title='能力' id={5} position={{ x: 320, y: 300 }} window={window} nameToClose='ability'>
             <div className={style.wrapper}>
                 <div className={style.abilityList}>
                     {abilityList}

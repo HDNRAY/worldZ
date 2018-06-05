@@ -41,7 +41,7 @@ class Character extends Component {
 		},[])
 
 		return (
-			<Window title={name} id={1} position={{ x: 90, y: 90 }} windowClassName={style.characterWindow} window={window}
+			<Window title={name} id={1} position={{ x: 90, y: 90 }} window={window}
 				nameToClose='character'>
 				<div className={style.attributes}>
 					<div className={style.basicAttributes}>

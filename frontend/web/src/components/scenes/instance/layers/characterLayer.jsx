@@ -97,12 +97,12 @@ class CharacterLayer extends PureComponent {
 
 const mapStateToProps = (state, props) => {
     return {
-        character: state.scene.get('character'),
-        moveables: state.scene.get('moveables'),
-        attackables: state.scene.get('attackables'),
-        paths: state.scene.get('paths'),
-        sideLength: state.scene.get('sideLength'),
-        enemies: state.scene.get('enemies'),
+        character: state.instance.get('character'),
+        moveables: state.instance.get('moveables'),
+        attackables: state.instance.get('attackables'),
+        paths: state.instance.get('paths'),
+        sideLength: state.instance.get('sideLength'),
+        enemies: state.instance.get('enemies'),
         ...props
     }
 }

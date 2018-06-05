@@ -55,8 +55,7 @@ class MapLayer extends PureComponent {
 
 const mapStateToProps = (state, props) => {
     return {
-        sideLength: state.scene.get('sideLength'),
-        moveables: state.scene.get('moveables'),
+        sideLength: state.instance.get('sideLength'),
         ...props
     }
 }

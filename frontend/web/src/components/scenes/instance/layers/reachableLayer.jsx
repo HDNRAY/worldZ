@@ -24,7 +24,7 @@ class ReachableLayer extends PureComponent {
             payload: { coordinate }
         })
         this.props.dispatch({
-            type: 'menu/config',
+            type: 'menu/show',
             payload: {
                 position
             }
@@ -199,12 +199,12 @@ class ReachableLayer extends PureComponent {
 
 const mapStateToProps = (state, props) => {
     return {
-        moveables: state.scene.get('moveables'),
-        attackables: state.scene.get('attackables'),
-        effectables: state.scene.get('effectables'),
-        enemies: state.scene.get('enemies'),
-        sideLength: state.scene.get('sideLength'),
-        paths: state.scene.get('paths'),
+        moveables: state.instance.get('moveables'),
+        attackables: state.instance.get('attackables'),
+        effectables: state.instance.get('effectables'),
+        enemies: state.instance.get('enemies'),
+        sideLength: state.instance.get('sideLength'),
+        paths: state.instance.get('paths'),
         ...props
     }
 }

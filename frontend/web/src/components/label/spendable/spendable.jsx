@@ -1,10 +1,11 @@
 import { Component } from 'react';
 // import PropTypes from 'prop-types';
+import { menuTypes } from '../../game/menu/constant'
 import style from './spendable.less';
 import Item from '../../shared/item/item';
 import itemStyle from '../../shared/item/item.less'
 import ImmmutablePropTypes from 'react-immutable-proptypes';
-import {is} from 'immutable';
+import { is } from 'immutable';
 
 class Spendable extends Component {
 
@@ -13,8 +14,8 @@ class Spendable extends Component {
 	}
 
 	render() {
-		const {spendable} = this.props;
-		const { name, quantity, quality,description } = spendable.toJS();
+		const { spendable } = this.props;
+		const { name, quantity, quality, description } = spendable.toJS();
 
 		const display = `${name}${!!quantity ? ('\(' + quantity + '\)') : ''}`;
 
@@ -29,6 +30,7 @@ class Spendable extends Component {
 		}, {
 			name: '丢弃',
 			confirm: '确认丢弃吗',
+			type: menuTypes.CONFIRM,
 			action: () => {
 				console.log('deleted')
 			}
@@ -41,7 +43,7 @@ class Spendable extends Component {
 			</div>
 			<div className={style.description}>
 				{description}
-            </div>
+			</div>
 		</div>)
 
 		return (

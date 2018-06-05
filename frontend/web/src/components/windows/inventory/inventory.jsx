@@ -19,7 +19,7 @@ class Inventory extends Component {
 			return <Gear key={item.get('name') + index} where='inventory' gear={item} />
 		})
 
-		return (<Window title='包裹' id={4} position={{ x: 320, y: 0 }} windowClassName={style.inventoryWindow} window={window} nameToClose='inventory'>
+		return (<Window title='包裹' id={4} position={{ x: 320, y: 0 }} window={window} nameToClose='inventory'>
 			<div className={style.list}>
 				{spendables}
 				{gears}

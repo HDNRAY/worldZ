@@ -1,17 +1,39 @@
-.menu {
+.menuWrapper {
     position: absolute;
-    z-index: 100;
-    background-color: black;
-    border: 1px solid grey;
-    border-radius: 0;
-    padding: 2px 5px;
-    font-size: 15px;
-    color: #aaaaaa;
-    .action {
-        cursor: pointer;
-        
-        &:hover {
-            color: #eeeeee;
+    height: 100%;
+    width: 100%;
+    .menuCover {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: transparent;
+        z-index: 99;
+    }
+    .menu {
+        position: absolute;
+        z-index: 100;
+        background-color: black;
+        border: 1px solid grey;
+        border-radius: 0;
+        padding: 2px 5px;
+        font-size: 15px;
+        color: #aaaaaa;
+        .action {
+            cursor: pointer;
+            &:hover {
+                color: #eeeeee;
+            }
+        }
+        .action-bar {
+            height: 50px;
+            .back {
+                height: 50px;
+                line-height: 50px;
+            }
         }
     }
+    .operations {}
+    .abilities {}
+    .spendables {}
+    .confirm {}
 }

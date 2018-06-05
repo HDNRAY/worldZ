@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
-import Confirm from '../../shared/confirm/confirm'
 import style from './menu.less'
+import { menuTypes } from './constant'
 
 
 class Menu extends React.PureComponent {
@@ -24,34 +24,105 @@ class Menu extends React.PureComponent {
         return { x: mx, y: my }
     }
 
-    render = () => {
-        const { show, operations, position } = this.props
+    renderOperation = () => {
+        const { operations, dispatch } = this.props
 
-        const { x, y } = this.optimizePosition()
-        console.log(position)
-        const content = operations.map((item, index) => {
+        return operations.map((item, index) => {
 
-            const operation = !!item.confirm ? (
-                <Confirm
-                    title={item.confirm}
-                    key={'action' + index}
-                    onConfirm={item.action}>
-                    <div className={style.action}>
-                        {item.name}
-                    </div>
-                </Confirm>
-            ) : (
-                    <div className={style.action} key={'action' + index} onClick={item.action}>{
-                        item.name}
-                    </div>
-                )
+            let onClick
 
-            return operation
+            if (item.type) {
+                if (item.type === menuTypes.CONFIRM) {
+                    onClick = () => dispatch({
+                        type: 'menu/push',
+                        payload: {
+                            type: menuTypes.CONFIRM,
+                            confirm: item.confirm,
+                            onConfirm: item.action
+                        }
+                    })
+                } else {
+                    onClick = () => dispatch({
+                        type: 'menu/push',
+                        payload: {
+                            type: item.type
+                        }
+                    })
+                }
+
+            } else {
+                onClick = this.actionAndHideMenu(item.action)
+            }
+
+            return (<div className={style.action} key={'action' + index} onClick={onClick}>
+                {item.name}
+            </div>)
         })
+    }
 
-        return show ? (<div className={style.menu} style={{ left: x, top: y }}>
-            {content}
+    actionAndHideMenu = (action) => {
+        return () => {
+            this.hideMenu()
+            action()
+        }
+    }
+
+    hideMenu = () => {
+        this.props.dispatch({
+            type: 'menu/hide'
+        })
+    }
+
+    renderConfirm = () => {
+        const { confirm, onConfirm } = this.props
+        return (<div className={style.menuConfirm}>
+            <div>{confirm}</div>
+            <div onClick={onConfirm}>确定</div>
+        </div>)
+    }
+
+    renderAbility = () => {
+        return null
+    }
+
+    renderSpendables = () => {
+        return null
+    }
+
+    renderer = {
+        'operations': this.renderOperation,
+        'confirm': this.renderConfirm,
+        'abilities': this.renderAbility,
+        'spendables': this.renderSpendables
+    }
+
+    render = () => {
+        const { show, menus, dispatch } = this.props
+        console.log('show', show)
+        if (!show) return null
+
+        const type = menus[0]
+        const { x, y } = this.optimizePosition()
+        console.log(menus)
+
+        const actionbar = menus.length > 1 ? (<div className={style.actionBar}>
+            <div className={style.back} onClick={() => dispatch({
+                type: 'menu/back',
+            })
+            }>返回</div>
         </div>) : null
+
+        const content = this.renderer[type]()
+
+        return (<div className={style.menuWrapper}>
+            <div onClick={this.hideMenu} className={style.menuCover}></div>
+            <div className={style.menu + ' ' + type} style={{ left: x, top: y }}>
+                {actionbar}
+                {content}
+            </div>
+        </div>
+
+        )
     }
 }
 
@@ -60,7 +131,11 @@ const mapStateToProps = (state, props) => {
     return {
         show: state.menu.get('show'),
         operations: state.menu.get('operations'),
+        confirm: state.menu.get('confirm'),
+        menus: state.menu.get('menus'),
         position: state.menu.get('position'),
+        abilities: state.ability.get('abilities'),
+        spendables: state.inventory.get('spendables'),
         ...props
     }
 }

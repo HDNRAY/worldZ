@@ -26,7 +26,7 @@ class Instance extends Component {
 
 const mapStateToProps = (state, props) => {
     return {
-        sideLength: state.scene.get('sideLength'),
+        sideLength: state.instance.get('sideLength'),
         ...props
     }
 }
