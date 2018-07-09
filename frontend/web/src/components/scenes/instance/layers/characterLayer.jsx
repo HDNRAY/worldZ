@@ -16,18 +16,18 @@ class CharacterLayer extends PureComponent {
 
         if (moveables !== {}) operations.push({
             name: '移动',
-            action: () => dispatch({ type: 'scene/showMoveables' })
+            action: () => dispatch({ type: 'instance/showMoveables' })
         })
 
         if (!attackables || !attackables.length) operations.push({
             name: '平A',
-            action: () => dispatch({ type: 'scene/showAttackables' })
+            action: () => dispatch({ type: 'instance/showAttackables' })
         })
 
         operations.push({
             name: '取消',
             action: () => {
-                dispatch({ type: 'scene/cancel' })
+                dispatch({ type: 'instance/cancel' })
                 dispatch({ type: 'menu/hide' })
             }
         })

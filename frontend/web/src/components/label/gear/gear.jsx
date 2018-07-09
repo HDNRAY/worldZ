@@ -189,7 +189,7 @@ Gear.types = types;
 Gear.positions = positions
 
 const mapStateToProps = (state, props) => {
-	const wearings = state.inventory.get('wearings');
+	const wearings = state.gear.get('wearings');
 
 	const comparePositions = props.gear.get('types').includes('twoHand') ? ['firstHand', 'offHand'] : props.gear.get('position');
 

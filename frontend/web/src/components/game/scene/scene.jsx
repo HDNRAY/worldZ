@@ -17,7 +17,7 @@ class Scene extends Component {
             handle: '#scene'
         }
 
-        const currentScene = null// (<Instance />)
+        const currentScene = (<Instance />)
 
         return (<div id="sceneWrapper" className={style.sceneWrapper}>
             <Draggable {...draggableProps}>

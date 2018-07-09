@@ -9,17 +9,17 @@ class Field extends Component {
 		const invalidStyle = !!invalid ? style.invalid + ' ' : '';
 
 		const center = !!children ?
-			(<div className={style.insert}>{children}</div>) :
-			(<div className={style.name}>{name}</div>)
+			(<div className={style.insert}>:{children}</div>) : null
 
 		return (
-			<div className={ invalidStyle + style.field}>
-                <div className={style.lt}></div>
-                <div className={style.rt}></div>
-                {center}
-                <div className={style.lb}></div>
-                <div className={style.rb}></div>
-            </div>
+			<div className={invalidStyle + style.field}>
+				<div className={style.lt}></div>
+				<div className={style.rt}></div>
+				<div className={style.name}>{name}</div>
+				{center}
+				<div className={style.lb}></div>
+				<div className={style.rb}></div>
+			</div>
 		)
 	}
 }

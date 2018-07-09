@@ -10,9 +10,9 @@ import MarkNode from '../materials/markNode'
 class ReachableLayer extends PureComponent {
 
     onMoveableHover = ({ coordinate, position }) => {
-        console.log('moveable hovered', coordinate)
+        // console.log('moveable hovered', coordinate)
         this.props.dispatch({
-            type: 'scene/showPath',
+            type: 'instance/showPath',
             payload: { coordinate }
         })
     }
@@ -20,15 +20,15 @@ class ReachableLayer extends PureComponent {
     onMoveableClick = ({ coordinate, position }) => {
         console.log('moveable clicked', coordinate, position)
         this.props.dispatch({
-            type: 'scene/move',
+            type: 'instance/move',
             payload: { coordinate }
         })
-        this.props.dispatch({
-            type: 'menu/show',
-            payload: {
-                position
-            }
-        })
+        // this.props.dispatch({
+        //     type: 'menu/show',
+        //     payload: {
+        //         position
+        //     }
+        // })
     }
 
     renderMoveables = () => {
@@ -46,8 +46,8 @@ class ReachableLayer extends PureComponent {
                 distance: metrics.MAP_NODE_DISTANCE,
                 sideLength
             })
-            console.log('render moveable moeablestring', moveableString)
-            console.log('render moveable path', paths)
+            // console.log('render moveable moeablestring', moveableString)
+            // console.log('render moveable path', paths)
             const color = '#00ff00' + (paths.some(path => JSON.stringify(path) === moveableString) ? '80' : '20')
 
             const nodeProps = {
@@ -65,9 +65,9 @@ class ReachableLayer extends PureComponent {
     }
 
     onAttackableHover = ({ coordinate, position }) => {
-        console.log('on attackable hover', coordinate)
+        // console.log('on attackable hover', coordinate)
         this.props.dispatch({
-            type: 'scene/showEffectables',
+            type: 'instance/showEffectables',
             payload: { coordinate }
 
         })
@@ -90,7 +90,7 @@ class ReachableLayer extends PureComponent {
                 type: 'menu/hide'
             })
             dispatch({
-                type: 'scene/cancel'
+                type: 'instance/cancel'
             })
         } else {
             dispatch({
@@ -138,13 +138,13 @@ class ReachableLayer extends PureComponent {
 
     onEffectableHover = ({ coordinate, position }) => {
         const { attackables } = this.props
-        console.log('onEffectablesHover', attackables)
+        // console.log('onEffectablesHover', attackables)
         let newCoordinate = null
         if (attackables.some(attackable => attackable === JSON.stringify(coordinate))) {
             newCoordinate = coordinate
         }
         this.props.dispatch({
-            type: 'scene/showEffectables',
+            type: 'instance/showEffectables',
             payload: {
                 coordinate: newCoordinate
             }

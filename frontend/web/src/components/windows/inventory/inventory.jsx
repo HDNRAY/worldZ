@@ -9,20 +9,21 @@ import style from './inventory.less';
 
 class Inventory extends Component {
 	render = () => {
-		const { window, spendable, gear } = this.props;
-
-		const spendables = spendable.map((item, index) => {
-			return <Spendable key={item.get('name') + index} spendable={item} />
-		})
-
-		const gears = gear.map((item, index) => {
-			return <Gear key={item.get('name') + index} where='inventory' gear={item} />
+		const { window, items, wearings } = this.props;
+		console.log(wearings)
+		const displayItems = items.filter(item => !wearings.includes(item.get('id'))).map((item, index) => {
+			console.log(index, item)
+			if (item.get('itemType') === 'gear') {
+				return <Gear key={item.get('name') + index} where='inventory' gear={item} />
+			} else if (item.get('itemType') === 'spendable') {
+				return <Spendable key={item.get('name') + index} spendable={item} />
+			}
+			return null
 		})
 
 		return (<Window title='包裹' id={4} position={{ x: 320, y: 0 }} window={window} nameToClose='inventory'>
 			<div className={style.list}>
-				{spendables}
-				{gears}
+				{displayItems}
 			</div>
 		</Window>)
 	}
@@ -31,8 +32,8 @@ class Inventory extends Component {
 const mapStateToProps = (state, props) => {
 	return {
 		window: state.game.getIn(['windows', 'inventory']),
-		spendable: state.inventory.get('spendable'),
-		gear: state.inventory.get('gear'),
+		items: state.inventory.get('items'),
+		wearings: state.gear.get('wearings'),
 		...props
 	}
 }

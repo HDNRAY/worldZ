@@ -37,7 +37,7 @@ class Gear extends Component {
 const mapStateToProps = (state, props) => {
 	return {
 		window: state.game.getIn(['windows', 'gear']),
-		wearings: state.inventory.get('wearings'),
+		wearings: state.gear.get('wearings'),
 		...props
 	}
 }

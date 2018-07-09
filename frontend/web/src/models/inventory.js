@@ -5,41 +5,28 @@ export default {
 	namespace: 'inventory',
 
 	state: fromJS({
-		wearings: {
-			head: null,
-			neck: null,
-			shoulders: null,
-			torso: null,
-			wrists: null,
-			hands: null,
-			waist: null,
-			legs: null,
-			feets: null,
-			firstHand: {
-				name: '玄铁剑',
-				quality: 'epic',
-				weight: 10,
-				damage: 110,
-				types: ['twoHand', 'sword',],
-				position: ['firstHand'],
-				description: '重剑无锋，大巧不工',
-				effects: [{
-					description: ''
-				}]
-			},
-			offHand: null,
-			fingers: [],
-		},
-		gear: [{
-			id: 4, name: '短匕4', quality: 'normal', types: ['dagger'], position: ['firstHand', 'offHand'], description: '', effects: [], weight: 1, damage: 1
+		items: [{
+			id: 4, itemType: 'gear', name: '短匕4', quality: 'normal', types: ['dagger'], position: ['firstHand', 'offHand'], description: '', effects: [], weight: 1, damage: 1
 		}, {
-			id: 3, name: '短匕3', quality: 'normal', types: ['dagger'], position: ['firstHand', 'offHand'], description: '', effects: [], weight: 1, damage: 1
+			id: 3, itemType: 'gear', name: '短匕3', quality: 'normal', types: ['dagger'], position: ['firstHand', 'offHand'], description: '', effects: [], weight: 1, damage: 1
 		}, {
-			id: 2, name: '银铃胸甲', quality: 'magic', types: ['torso'], position: ['torso'], description: '银铃胸甲，五金一件', effects: [], weight: 3
+			id: 2, itemType: 'gear', name: '银铃胸甲', quality: 'magic', types: ['torso'], position: ['torso'], description: '银铃胸甲，五金一件', effects: [], weight: 3
 		}, {
-			id: 0, name: '光之剑', quality: 'legend', types: ['twoHand', 'sword',], position: ['firstHand'], description: 'Gorn Nova', damage: 100, weight: 1.5, effects: [{ description: '可对灵体造成伤害' }, { description: '可附着魔法，提高斩击威力' }]
-		}],
-		spendable: [{ id: 0, name: '面包', quantity: 5, quality: 'normal', description: '回复体力' }]
+			id: 0, itemType: 'gear', name: '光之剑', quality: 'legend', types: ['twoHand', 'sword'], position: ['firstHand'], description: 'Gorn Nova', damage: 100, weight: 1.5, effects: [{ description: '可对灵体造成伤害' }, { description: '可附着魔法，提高斩击威力' }]
+		}, {
+			id: 11,
+			itemType: 'gear',
+			name: '玄铁剑',
+			quality: 'epic',
+			weight: 10,
+			damage: 110,
+			types: ['twoHand', 'sword',],
+			position: ['firstHand'],
+			description: '重剑无锋，大巧不工',
+			effects: [{
+				description: ''
+			}]
+		}, { id: 0, itemType: 'spendable', name: '面包', quantity: 5, quality: 'normal', description: '回复体力' }]
 	}),
 
 	subscriptions: {

@@ -11,14 +11,14 @@ class MapNode extends PureComponent {
     }
 
     onMouseLeave = (e) => {
-        console.log('leave map node')
+        // console.log('leave map node')
         this.setState({
             pointed: false
         })
     }
 
     onMouseEnter = (e) => {
-        console.log('enter map node')
+        // console.log('enter map node')
         this.setState({
             pointed: true
         })
