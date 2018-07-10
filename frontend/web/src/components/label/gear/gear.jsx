@@ -27,13 +27,12 @@ class Gear extends Component {
 	actions = () => {
 
 		const { where, dispatch, gear, position } = this.props;
-		console.log('rendring gear', gear)
 
 		const switchHand = {
 			name: '换手',
 			action: () => {
 				dispatch({
-					type: 'inventory/switchHand',
+					type: 'gear/switchHand',
 				})
 				this.info({
 					content: 'switched'
@@ -45,9 +44,10 @@ class Gear extends Component {
 			name: '装备',
 			action: () => {
 				dispatch({
-					type: 'inventory/equip',
+					type: 'gear/equip',
 					payload: {
-						gear: gear
+						gearId: gear.get('id'),
+						position: gear.get('position').get(0)
 					}
 				})
 				this.info({
@@ -60,7 +60,7 @@ class Gear extends Component {
 			name: '卸下',
 			action: () => {
 				dispatch({
-					type: 'inventory/unequip',
+					type: 'gear/unequip',
 					payload: {
 						position: position
 					}
@@ -106,9 +106,9 @@ class Gear extends Component {
 		return actions;
 	}
 
+	// 渲染tip
 	gearTip = (gear) => {
 		if (!gear) return null;
-
 		const qualityStyle = itemStyle[Item.qualities[gear.get('quality').toUpperCase()].className];
 
 		const displayPosition = gear.get('position').map(item => positions[item]).join(',');
@@ -148,6 +148,7 @@ class Gear extends Component {
 
 	gearTips = () => {
 		const { gear, compareGears, where } = this.props;
+
 		return (<div className={style.tips}>
 			{this.gearTip(gear)}
 			{where !== 'equiped' ? compareGears.map((item, index) => {
@@ -161,7 +162,6 @@ class Gear extends Component {
 
 	render() {
 		const { gear } = this.props;
-
 		const name = gear.get('name');
 
 		const quality = Item.qualities[gear.get('quality').toUpperCase()];
@@ -189,20 +189,21 @@ Gear.types = types;
 Gear.positions = positions
 
 const mapStateToProps = (state, props) => {
-	const wearings = state.gear.get('wearings');
+	const wearings = state.gear.get('wearings')
+	const items = state.inventory.get('items')
 
 	const comparePositions = props.gear.get('types').includes('twoHand') ? ['firstHand', 'offHand'] : props.gear.get('position');
 
 	const compareGears = comparePositions.reduce((result, item) => {
-		if (!!wearings.get(item)) {
-			result.push(wearings.get(item));
+		const gearId = wearings.get(item)
+		if (gearId) {
+			result.push(items.find(item => item.get('id') === gearId))
 		}
 		return result;
 	}, []);
 
 	return {
-		compareGears,
-		...props
+		compareGears
 	}
 }
 

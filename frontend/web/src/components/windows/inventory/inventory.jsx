@@ -9,10 +9,14 @@ import style from './inventory.less';
 
 class Inventory extends Component {
 	render = () => {
-		const { window, items, wearings } = this.props;
-		console.log(wearings)
-		const displayItems = items.filter(item => !wearings.includes(item.get('id'))).map((item, index) => {
-			console.log(index, item)
+		const { window, items, wearings } = this.props
+
+		// 已装备的装备不显示
+		const itemsNotWearing = items.filter(item => !wearings.includes(item.get('id')))
+		
+		// 渲染物品
+		const displayItems = itemsNotWearing.map((item, index) => {
+			
 			if (item.get('itemType') === 'gear') {
 				return <Gear key={item.get('name') + index} where='inventory' gear={item} />
 			} else if (item.get('itemType') === 'spendable') {
@@ -29,12 +33,11 @@ class Inventory extends Component {
 	}
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
 	return {
 		window: state.game.getIn(['windows', 'inventory']),
 		items: state.inventory.get('items'),
-		wearings: state.gear.get('wearings'),
-		...props
+		wearings: state.gear.get('wearings')
 	}
 }
 

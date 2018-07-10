@@ -26,7 +26,7 @@ export default {
 			effects: [{
 				description: ''
 			}]
-		}, { id: 0, itemType: 'spendable', name: '面包', quantity: 5, quality: 'normal', description: '回复体力' }]
+		}, { id: 101, itemType: 'spendable', name: '面包', quantity: 5, quality: 'normal', description: '回复体力' }]
 	}),
 
 	subscriptions: {
@@ -43,89 +43,6 @@ export default {
 	},
 
 	reducers: {
-		unequip(state, { payload }) {
-			// const gear = Map(payload.gear);
-			return state.updateIn(['gear'], items => {
-				return items.push(state.getIn(['wearings', payload.position]))
-			}).setIn(['wearings', payload.position], null)
-		},
-		switchHand(state, { payload }) {
-
-			const hands = {
-				firstHand: state.getIn(['wearings', 'firstHand']),
-				offHand: state.getIn(['wearings', 'offHand'])
-			}
-
-			return ['firstHand', 'offHand'].reduce((newState, fromHand) => {
-				let toHand = fromHand === 'firstHand' ? 'offHand' : 'firstHand';
-
-				if (!!hands[fromHand]) {
-					if (hands[fromHand].get('position').size > 1) {
-						return newState.setIn(['wearings', toHand], hands[fromHand]);
-					} else {
-						return newState.updateIn(['gear'], items => {
-							return items.push(hands[fromHand])
-						}).setIn(['wearings', toHand], null);
-					}
-				} else {
-					return newState.setIn(['wearings', toHand], null);
-				}
-			}, state)
-		},
-		equip(state, { payload }) {
-
-			const unequip = (state, position) => {
-				return state.updateIn(['gear'], items => {
-					return items.push(state.getIn(['wearings', position]))
-				}).setIn(['wearings', position], null)
-			}
-
-			const gearToEquip = fromJS(payload.gear);
-			let newState = state, positionToEquip = null;
-
-			if (gearToEquip.get('types').includes('twoHand')) {
-				if (!!state.getIn(['wearings', 'firstHand'])) newState = unequip(newState, 'firstHand');
-				if (!!state.getIn(['wearings', 'offHand'])) newState = unequip(newState, 'offHand');
-				positionToEquip = 'firstHand'
-			} else {
-
-				const posiblePositions = gearToEquip.get('position');
-
-				//如果是把单手武器，则检查是否主手是双手武器，若是，则卸下
-				if ((posiblePositions.includes('firstHand')
-					|| posiblePositions.includes('offHand'))
-					&& !!state.getIn(['wearings', 'firstHand'])
-					&& state.getIn(['wearings', 'firstHand', 'types']).includes('twoHand')) {
-					newState = unequip(newState, 'firstHand');
-				}
-
-				//如果任意可装备位置为空，则选择此位置装备
-				positionToEquip = gearToEquip.get('position').find((item) => {
-					console.log(item)
-					console.log(newState.getIn(['wearings', item]))
-					if (newState.getIn(['wearings', item]) === null) {
-						positionToEquip = item;
-						return true;
-					}
-
-					return false;
-				})
-
-				//如果所有可装备位置都不为空，则选择第一个位置装备
-				if (positionToEquip === null) {
-					console.log(posiblePositions)
-					positionToEquip = posiblePositions.get(0)
-					newState = unequip(newState, positionToEquip);
-				}
-			}
-			//equip the gear
-			return newState.setIn(['wearings', positionToEquip], gearToEquip).updateIn(['gear'], items => {
-				const index = items.findIndex((item) => {
-					return item.get('id') === gearToEquip.get('id');
-				})
-				return items.delete(index)
-			})
-		},
 		add(state, { payload }) {
 			const { type, data } = payload;
 			return state.updateIn([type], (items) => {

@@ -15,7 +15,7 @@ class Attribute extends Component {
 
 	render() {
 		const { attribute, value } = this.props;
-		console.log('rendring attribute', attribute)
+		// console.log('rendring attribute', attribute)
 		const content = (
 			<div className={style.tips}>
 				<div className={style.oneLine}>{attributes[attribute].name}</div>

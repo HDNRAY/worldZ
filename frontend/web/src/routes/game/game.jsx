@@ -17,7 +17,7 @@ class Game extends React.Component {
 
 		return (
 			<div id='area' className={style.area}>
-				<Scene />
+				{/* <Scene /> */}
 				<Basic />
 				<Inventory />
 				<Character />

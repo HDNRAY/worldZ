@@ -1,4 +1,4 @@
-import { fromJS, Map } from 'immutable';
+import { fromJS } from 'immutable'
 
 export default {
 
@@ -15,7 +15,7 @@ export default {
 			waist: null,
 			legs: null,
 			feets: null,
-			firstHand: null,
+			firstHand: 11,
 			offHand: null,
 			fingers: [],
 		},
@@ -28,14 +28,16 @@ export default {
 	},
 
 	effects: {
-		* equip({ payload }, { put }) {
+		* equip({ payload }, { select, put }) {
 			try {
-				const { gear } = payload;
-
+				const { gearId } = payload
+				const gears = yield select(state => state.inventory.get('items').filter(item => item.get('itemType') === 'gear'))
+				
 				yield put({
-					type: 'equip',
+					type: 'onEquiped',
 					payload: {
-						gear
+						gearId,
+						gears
 					}
 				})
 			} catch (err) {
@@ -44,10 +46,10 @@ export default {
 		},
 		* unequip({ payload }, { put }) {
 			try {
-				const { position } = payload;
+				const { position } = payload
 
 				yield put({
-					type: 'unequip',
+					type: 'onUnequiped',
 					payload: {
 						position
 					}
@@ -59,7 +61,7 @@ export default {
 		* switchHand({ payload }, { put }) {
 			try {
 				yield put({
-					type: 'switchHand',
+					type: 'onSwitchedHand',
 				})
 			} catch (err) {
 				console.log(err)
@@ -68,21 +70,57 @@ export default {
 	},
 
 	reducers: {
-		equip(state, { payload }) {
-			return state.setIn(['wearings', payload.gear.position], payload.gear);
-		},
-		unequip(state, { payload }) {
-			return state.update('wearings', list => list.map(item => {
-				if (item.position === payload.position) {
-					return null
+		onEquiped(state, { payload }) {
+			// 按id获得装备的方法
+			const getGearById = (gears, id) => gears.find(item => item.get('id') === id)
+
+			const gearToEquip = getGearById(payload.gears, payload.gearId)
+			// let positionToEquip
+			let update
+
+			// 如果是双手武器，则卸下主副手
+			if (gearToEquip.get('types').includes('twoHand')) {
+				update = {
+					firstHand: payload.gearId,
+					offHand: null
 				}
-				return item
-			}))
+			} else {
+				// 如果是单手武器 且目前的主手是双手武器，则卸下, 并装备于主手
+				const posiblePositions = gearToEquip.get('position')
+				if (posiblePositions.includes('firstHand') || posiblePositions.includes('offHand')) {
+					const gearToUnequip = getGearById(payload.gears, state.getIn(['wearings', 'firstHand']))
+					if (gearToUnequip && gearToUnequip.get('types').includes('twoHand')) {
+						update = {
+							firstHand: payload.gearId
+						}
+					}
+				}
+			}
+
+			// 如果不是以上情况则
+			if (!update) {
+				// 如果任意可装备位置为空，则选择此位置装备
+				let positionToEquip = gearToEquip.get('position').find(item => {
+					return state.getIn(['wearings', item]) === null
+				})
+
+				// 如果所有可装备位置都不为空，则选择第一个位置装备
+				if (!positionToEquip) positionToEquip = gearToEquip.get('position').get(0)
+
+				update = {
+					[positionToEquip]: payload.gearId
+				}
+			}
+
+			// 执行装备
+			return state.mergeIn(['wearings'], update)
 		},
-		switchHand(state, { payload }) {
+		onUnequiped(state, { payload }) {
+			return state.setIn(['wearings', payload.position], null)
+		},
+		onSwitchedHand(state, { payload }) {
 			const offHand = state.getIn(['wearings', 'offHand'])
 			return state.setIn(['wearings', 'offHand'], state.getIn(['wearings', 'firstHand'])).setIn(['wearings', 'firstHand'], offHand)
 		}
 	},
-
 };
