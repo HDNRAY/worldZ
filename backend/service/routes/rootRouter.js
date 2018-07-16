@@ -1,5 +1,5 @@
-import indexRouter from './index';
-import usersRouter from './users';
+const indexRouter = require('./index')
+const usersRouter = require('./users')
 
 const router = app => {
     app.use('/', indexRouter)
@@ -7,4 +7,4 @@ const router = app => {
     return app
 }
 
-export default router
+module.exports = router;
