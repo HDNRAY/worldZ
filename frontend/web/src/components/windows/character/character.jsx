@@ -76,7 +76,7 @@ const mapStateToProps = (state, props) => {
 		window: state.game.getIn(['windows', 'character']),
 		name: state.character.get('name'),
 		id: state.character.get('id'),
-		attributes: state.character.get('current'),
+		attributes: state.character.get('attributes'),
 		...props
 	}
 }

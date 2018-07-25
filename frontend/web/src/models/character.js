@@ -7,28 +7,7 @@ export default {
 	state: fromJS({
 		id: 0,
 		name: 'Ray',
-		base: {
-			spirit: 100,
-			strength: 20,
-			agility: 15,
-			dexterity: 20,
-			stamina: 15,
-			mind: 10,
-			experience: 5,
-			intelligence: 10,
-		},
-		beAffected:{
-			fromGear: [{
-				from: 'gear',
-				attribute: 'strength',
-				effect: 'enhance',
-				value: 1,
-				duration: null,
-			}],
-			fromSkill:[],
-			fromEnvironment:[]
-		},
-		current: {
+		attributes: {
 			volumn: {
 				health: 5000,
 				spirit: 100,
@@ -86,26 +65,7 @@ export default {
 	},
 
 	reducers: {
-		compute(state, { payload }){
 
-			const bloodDebuff = ((health) => {
-				if (health < 2000) return 0.1;
-				if (health < 3000) return 0.5;
-				if (health < 4000) return 0.8;
-				return 1;
-			})(state.getIn(['current','health']));
-
-			let current = state.get('base').flatMap((key,value,iterator)=>{
-				console.log('key',key)
-				console.log('value', value)
-				console.log('iterator', iterator)
-				return value * bloodDebuff;
-			})
-
-
-
-			return current;
-		}
 	},
 
 };

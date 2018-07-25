@@ -30,13 +30,13 @@ class Game extends React.Component {
 
 }
 
-Game.propTypes = {};
+// Game.propTypes = {};
 
-const mapStateToProps = (state, props) => {
+// const mapStateToProps = (state, props) => {
 
-	return {
-		...props
-	}
-}
+// 	return {
+// 		...props
+// 	}
+// }
 
-export default connect(mapStateToProps)(Game);
+export default Game
