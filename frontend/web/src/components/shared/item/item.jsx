@@ -12,19 +12,19 @@ class Item extends React.Component {
 
 		return (
 			<Operations operations={operations}>
-                <Tips content={tips}>
-                    <Clickable text={name} className={style[quality.className]} />
-                </Tips>
-            </Operations>
+				<Tips content={tips}>
+					<Clickable text={name} className={style[quality.className]} />
+				</Tips>
+			</Operations>
 		)
 	}
 }
 
 Item.qualities = {
-	LEGEND: { name: 'Legend', className: 'legend' }, //unique in the world
-	EPIC: { name: 'epic', className: 'epic' }, //with strong soul power enhanced
-	MAGIC: { name: 'magic', className: 'magic' }, //with magic enhanced
-	NORMAL: { name: 'Normal', className: 'normal' } //crafted with metals
+	LEGEND: { value: 3, name: 'Legend', className: 'legend' }, //unique in the world
+	EPIC: { value: 2, name: 'Epic', className: 'epic' }, //with strong soul power enhanced
+	MAGIC: { value: 1, name: 'Magic', className: 'magic' }, //with magic enhanced
+	NORMAL: { value: 0, name: 'Normal', className: 'normal' } //crafted with metals
 }
 
 Item.defaultProps = {

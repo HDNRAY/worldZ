@@ -11,8 +11,6 @@ export const positions = {
     feets: '脚',
     firstHand: '主手',
     offHand: '副手',
-    // twoHand: '双手',
-    // oneHand: '单手',
     fingers: '戒指',
 }
 

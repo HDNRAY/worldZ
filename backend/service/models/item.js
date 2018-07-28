@@ -1,9 +1,20 @@
-const { Schema, model } = require('mongoose')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const schema = new Schema({
-    name: String,
+    itemType: {
+        type: String,
+        enum: ['Gear', 'Spendable']
+    },
 
-    quantity: Number 
+    itemAttributes: {
+        quantity: Number,
+    },
+
+    object: {
+        type: Schema.Types.ObjectId,
+        refPath: 'itemType'
+    }
 })
 
-module.exports = model('Item', schema)
+module.exports = mongoose.model('Item', schema)
