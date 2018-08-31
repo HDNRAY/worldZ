@@ -1,7 +1,6 @@
 const EVENT_TYPE = {
 	CHARACTER_TURN: 1,
 }
-var assert = require('assert');
 
 let battle = {};
 

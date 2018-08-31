@@ -21,6 +21,8 @@ const schema = new Schema({
     }],
     // 描述
     description: String,
+    // 基础属性
+    attributes: [],
     // 特殊效果
     effects: [],
     // 重量

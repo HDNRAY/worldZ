@@ -6,13 +6,39 @@ repository.create = character => {
     return characterModal.create(character)
 }
 
-repository.findById = id  => {
-    return characterModal.findById(id).lean()
+repository.findById = id => {
+    return characterModal.findById(id)
 }
 
-repository.findByIdWithItem = id =>{
-    return characterModal.findById(id).populate('items').lean()
+repository.findByIdWithGears = id => {
+    return characterModal.findById(id).populate('gears')
 }
 
+repository.findByIdWithAllInfos = id => {
+    return characterModal.findById(id).populate('wearings inventory')
+}
+
+// 脱装备
+repository.updateGearByPosition = (id, itemId, position) => {
+    const data = itemId ? {
+        position,
+        gear: itemId
+    } : null
+
+    return characterModal.findOneAndUpdate({
+        id,
+        wearings: {
+            $elemMatch: {
+                position
+            }
+        }
+    }, {
+            $set: {
+                "wearings.$": data
+            }
+        }, {
+            new: true
+        })
+}
 
 module.exports = repository

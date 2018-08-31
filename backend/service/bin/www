@@ -31,6 +31,7 @@ fs.readFile(mongoConfigFile, {}, (err, data) => {
     console.log(err)
   } else {
     const config = JSON.parse(data)
+    console.log('connecting mongo')
     mongoose.connect('mongodb://' + config.url, {
       user: config.user,
       pass: config.password,

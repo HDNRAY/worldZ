@@ -25,4 +25,20 @@ builder.buildFailureResponse = (errCode, errMsg) => {
     })
 }
 
+builder.buildCatchError = (res) => (err) => {
+    console.log(err)
+    if (err.errCode) {
+        res.send(buildResponse({
+            ...err,
+            status: 'failure'
+        }))
+    } else {
+        res.send(buildResponse({
+            errCode: 1000,
+            errMsg: 'Server Issue',
+            status: 'failure'
+        }))
+    }
+}
+
 module.exports = builder

@@ -16,9 +16,7 @@ controller.loginByUsername = (req, res) => {
         } else {
             res.send(buildFailureResponse(1001, 'No user found'))
         }
-    }).catch(err => {
-        res.send(buildFailureResponse(err))
-    })
+    }).catch(buildCatchError(res))
 
 }
 

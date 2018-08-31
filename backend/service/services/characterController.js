@@ -1,6 +1,6 @@
 const characterRepository = require('../repositories/characterRepository')
 const userRepository = require('../repositories/userRepository')
-const { buildFailureResponse, buildSuccessResponse } = require('./responseBuilder')
+const { buildFailureResponse, buildSuccessResponse, buildCatchError } = require('./responseBuilder')
 
 const controller = {}
 
@@ -30,14 +30,34 @@ controller.create = (req, res) => {
         res.send(buildSuccessResponse({
             character: result
         }))
-    }).catch(err => {
-        console.log(err)
-        res.send(buildFailureResponse(1002, ''))
-    })
+    }).catch(buildCatchError(res))
 }
 
 controller.getCharacterById = (req, res) => {
     const { id } = req.params
+    characterRepository.findById(id).lean().then(result => {
+        res.send(buildSuccessResponse({
+            character: result
+        }))
+    }).catch(buildCatchError(res))
+}
+
+controller.viewCharacterById = (req, res) => {
+    const { id } = req.params
+    characterRepository.findByIdWithGears(id).lean().then(result => {
+        res.send(buildSuccessResponse({
+            character: result
+        }))
+    }).catch(buildCatchError(res))
+}
+
+controller.loadCharacterById = (req, res) => {
+    const { id } = req.params
+    characterRepository.findByIdWithAllInfos(id).lean().then(result => {
+        res.send(buildSuccessResponse({
+            character: result
+        }))
+    }).catch(buildCatchError(res))
 }
 
 module.exports = controller

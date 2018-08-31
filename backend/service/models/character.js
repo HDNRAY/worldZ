@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const { gearPosition } = require('../common/constants')
 
 const schema = new Schema({
     name: {
@@ -18,12 +19,18 @@ const schema = new Schema({
         intelligence: Number,
     },
 
-    gears: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Item'
+    wearings: [{
+        position: {
+            type: Number,
+            enum: Object.values(gearPosition)
+        },
+        gear: {
+            type: Schema.Types.ObjectId,
+            ref: 'Item'
+        }
     }],
 
-    items: [{
+    inventory: [{
         type: Schema.Types.ObjectId,
         ref: 'Item'
     }]

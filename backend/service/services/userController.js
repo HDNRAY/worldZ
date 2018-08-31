@@ -1,5 +1,5 @@
 const userRepository = require('../repositories/userRepository')
-const { buildFailureResponse, buildSuccessResponse } = require('./responseBuilder')
+const { buildFailureResponse, buildSuccessResponse, buildCatchError } = require('./responseBuilder')
 
 const controller = {}
 
@@ -18,10 +18,7 @@ controller.getUserById = (req, res) => {
                 })
             }
             res.send(response)
-        }).catch(err => {
-            console.log(err)
-            res.send(buildFailureResponse(0, 'Server Error'))
-        })
+        }).catch(buildCatchError(res))
 }
 
 controller.create = (req, res) => {
@@ -35,10 +32,7 @@ controller.create = (req, res) => {
         res.send(buildSuccessResponse({
             user: result
         }))
-    }).catch(err => {
-        console.log(err)
-        res.send(buildFailureResponse(0, ''))
-    })
+    }).catch(buildCatchError(res))
 }
 
 module.exports = controller
