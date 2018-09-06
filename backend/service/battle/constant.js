@@ -1,7 +1,3 @@
-const EVENT_TYPE = {
-    BATTLE_START_TURN: 0,
-    CHARACTER_TURN: 1
-}
 
 const EFFECT_TYPE = {
     DIRECT_DAMAGE: 0,
@@ -21,4 +17,4 @@ const BATTLE_RESULT = {
     ALL_LOSE: 3
 }
 
-module.exports = { EVENT_TYPE, EFFECT_TYPE, TEAM_ID, BATTLE_RESULT }
+module.exports = { EFFECT_TYPE, TEAM_ID, BATTLE_RESULT }

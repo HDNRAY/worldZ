@@ -1,31 +1,31 @@
-const battle = require('./battle');
+const battle = require('./battle')
+
 let state = {
     playerTeam: {
         characters: [{
             name: 'Ray',
             attributes: {
-                atk_period: 15,
-                attack: 5,
-                health: 80
+                health: 100,
+                strength: 13,
+                agility: 8,
+                stamina: 9,
             },
-            skills: {
-                active: [],
-                passive: []
-            }
+            skills:[{
+                name:'',
+                targetTeam:[],
+                targetCount:[1]
+            }]
         }]
     },
     enemyTeam: {
         characters: [{
             name: '61f',
             attributes: {
-                atk_period: 10,
-                attack: 3,
-                health: 100
+                health: 80,
+                strength: 8,
+                agility: 12,
+                stamina: 10,
             },
-            skills: {
-                active: [],
-                passive: []
-            }
         }]
     }
 }

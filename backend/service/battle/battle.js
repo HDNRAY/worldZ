@@ -1,6 +1,7 @@
-'use strict'
-
-const { EVENT_TYPE, TEAM_ID, EFFECT_TYPE, BATTLE_RESULT } = require('./constant')
+const { TEAM_ID, EFFECT_TYPE, BATTLE_RESULT } = require('./constant')
+const { getDamage, getSpeed } = require('../common/formula')
+const EventCharacterAction = require('./events/eventCharacterAction')
+const Queue = require('./queue')
 const config = require('./config')
 
 const battle = {};
@@ -11,8 +12,7 @@ const willStart = (state) => {
 	state.playerTeam.characters.forEach(character => initialCharacterStatus(character, TEAM_ID.PLAYER))
 	state.enemyTeam.characters.forEach(character => initialCharacterStatus(character, TEAM_ID.ENEMY))
 
-	const characters = state.playerTeam.characters.concat(state.enemyTeam.characters)
-	state.eventQueue = initEventQueue(characters);
+	initEventQueue(state);
 
 	state.actionLogs = [];
 	state.result = BATTLE_RESULT.NO_RESULT
@@ -20,30 +20,20 @@ const willStart = (state) => {
 
 const initialCharacterStatus = (character, teamId) => {
 	character.currentStatus = {
-		...character.attributes
+		...character.attributes,
 	}
+	character.currentStatus.damage = getDamage(character.currentStatus)
+	character.currentStatus.speed = getSpeed(character.currentStatus)
 	character.team = teamId
 	console.log('initialed %s\'s status', character.name, character.currentStatus);
 }
 
-const initEventQueue = (characters) => {
-	// character fisrt temporarily
-	const queue = [{
-		type: EVENT_TYPE.BATTLE_START_TURN,
-		executor: battle,
-		leftTime: 0
-	}];
-
+const initEventQueue = (state) => {
+	state.eventQueue = new Queue()
+	const characters = state.playerTeam.characters.concat(state.enemyTeam.characters)
 	characters.forEach(character => {
-		const event = {
-			type: EVENT_TYPE.CHARACTER_TURN,
-			executor: character,
-			leftTime: character.currentStatus.atk_period
-		};
-		insertInOrder(event, queue);
+		state.eventQueue.insertInOrder(new EventCharacterAction(character));
 	})
-
-	return queue;
 }
 
 const didStart = (state) => {
@@ -56,8 +46,6 @@ const didStart = (state) => {
 const doBattle = (state) => {
 	while (state.result === 0) {
 		state.turnCount++
-		// 计算当前回合执行的行动（因为可能有多个行动在同一时间点执行，为保证互相不影响则需先计算再实施）
-		prepareActions(state);
 		// 计算一切可能的效果
 		prepareEffects(state);
 		// 实施效果
@@ -76,13 +64,9 @@ const doBattle = (state) => {
 
 const checkContinue = (state) => {
 
-	const playerTeamAlive = state.playerTeam.characters.some(character => {
-		return character.currentStatus.health > 0
-	})
+	const playerTeamAlive = state.playerTeam.characters.some(character => character.currentStatus.health > 0)
 
-	const enemyTeamAlive = state.enemyTeam.characters.some(character => {
-		return character.currentStatus.health > 0
-	})
+	const enemyTeamAlive = state.enemyTeam.characters.some(character => character.currentStatus.health > 0)
 
 	if (playerTeamAlive && !enemyTeamAlive) {
 		state.result = BATTLE_RESULT.PLAYER_WIN
@@ -96,108 +80,24 @@ const checkContinue = (state) => {
 
 }
 
-const actionFromEvent = (event, state) => {
-	// change to action builder , in future
-	let action
-	if (event.type === EVENT_TYPE.CHARACTER_TURN) {
-		const targetTeam = event.executor.team == TEAM_ID.PLAYER ? state.enemyTeam : state.playerTeam
-		const targetChoices = targetTeam.characters.filter(character => character.currentStatus.health > 0)
-		action = {
-			executor: event.executor,
-			targets: [targetChoices[0]],
-			type: EVENT_TYPE.CHARACTER_TURN
-			//You can add any effects you want here...
-		}
-	}
-	if (!action) action = {
-		type: event.type
-	}
-	//console.log('action:', action)
-	state.actionLogs.push(action)
-	return action;
-}
-
-const prepareActions = (state) => {
-	const frontEvent = state.eventQueue.shift();
-	const actionsInTurn = [actionFromEvent(frontEvent, state)];
-	const eventsInTurn = [frontEvent];
-	while (state.eventQueue.length > 0) {
-		if (state.eventQueue[0].leftTime == frontEvent.leftTime) {
-			const parallelEvent = state.eventQueue.shift();
-			actionsInTurn.push(actionFromEvent(parallelEvent, state));
-			eventsInTurn.push(parallelEvent);
-		} else {
-			break;
-		}
-	}
-	state.actionsInTurn = actionsInTurn
-	state.eventsInTurn = eventsInTurn
-}
-
-//Calculate damages and reduce the health.
-//Need to consider defense, avoidance, resistance here, in future.
 const prepareEffects = (state) => {
-	state.effects = state.actionsInTurn.reduce((effects, action) => {
-		if (action.type === EVENT_TYPE.CHARACTER_TURN) {
-			const effect = {
-				target: action.targets[0],
-				attribute: 'health',
-				value: -action.executor.currentStatus.attack,
-				type: EFFECT_TYPE.DIRECT_DAMAGE
-			}
-			effects.push(effect)
-		}
-
-		return effects
+	state.eventsInTurn = state.eventQueue.getEventsInTurn()
+	state.effects = state.eventsInTurn.reduce((effects, event) => {
+		const newEffects = event.getEffects(state)
+		return effects.concat(newEffects)
 	}, [])
 }
 
 //Check the alive status, add buffers, dots and other effects.
 const implementEffects = (state) => {
-	state.effects.forEach(effect => {
-		if (effect.type === EFFECT_TYPE.DIRECT_DAMAGE) {
-			effect.target.currentStatus[effect.attribute] += effect.value
-			if (effect.target.health <= 0) console.log(effect.target.name + ' dead!');
-		}
-	})
-}
-
-const insertInOrder = (event, queue) => {
-	//Can be optimized with binary search
-	let i = 0;
-	for (; i < queue.length; i++) {
-		// console.log('Insert: ' + event.executor.currentStatus.atk_period + ' : ' + queue[i].leftTime);
-		if (event.executor.currentStatus.atk_period <= queue[i].leftTime) {
-			// console.log('Splice @' + i);
-			queue.splice(i, 0, event);
-			break;
-		}
-	}
-	if (i == queue.length) {
-		// console.log('Splice @' + i);
-		queue.splice(i, 0, event);
-	}
+	state.effects.forEach(effect => effect.implement())
 }
 
 const reQueue = (state) => {
-	//console.log('reQueue:');
-	//Calculate the rest time for each charactor.
-	const timeGoesBy = state.eventsInTurn[0].leftTime
-	state.eventQueue.forEach(event => {
-		event.leftTime -= timeGoesBy
-	})
-
 	//Insert the executors in processedQueue back to the eventQueue
-	state.eventsInTurn.forEach(eventInTurn => {
-		if (eventInTurn.type === EVENT_TYPE.CHARACTER_TURN) {
-			if (eventInTurn.executor.currentStatus.health > 0) {
-				const newEvent = {
-					type: EVENT_TYPE.CHARACTER_TURN,
-					executor: eventInTurn.executor,
-					leftTime: eventInTurn.executor.currentStatus.atk_period
-				}
-				insertInOrder(newEvent, state.eventQueue);
-			}
+	state.eventsInTurn.forEach(event => {
+		if (event.hasNextTurn()) {
+			state.eventQueue.insertInOrder(event.rebuild())
 		}
 	})
 }
@@ -206,10 +106,7 @@ const onEnd = (state) => {
 	//处理战斗结果
 	console.log('player status', state.playerTeam.characters)
 	console.log('enemy status', state.enemyTeam.characters)
-	console.log('actions count', state.actionLogs.length)
-	console.log('start', state.start.getTime())
-	console.log('end', new Date().getTime())
-	console.log('time cost', new Date().getTime() - state.start.getTime())
+	console.log('time cost', `${new Date().getTime() - state.start.getTime()} ms`)
 	console.log('turn count', state.turnCount)
 	if (state.result == BATTLE_RESULT.ENEMY_WIN) {
 		console.log('enemyTeam win!');
@@ -219,6 +116,7 @@ const onEnd = (state) => {
 		console.log('no win!');
 	}
 }
+
 battle.compute = (state) => {
 	//外部方法
 	willStart(state);
