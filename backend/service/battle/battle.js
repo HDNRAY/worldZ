@@ -1,4 +1,4 @@
-const { TEAM_ID, EFFECT_TYPE, BATTLE_RESULT } = require('./constant')
+const { TEAM_ID, BATTLE_RESULT } = require('./constant')
 const { getDamage, getSpeed } = require('../common/formula')
 const EventCharacterAction = require('./events/eventCharacterAction')
 const Queue = require('./queue')
@@ -9,8 +9,7 @@ const battle = {};
 const willStart = (state) => {
 	console.log('will start')
 
-	state.playerTeam.characters.forEach(character => initialCharacterStatus(character, TEAM_ID.PLAYER))
-	state.enemyTeam.characters.forEach(character => initialCharacterStatus(character, TEAM_ID.ENEMY))
+	state.characters.forEach(character => initialCharacterStatus(character))
 
 	initEventQueue(state);
 
@@ -18,20 +17,18 @@ const willStart = (state) => {
 	state.result = BATTLE_RESULT.NO_RESULT
 }
 
-const initialCharacterStatus = (character, teamId) => {
+const initialCharacterStatus = (character) => {
 	character.currentStatus = {
 		...character.attributes,
 	}
 	character.currentStatus.damage = getDamage(character.currentStatus)
 	character.currentStatus.speed = getSpeed(character.currentStatus)
-	character.team = teamId
 	console.log('initialed %s\'s status', character.name, character.currentStatus);
 }
 
 const initEventQueue = (state) => {
 	state.eventQueue = new Queue()
-	const characters = state.playerTeam.characters.concat(state.enemyTeam.characters)
-	characters.forEach(character => {
+	state.characters.forEach(character => {
 		state.eventQueue.insertInOrder(new EventCharacterAction(character));
 	})
 }
@@ -63,10 +60,8 @@ const doBattle = (state) => {
 }
 
 const checkContinue = (state) => {
-
-	const playerTeamAlive = state.playerTeam.characters.some(character => character.currentStatus.health > 0)
-
-	const enemyTeamAlive = state.enemyTeam.characters.some(character => character.currentStatus.health > 0)
+	const playerTeamAlive = state.characters.some(character => character.currentStatus.health > 0 && character.team === TEAM_ID.PLAYER)
+	const enemyTeamAlive = state.characters.some(character => character.currentStatus.health > 0 && character.team === TEAM_ID.ENEMY)
 
 	if (playerTeamAlive && !enemyTeamAlive) {
 		state.result = BATTLE_RESULT.PLAYER_WIN
@@ -104,8 +99,8 @@ const reQueue = (state) => {
 
 const onEnd = (state) => {
 	//处理战斗结果
-	console.log('player status', state.playerTeam.characters)
-	console.log('enemy status', state.enemyTeam.characters)
+	console.log('player status', state.characters.filter(c => c.team === TEAM_ID.PLAYER))
+	console.log('enemy status', state.characters.filter(c => c.team === TEAM_ID.ENEMY))
 	console.log('time cost', `${new Date().getTime() - state.start.getTime()} ms`)
 	console.log('turn count', state.turnCount)
 	if (state.result == BATTLE_RESULT.ENEMY_WIN) {

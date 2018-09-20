@@ -1,10 +1,4 @@
 
-const EFFECT_TYPE = {
-    DIRECT_DAMAGE: 0,
-    ADD_BUFF: 1,
-    CLEAR_BUFF: 2
-}
-
 const TEAM_ID = {
     PLAYER: 0,
     ENEMY: 1
@@ -17,4 +11,11 @@ const BATTLE_RESULT = {
     ALL_LOSE: 3
 }
 
-module.exports = { EFFECT_TYPE, TEAM_ID, BATTLE_RESULT }
+const TARGET_TYPE = {
+    SELF: 0,
+    ALLY: 1,
+    OPPONENT: 2,
+    ALL: 3
+}
+
+module.exports = { TEAM_ID, BATTLE_RESULT, TARGET_TYPE }
