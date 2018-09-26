@@ -1,4 +1,3 @@
-
 const constants = {}
 
 constants.gearType = {
@@ -29,6 +28,11 @@ constants.itemQuality = {
     MAGIC: 1,
     EPIC: 2,
     LEGEND: 3
+}
+
+constants.itemType = {
+    GEAR: 0,
+    SPENDABLE: 1
 }
 
 module.exports = constants

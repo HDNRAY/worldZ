@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const { itemType } = require('../common/constants')
 
 const schema = new Schema({
     itemType: {
         type: String,
-        enum: ['Gear', 'Spendable']
+        enum: Object.values(itemType)
     },
 
     itemAttributes: {

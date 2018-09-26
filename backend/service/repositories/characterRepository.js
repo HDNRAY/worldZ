@@ -18,7 +18,21 @@ repository.findByIdWithAllInfos = id => {
     return characterModal.findById(id).populate('wearings inventory')
 }
 
-// 脱装备
+repository.findByIdsWithAllInfos = ids => {
+    return characterModal.where('id').in(ids).populate('wearings inventory').exec()
+}
+
+repository.addItem = (id, itemId) => {
+    return characterModal.findByIdAndUpdate(id, {
+        $push: {
+            inventory: itemId
+        }
+    }, {
+        new: true
+    })
+}
+
+// 穿/脱装备
 repository.updateGearByPosition = (id, itemId, position) => {
     const data = itemId ? {
         position,
@@ -33,12 +47,12 @@ repository.updateGearByPosition = (id, itemId, position) => {
             }
         }
     }, {
-            $set: {
-                "wearings.$": data
-            }
-        }, {
-            new: true
-        })
+        $set: {
+            "wearings.$": data
+        }
+    }, {
+        new: true
+    })
 }
 
 module.exports = repository

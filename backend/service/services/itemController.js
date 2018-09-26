@@ -1,16 +1,24 @@
 const itemRepository = require('../repositories/itemRepository')
-const { buildFailureResponse, buildSuccessResponse, buildCatchError } = require('./responseBuilder')
+const characterRepository = require('../repositories/characterRepository')
+const { buildSuccessResponse, buildCatchError } = require('./responseBuilder')
+const { itemType } = require('../common/constants')
 
 const item = {}
 
 item.createGearItemByBuy = (req, res) => {
-    const userId = req.params.id
+    const characterId = req.params.id
     const { gearId } = req
-    itemRepository.create(body).then(result => {
+    itemRepository.create({
+        itemType: itemType.GEAR,
+        itemAttributes: {},
+        object: gearId
+    }).then(item => {
+        return characterRepository.addItem(characterId, item.Id)
+    }).then(result => {
         res.send(buildSuccessResponse({
             item: result
         }))
-    }).catch(buildCatchError(res))
+    }).catch(err => res.send(buildCatchError(err)))
 }
 
 item.update = (req, res) => {
@@ -19,7 +27,7 @@ item.update = (req, res) => {
         res.send(buildSuccessResponse({
             item: result
         }))
-    }).catch(buildCatchError(res))
+    }).catch(err => res.send(buildCatchError(err)))
 }
 
 module.exports = item

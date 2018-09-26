@@ -1,4 +1,4 @@
-
+const { ERROR_SERVER_ISSUE } = require('./exceptions');
 const builder = {}
 
 const buildResponse = ({ data, status, errCode, errMsg }) => {
@@ -17,27 +17,23 @@ builder.buildSuccessResponse = (data) => {
     })
 }
 
-builder.buildFailureResponse = (errCode, errMsg) => {
+builder.buildFailureResponse = ({ code, message }) => {
     return buildResponse({
-        errCode,
-        errMsg,
+        errCode: code,
+        errMsg: message,
         status: 'failure'
     })
 }
 
-builder.buildCatchError = (res) => (err) => {
+builder.buildCatchError = (err) => {
     console.log(err)
     if (err.errCode) {
-        res.send(buildResponse({
+        return buildResponse({
             ...err,
             status: 'failure'
-        }))
+        })
     } else {
-        res.send(buildResponse({
-            errCode: 1000,
-            errMsg: 'Server Issue',
-            status: 'failure'
-        }))
+        return buildFailureResponse(ERROR_SERVER_ISSUE)
     }
 }
 

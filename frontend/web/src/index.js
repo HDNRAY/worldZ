@@ -3,9 +3,9 @@ import './index.css';
 
 // 1. Initialize
 const app = dva({
-	onStateChange: (state => {
+    onStateChange: (state => {
 
-	})
+    })
 });
 
 // 2. Plugins

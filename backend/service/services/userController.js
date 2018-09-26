@@ -1,6 +1,6 @@
 const userRepository = require('../repositories/userRepository')
 const { buildFailureResponse, buildSuccessResponse, buildCatchError } = require('./responseBuilder')
-
+const { ERROR_NO_USER } = require('./exceptions');
 const controller = {}
 
 controller.getUserById = (req, res) => {
@@ -11,14 +11,14 @@ controller.getUserById = (req, res) => {
         .then(result => {
             let response
             if (!result) {
-                response = buildFailureResponse(1002, 'No user found')
+                response = buildFailureResponse(ERROR_NO_USER)
             } else {
                 response = buildSuccessResponse({
                     user: result
                 })
             }
             res.send(response)
-        }).catch(buildCatchError(res))
+        }).catch(err => res.send(buildCatchError(err)))
 }
 
 controller.create = (req, res) => {
@@ -32,7 +32,7 @@ controller.create = (req, res) => {
         res.send(buildSuccessResponse({
             user: result
         }))
-    }).catch(buildCatchError(res))
+    }).catch(err => res.send(buildCatchError(err)))
 }
 
 module.exports = controller

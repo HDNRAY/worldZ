@@ -1,5 +1,5 @@
 const gearRepository = require('../repositories/gearRepository')
-const { buildFailureResponse, buildSuccessResponse, buildCatchError } = require('./responseBuilder')
+const { buildSuccessResponse, buildCatchError } = require('./responseBuilder')
 
 const gear = {}
 
@@ -9,7 +9,7 @@ gear.create = (req, res) => {
         res.send(buildSuccessResponse({
             gear: result
         }))
-    }).catch(buildCatchError(res))
+    }).catch(err => res.send(buildCatchError(err)))
 }
 
 gear.update = (req, res) => {
@@ -18,7 +18,7 @@ gear.update = (req, res) => {
         res.send(buildSuccessResponse({
             gear: result
         }))
-    }).catch(buildCatchError(res))
+    }).catch(err => res.send(buildCatchError(err)))
 }
 
 module.exports = gear

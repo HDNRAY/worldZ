@@ -1,24 +1,40 @@
 const characterRepository = require('../repositories/characterRepository')
 const userRepository = require('../repositories/userRepository')
-const { buildFailureResponse, buildSuccessResponse, buildCatchError } = require('./responseBuilder')
+const { buildSuccessResponse, buildCatchError } = require('./responseBuilder')
+const { checkAttributes } = require('../common/util');
+const { ERROR_INVALID_PARAMETER } = require('./exceptions');
 
 const controller = {}
 
-controller.create = (req, res) => {
-    const userId = req.params.id
-    const { name } = req.body
+const characterAttributes = ['spirit', 'strength', 'agility', 'dexterity', 'stamina', 'mind', 'intelligence']
 
+const attributeBaseValue = 10
+
+controller.create = (req, res) => {
+    
+    if (!checkAttributes({ target: req.body, attributes: ['name', 'attributes'] })) {
+        buildFailureResponse(ERROR_INVALID_PARAMETER)
+        return
+    }
+
+    const { name, attributes } = req.body
+
+    if (!checkAttributes({ target: attributes, attributes: characterAttributes })) {
+        buildFailureResponse(ERROR_INVALID_PARAMETER)
+        return
+    }
+
+    if (characterAttributes.reduce((sum, item) => sum + item, 0) !== characterAttributes.length * attributeBaseValue) {
+        buildFailureResponse(ERROR_INVALID_PARAMETER)
+        return
+    }
+
+    const userId = req.params.id
     const character = {
         name,
         attributes: {
-            spirit: 10,
-            strength: 10,
-            agility: 10,
-            dexterity: 10,
-            stamina: 10,
-            mind: 10,
-            experience: 10,
-            intelligence: 10,
+            ...attributes,
+            experience: 0
         }
     }
     let result
@@ -30,7 +46,7 @@ controller.create = (req, res) => {
         res.send(buildSuccessResponse({
             character: result
         }))
-    }).catch(buildCatchError(res))
+    }).catch(err => res.send(buildCatchError(err)))
 }
 
 controller.getCharacterById = (req, res) => {
@@ -39,7 +55,7 @@ controller.getCharacterById = (req, res) => {
         res.send(buildSuccessResponse({
             character: result
         }))
-    }).catch(buildCatchError(res))
+    }).catch(err => res.send(buildCatchError(err)))
 }
 
 controller.viewCharacterById = (req, res) => {
@@ -48,7 +64,7 @@ controller.viewCharacterById = (req, res) => {
         res.send(buildSuccessResponse({
             character: result
         }))
-    }).catch(buildCatchError(res))
+    }).catch(err => res.send(buildCatchError(err)))
 }
 
 controller.loadCharacterById = (req, res) => {
@@ -57,7 +73,7 @@ controller.loadCharacterById = (req, res) => {
         res.send(buildSuccessResponse({
             character: result
         }))
-    }).catch(buildCatchError(res))
+    }).catch(err => res.send(buildCatchError(err)))
 }
 
 module.exports = controller
