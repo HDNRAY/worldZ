@@ -1,6 +1,7 @@
 const userRepository = require('../repositories/userRepository')
 const { buildFailureResponse, buildSuccessResponse, buildCatchError } = require('./responseBuilder')
 const { ERROR_NO_USER } = require('./exceptions');
+const { generateSalt, encryptWithSalt } = require('../common/crypto')
 const controller = {}
 
 controller.getUserById = (req, res) => {
@@ -19,20 +20,6 @@ controller.getUserById = (req, res) => {
             }
             res.send(response)
         }).catch(err => res.send(buildCatchError(err)))
-}
-
-controller.create = (req, res) => {
-    const { username } = req.body
-
-    const user = {
-        username
-    }
-
-    userRepository.create(user).then(result => {
-        res.send(buildSuccessResponse({
-            user: result
-        }))
-    }).catch(err => res.send(buildCatchError(err)))
 }
 
 module.exports = controller

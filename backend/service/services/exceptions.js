@@ -10,5 +10,9 @@ module.exports = {
     ERROR_NO_USER: {
         code: 1002,
         message: 'No User Found'
+    },
+    ERROR_INVALID_CREDENTIALS: {
+        code: 1003,
+        message: 'Invalid Username Or Password'
     }
 }

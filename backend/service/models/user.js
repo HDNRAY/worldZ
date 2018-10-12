@@ -7,6 +7,16 @@ const userSchema = new Schema({
         unique: true
     },
 
+    salt: {
+        type: String,
+        required: true
+    },
+
+    password: {
+        type: String,
+        required: true
+    },
+
     characters: [{
         type: Schema.Types.ObjectId,
         ref: 'Character'

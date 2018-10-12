@@ -13,20 +13,17 @@ const attributeBaseValue = 10
 controller.create = (req, res) => {
     
     if (!checkAttributes({ target: req.body, attributes: ['name', 'attributes'] })) {
-        buildFailureResponse(ERROR_INVALID_PARAMETER)
-        return
+        res.send(buildFailureResponse(ERROR_INVALID_PARAMETER))
     }
 
     const { name, attributes } = req.body
 
     if (!checkAttributes({ target: attributes, attributes: characterAttributes })) {
-        buildFailureResponse(ERROR_INVALID_PARAMETER)
-        return
+        res.send(buildFailureResponse(ERROR_INVALID_PARAMETER))
     }
 
     if (characterAttributes.reduce((sum, item) => sum + item, 0) !== characterAttributes.length * attributeBaseValue) {
-        buildFailureResponse(ERROR_INVALID_PARAMETER)
-        return
+        res.send(buildFailureResponse(ERROR_INVALID_PARAMETER))
     }
 
     const userId = req.params.id

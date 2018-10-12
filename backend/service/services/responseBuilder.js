@@ -26,7 +26,6 @@ builder.buildFailureResponse = ({ code, message }) => {
 }
 
 builder.buildCatchError = (err) => {
-    console.log(err)
     if (err.errCode) {
         return buildResponse({
             ...err,
