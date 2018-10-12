@@ -1,6 +1,5 @@
 import { Component } from 'react';
 // import PropTypes from 'prop-types';
-import { menuTypes } from '../../game/menu/constant'
 import style from './spendable.less';
 import Item from '../../shared/item/item';
 import itemStyle from '../../shared/item/item.less'
@@ -21,20 +20,21 @@ class Spendable extends Component {
 
 		const qualityStyle = itemStyle[Item.qualities[quality.toUpperCase()].className];
 
-		const actions = [{
-			name: '使用',
-			action: () => {
-				console.log('used')
-				if (!!quantity) console.log('spended')
-			}
-		}, {
-			name: '丢弃',
-			confirm: '确认丢弃吗',
-			type: menuTypes.CONFIRM,
-			action: () => {
-				console.log('deleted')
-			}
-		}]
+		// const actions = [{
+		// 	name: '使用',
+		// 	action: () => {
+		// 		console.log('used')
+		// 		if (!!quantity) console.log('spended')
+		// 	}
+		// }, {
+		// 	name: '丢弃',
+		// 	confirm: '确认丢弃吗',
+		// 	type: menuTypes.CONFIRM,
+		// 	action: () => {
+		// 		console.log('deleted')
+		// 	}
+        // }]
+        const actions = []
 
 		const tips = (<div className={style.tips}>
 			<div className={qualityStyle + ' ' + style.name}>{display}</div>

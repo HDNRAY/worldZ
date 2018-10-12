@@ -1,30 +1,40 @@
+import { fromJS } from 'immutable'
+import { loginRequest } from '../services/user'
+
 export default {
 
-	namespace: 'user',
+    namespace: 'user',
 
-	state: {
-		characters: [{
-			id: 0
-		}]
-	},
+    state: fromJS({
+        characters: []
+    }),
 
-	subscriptions: {
-		setup({ dispatch, history }) { // eslint-disable-line
-		},
-	},
+    // subscriptions: {
+    //     setup({ dispatch, history }) { // eslint-disable-line
+    //     },
+    // },
 
-	effects: {
-		* fetch({ payload }, { call, put }) { // eslint-disable-line
-			yield put({
-				type: 'save'
-			});
-		},
-	},
+    effects: {
+        * login({ payload }, { call, put }) { // eslint-disable-line
+            try {
+                const user = yield call(loginRequest, payload)
+                yield put({
+                    type: 'userInfoUpdate',
+                    payload: {
+                        user
+                    }
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        },
+    },
 
-	reducers: {
-		get(state, action) {
-			return { ...state }
-		}
-	},
+    reducers: {
+        userInfoUpdate(state, action) {
+            console.log(action)
+            return { ...state }
+        }
+    },
 
 };

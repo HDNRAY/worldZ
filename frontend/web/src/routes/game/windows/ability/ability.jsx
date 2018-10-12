@@ -1,7 +1,7 @@
 import { Component } from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'dva';
-import Window from '../window/window';
+import Window from '../../../../components/window/window'
 import style from './ability.less';
 
 

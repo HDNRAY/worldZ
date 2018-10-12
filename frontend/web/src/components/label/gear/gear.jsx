@@ -1,13 +1,10 @@
 import { Component } from 'react';
 import { connect } from 'dva';
-import PropTypes from 'prop-types';
 import style from './gear.less';
 import Item from '../../shared/item/item';
 import itemStyle from '../../shared/item/item.less';
 // import GearTips from '../../tips/gear/gear';
 import { types, positions } from './constant.js';
-import { menuTypes } from '../../game/menu/constant'
-import ImmmutablePropTypes from 'react-immutable-proptypes';
 import { is } from 'immutable';
 
 class Gear extends Component {
@@ -26,82 +23,82 @@ class Gear extends Component {
 
 	actions = () => {
 
-		const { where, dispatch, gear, position } = this.props;
+		// const { where, dispatch, gear, position } = this.props;
 
-		const switchHand = {
-			name: '换手',
-			action: () => {
-				dispatch({
-					type: 'gear/switchHand',
-				})
-				this.info({
-					content: 'switched'
-				})
-			}
-		}
+		// const switchHand = {
+		// 	name: '换手',
+		// 	action: () => {
+		// 		dispatch({
+		// 			type: 'gear/switchHand',
+		// 		})
+		// 		this.info({
+		// 			content: 'switched'
+		// 		})
+		// 	}
+		// }
 
-		const actionEquip = {
-			name: '装备',
-			action: () => {
-				dispatch({
-					type: 'gear/equip',
-					payload: {
-						gearId: gear.get('id'),
-						position: gear.get('position').get(0)
-					}
-				})
-				this.info({
-					content: 'equiped'
-				})
-			}
-		}
+		// const actionEquip = {
+		// 	name: '装备',
+		// 	action: () => {
+		// 		dispatch({
+		// 			type: 'gear/equip',
+		// 			payload: {
+		// 				gearId: gear.get('id'),
+		// 				position: gear.get('position').get(0)
+		// 			}
+		// 		})
+		// 		this.info({
+		// 			content: 'equiped'
+		// 		})
+		// 	}
+		// }
 
-		const actionUnequip = {
-			name: '卸下',
-			action: () => {
-				dispatch({
-					type: 'gear/unequip',
-					payload: {
-						position: position
-					}
-				})
-				this.info({
-					content: 'unequiped'
-				})
-			}
-		}
+		// const actionUnequip = {
+		// 	name: '卸下',
+		// 	action: () => {
+		// 		dispatch({
+		// 			type: 'gear/unequip',
+		// 			payload: {
+		// 				position: position
+		// 			}
+		// 		})
+		// 		this.info({
+		// 			content: 'unequiped'
+		// 		})
+		// 	}
+		// }
 
-		const actionDrop = {
-			name: '丢弃',
-			type: menuTypes.CONFIRM,
-			confirm: '确认丢弃吗',
-			action: () => {
-				dispatch({
-					type: 'inventory/remove',
-					payload: {
-						type: 'gear',
-						gear: gear
-					}
-				})
-				this.info({
-					content: 'deleted'
-				})
-			}
-		}
+		// const actionDrop = {
+		// 	name: '丢弃',
+		// 	type: menuTypes.CONFIRM,
+		// 	confirm: '确认丢弃吗',
+		// 	action: () => {
+		// 		dispatch({
+		// 			type: 'inventory/remove',
+		// 			payload: {
+		// 				type: 'gear',
+		// 				gear: gear
+		// 			}
+		// 		})
+		// 		this.info({
+		// 			content: 'deleted'
+		// 		})
+		// 	}
+		// }
 
 		let actions = []
 
-		switch (where) {
-			case 'equiped':
-				if (gear.get('position').size > 1) actions.push(switchHand);
-				actions.push(actionUnequip);
-				break;
-			case 'inventory':
-				actions = [actionEquip, actionDrop];
-				break;
-			default:
-				break;
-		}
+		// switch (where) {
+		// 	case 'equiped':
+		// 		if (gear.get('position').size > 1) actions.push(switchHand);
+		// 		actions.push(actionUnequip);
+		// 		break;
+		// 	case 'inventory':
+		// 		actions = [actionEquip, actionDrop];
+		// 		break;
+		// 	default:
+		// 		break;
+		// }
 
 		return actions;
 	}
@@ -177,12 +174,6 @@ class Gear extends Component {
 				operations={actions} />
 		)
 	}
-}
-
-
-Gear.propTypes = {
-	gear: ImmmutablePropTypes.map,
-	where: PropTypes.string.isRequired
 }
 
 Gear.types = types;

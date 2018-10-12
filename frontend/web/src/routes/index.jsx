@@ -1,27 +1,36 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Route, Switch, Redirect } from 'dva/router';
 import { connect } from 'dva';
-import { Layout } from 'antd';
 // import styles from './game.css';
 import Game from './game/game';
+import Login from './login/login'
+import Register from './register/register'
 import style from './index.less';
 
+import { GAME, LOGIN, REGISTER } from './routes'
 
-const { Header, Footer, Content } = Layout;
+class Index extends PureComponent {
 
-function Index() {
-  return (<Layout className={style.layout}>
-          <Header className={style.header}>worldz</Header>
-          <Content className={style.content} >
-              <Switch>
-                  <Route path='/game' exact component={Game} />
-                  <Redirect from='/' to='/game'/>
-              </Switch>
-          </Content>
-          <Footer className={style.footer}>footer</Footer>
-      </Layout>);
+    render = () => {
+        return (<div className={style.layout}>
+            <div className={style.header}>worldz</div>
+            <div className={style.content} >
+                <Switch>
+                    <Route path={GAME} exact component={Game} />
+                    <Route path={LOGIN} exact component={Login} />
+                    <Route path={REGISTER} exact component={Register} />
+                    <Redirect to={LOGIN} />
+                </Switch>
+            </div>
+            <div className={style.footer}>footer</div>
+        </div>);
+    }
 }
 
 Index.propTypes = {};
 
-export default connect()(Index);
+const mapStateToProps = (state) => {
+    return {}
+}
+
+export default connect(mapStateToProps)(Index);

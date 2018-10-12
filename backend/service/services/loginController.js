@@ -18,6 +18,8 @@ controller.loginByUsername = (req, res) => {
         if (result) {
             encryptWithSalt(password, result.salt).then(encryptedPwd => {
                 if (encryptedPwd === result.password) {
+                    delete result.password
+                    delete result.salt
                     res.send(buildSuccessResponse({
                         user: result
                     }))

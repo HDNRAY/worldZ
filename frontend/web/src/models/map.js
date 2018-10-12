@@ -1,4 +1,4 @@
-import * as mapService from '../services/map';
+// import * as mapService from '../services/map';
 
 export default {
 
@@ -24,15 +24,15 @@ export default {
 	},
 
 	effects: {
-		* get({ payload }, { call, put }) { // eslint-disable-line
-			const data = yield call(mapService.init);
-			yield put({
-				type: 'save',
-				payload: {
-					map: data
-				}
-			});
-		},
+		// * get({ payload }, { call, put }) { // eslint-disable-line
+		// 	const data = yield call(mapService.init);
+		// 	yield put({
+		// 		type: 'save',
+		// 		payload: {
+		// 			map: data
+		// 		}
+		// 	});
+		// },
 	},
 
 	reducers: {

@@ -3,13 +3,11 @@ import { Router, Route, Switch } from 'dva/router';
 import Index from './routes/index';
 
 function RouterConfig({ history }) {
-  return (
-    <Router history={history}>
-      <Switch>
-        <Route path="/"  component={Index} />
-      </Switch>
-    </Router>
-  );
+    return (
+        <Router history={history}>
+            <Index />
+        </Router>
+    );
 }
 
 export default RouterConfig;

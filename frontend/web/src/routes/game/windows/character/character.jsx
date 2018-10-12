@@ -1,8 +1,8 @@
 import { Component } from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'dva';
-import Window from '../window/window';
-import Attribute from '../../label/attribute/attribute';
+import Window from '../../../../components/window/window'
+import Attribute from '../../../../components/label/attribute/attribute';
 import style from './character.less';
 import { is } from 'immutable';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
-import Window from '../window/window';
-import Clickable from '../../shared/clickable/clickable';
+import Window from '../../../../components/window/window'
+import Clickable from '../../../../components/shared/clickable/clickable';
 
 
 class Basic extends React.Component {

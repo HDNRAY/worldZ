@@ -12,13 +12,6 @@ repository.findUserByUsername = username => {
     }).lean()
 }
 
-repository.findUserByCredentials = (username, password) => {
-    return userModal.findOne({
-        username,
-        password
-    }).lean()
-}
-
 repository.findByIdAndUpdate = (id, updates) => {
     return userModal.findByIdAndUpdate(id, updates).lean()
 }

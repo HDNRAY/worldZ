@@ -2,5 +2,6 @@
     "theme":"./src/theme.js",
     "extraBabelPlugins": [
        ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }]
-     ]
+     ],
+    "disableCSSModules": false
 }

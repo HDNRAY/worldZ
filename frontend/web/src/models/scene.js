@@ -1,5 +1,5 @@
 import immutable from 'immutable'
-import { sceneTypes } from '../components/game/scene/constant'
+import { sceneTypes } from '../routes/game/scene/constant'
 
 export default {
 

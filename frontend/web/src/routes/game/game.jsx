@@ -1,15 +1,15 @@
 import React from 'react';
 // import { connect } from 'dva';
 import style from './game.less';
-import Basic from '../../components/windows/basic/basic';
-import Inventory from '../../components/windows/inventory/inventory';
-import Character from '../../components/windows/character/character';
-// import MapWindow from '../../components/windows/map/map';
-import Gear from '../../components/windows/gear/gear';
-import Information from '../../components/game/information/information';
+import Basic from './windows/basic/basic';
+import Inventory from './windows/inventory/inventory';
+import Character from './windows/character/character';
+// import MapWindow from './windows/map/map';
+import Gear from './windows/gear/gear';
+import Information from './information/information';
 // import Scene from '../../components/game/scene/scene';
-import Menu from '../../components/game/menu/menu'
-import Ability from '../../components/windows/ability/ability'
+import Menu from './menu/menu'
+import Ability from './windows/ability/ability'
 
 class Game extends React.Component {
 
