@@ -37,15 +37,15 @@ const request = (url, options = {}) => {
             }
 
             if (data.status === 'failure') {
-                return {
-                    errCode: data.errCode,
-                    errMsg: data.errMsg
-                }
+                const err = new Error()
+                err.name = data.errCode
+                err.message = data.errMsg
+                throw err
             }
         })
-        // .catch(err => {
-        //     console.log(err)
-        // });
+    // .catch(err => {
+    //     console.log(err)
+    // });
 }
 
 export const post = (url, { body, params }) => {

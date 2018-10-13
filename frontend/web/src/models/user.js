@@ -1,12 +1,22 @@
 import { fromJS } from 'immutable'
 import { loginRequest } from '../services/user'
 
+export const loginStates = {
+    NOT_DECIDED: 0,
+    LOGGED_IN: 1,
+    NOT_LOGGED_IN: 2
+}
+
 export default {
 
     namespace: 'user',
 
     state: fromJS({
-        characters: []
+        characters: [],
+        username: '',
+        _id: null,
+        loginState: loginStates.NOT_DECIDED,
+        message: ''
     }),
 
     // subscriptions: {
@@ -17,23 +27,33 @@ export default {
     effects: {
         * login({ payload }, { call, put }) { // eslint-disable-line
             try {
-                const user = yield call(loginRequest, payload)
+                const response = yield call(loginRequest, payload)
                 yield put({
                     type: 'userInfoUpdate',
                     payload: {
-                        user
+                        ...response.user,
+                        loginState: loginStates.LOGGED_IN
                     }
                 })
             } catch (error) {
-                console.log(error)
+                yield put({
+                    type: 'userMessageUpdate',
+                    payload: {
+                        message: error.message,
+                        loginState: loginStates.NOT_LOGGED_IN
+                    }
+                })
             }
         },
     },
 
     reducers: {
-        userInfoUpdate(state, action) {
-            console.log(action)
-            return { ...state }
+        userInfoUpdate(state, { payload }) {
+            console.log(payload)
+            return state.merge(payload)
+        },
+        userMessageUpdate(state, { payload }) {
+            return state.merge(payload)
         }
     },
 

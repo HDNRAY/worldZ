@@ -5,9 +5,10 @@ import { connect } from 'dva';
 import Game from './game/game';
 import Login from './login/login'
 import Register from './register/register'
+import Character from './character/character'
 import style from './index.less';
 
-import { GAME, LOGIN, REGISTER } from './routes'
+import { GAME, LOGIN, REGISTER, CHARACTER } from './routes'
 
 class Index extends PureComponent {
 
@@ -19,6 +20,7 @@ class Index extends PureComponent {
                     <Route path={GAME} exact component={Game} />
                     <Route path={LOGIN} exact component={Login} />
                     <Route path={REGISTER} exact component={Register} />
+                    <Route path={CHARACTER} component={Character} />
                     <Redirect to={LOGIN} />
                 </Switch>
             </div>

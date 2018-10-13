@@ -1,3 +1,6 @@
 export const GAME = '/game'
 export const LOGIN = '/login'
 export const REGISTER = '/register'
+export const CHARACTER = '/character'
+export const CHARACTER_SELECT = '/character/select'
+export const CHARACTER_CREATE = '/character/create'

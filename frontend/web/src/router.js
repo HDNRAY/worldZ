@@ -5,7 +5,7 @@ import Index from './routes/index';
 function RouterConfig({ history }) {
     return (
         <Router history={history}>
-            <Index />
+            <Route component={Index} />
         </Router>
     );
 }
