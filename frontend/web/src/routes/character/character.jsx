@@ -9,13 +9,13 @@ import { CHARACTER_SELECT, CHARACTER_CREATE } from '../routes'
 class Character extends PureComponent {
 
     render = () => {
-        return (<div>
+        return (
             <Switch>
                 <Route path={CHARACTER_SELECT} exact component={CharacterSelect} />
                 <Route path={CHARACTER_CREATE} exact component={CharacterCreate} />
                 <Redirect to={CHARACTER_SELECT} />
             </Switch>
-        </div>);
+        );
     }
 }
 

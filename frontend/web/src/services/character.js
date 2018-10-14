@@ -1,5 +1,10 @@
-import request from '../network/request';
+import { get } from '../network/request';
+import api from '../network/api';
 
-export function character(id){
-    return request('/api/character/:id',id);
+export const loadCharacter = (id) => {
+    return get(api.LOAD_CHARACTER, {
+        params: {
+            id
+        }
+    });
 }
