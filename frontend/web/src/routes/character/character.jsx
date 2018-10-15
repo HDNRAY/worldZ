@@ -7,7 +7,7 @@ import CharacterCreate from './characterCreate/characterCreate'
 import { CHARACTER_SELECT, CHARACTER_CREATE } from '../routes'
 
 class Character extends PureComponent {
-
+    
     render = () => {
         return (
             <Switch>

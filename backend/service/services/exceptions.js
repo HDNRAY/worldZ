@@ -14,5 +14,9 @@ module.exports = {
     ERROR_INVALID_CREDENTIALS: {
         code: 1003,
         message: 'Invalid Username Or Password'
+    },
+    ERROR_NOT_AUTHORIZED: {
+        code: 1004,
+        message: 'Not Authorized'
     }
 }

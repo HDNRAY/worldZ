@@ -3,6 +3,7 @@ const { buildFailureResponse, buildSuccessResponse, buildCatchError } = require(
 const { ERROR_INVALID_PARAMETER, ERROR_INVALID_CREDENTIALS } = require('./exceptions');
 const { encryptWithSalt, generateSalt } = require('../common/crypto')
 const { checkAttributes } = require('../common/util')
+const { generate } = require('../auth/auth')
 const controller = {}
 
 controller.loginByUsername = (req, res) => {
@@ -12,17 +13,19 @@ controller.loginByUsername = (req, res) => {
     if (!checkAttributes({ target: req.body, attributes: ['username', 'password'] })) {
         res.send(buildFailureResponse(ERROR_INVALID_PARAMETER))
     }
-
+    let user
     userRepository.findUserByUsername(username).then(result => {
 
         if (result) {
-            encryptWithSalt(password, result.salt).then(encryptedPwd => {
+            return encryptWithSalt(password, result.salt).then(encryptedPwd => {
                 if (encryptedPwd === result.password) {
                     delete result.password
                     delete result.salt
-                    res.send(buildSuccessResponse({
-                        user: result
-                    }))
+                    user = {
+                        ...result
+                    }
+                    console.log(result)
+                    return generate(result._id)
                 } else {
                     res.send(buildFailureResponse(ERROR_INVALID_CREDENTIALS))
                 }
@@ -31,6 +34,10 @@ controller.loginByUsername = (req, res) => {
             res.send(buildFailureResponse(ERROR_INVALID_CREDENTIALS))
         }
 
+    }).then(token => {
+        console.log('in controller', token)
+        res.setHeader('Set-Cookie', token)
+        res.send(buildSuccessResponse(user))
     }).catch(err => res.send(buildCatchError(err)))
 }
 

@@ -26,13 +26,13 @@ builder.buildFailureResponse = ({ code, message }) => {
 }
 
 builder.buildCatchError = (err) => {
-    if (err.errCode) {
+    if (err.errCode || err.code) {
         return buildResponse({
             ...err,
             status: 'failure'
         })
     } else {
-        return buildFailureResponse(ERROR_SERVER_ISSUE)
+        return builder.buildFailureResponse(ERROR_SERVER_ISSUE)
     }
 }
 
