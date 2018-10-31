@@ -4,7 +4,10 @@ import styles from './input.less'
 
 class Input extends PureComponent {
     onBlur = (event) => {
-        console.log(event)
+        this.props.onBlur && this.props.onBlur(event.currentTarget.value)
+    }
+    onChange = event => {
+        this.props.onChange && this.props.onChange(event.currentTarget.value)
     }
     render = () => {
         const { message, value, placeholder, type, onChange } = this.props
@@ -14,12 +17,12 @@ class Input extends PureComponent {
             : null
 
         const clearButtonDisplay = value
-            ? <span className={styles.clearIcon} onClick={() => onChange('')}>X</span>
+            ? <span className={styles.clearIcon} onClick={onChange ? () => onChange('') : null}>X</span>
             : null
 
         return (<div className={styles.wrapper}>
             <div className={styles.input}>
-                <input value={value} type={type} onBlur={this.onBlur} onChange={event => onChange(event.currentTarget.value)} placeholder={placeholder} />
+                <input value={value} type={type} onBlur={this.onBlur} onChange={this.onChange} placeholder={placeholder} />
                 {clearButtonDisplay}
             </div>
             {messageDisplay}

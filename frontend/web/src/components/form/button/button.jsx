@@ -8,12 +8,12 @@ class Button extends PureComponent {
 
         const content = isLoading ? <span>Loading</span> : <span>{text}</span>
 
-        return (<div className={styles.wrapper} >
+        return (<button className={styles.wrapper} >
             <div className={styles.message}>{message}</div>
             <div className={styles.button} onClick={onClick}>
                 {content}
             </div>
-        </div>)
+        </button>)
     }
 }
 

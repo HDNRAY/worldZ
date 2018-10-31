@@ -1,11 +1,15 @@
 .wrapper {
     cursor: pointer;
     height: 50px;
-    padding-top: 5px;
+    padding: 0;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    display: block;
 
     .message {
-        height: 15px;
-        line-height: 15px;
+        height: 20px;
+        line-height: 20px;
         font-size: 12px;
         color: crimson;
     }
@@ -20,6 +24,10 @@
 
         &:hover {
             background: #dddddd;
+        }
+
+        &:active{
+            background: #999999;
         }
     }
 }

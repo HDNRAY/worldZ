@@ -29,16 +29,18 @@ class CharacterSelect extends PureComponent {
         characterCards.push(<CharacterCard key={'character_create'} onClick={this.goCreate} create={true} />)
 
         return (<div className={styles.page}>
-            <div className={styles.controls}>
-                <div className={styles.controlsLeft}>
-                    <div className={styles.button} onClick={this.goCreate}>新建角色</div>
+            <div className={styles.content}>
+                <div className={styles.controls}>
+                    <div className={styles.controlsLeft}>
+                        <div className={styles.button} onClick={this.goCreate}>新建角色</div>
+                    </div>
+                    <div className={styles.controlsRight}>
+                        <div className={styles.display}>{`角色槽位 ${characters.size}/${6}`}</div>
+                    </div>
                 </div>
-                <div className={styles.controlsRight}>
-                    <div className={styles.display}>{`角色槽位 ${characters.size}/${6}`}</div>
+                <div className={styles.cards}>
+                    {characterCards}
                 </div>
-            </div>
-            <div className={styles.cards}>
-                {characterCards}
             </div>
         </div>);
     }
