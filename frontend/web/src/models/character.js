@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { loadCharacter } from '../services/character';
+import { loadCharacter, createCharacter } from '../services/character';
 
 export default {
 
@@ -45,13 +45,30 @@ export default {
                     }
                 });
             } catch (error) {
-
+                console.log(error)
+            }
+        },
+        *create({ payload }, { call, put }) {
+            try {
+                const character = yield call(createCharacter, payload.character)
+                console.log(character)
+                yield put({
+                    type: 'characterCreated',
+                    payload: {
+                        character
+                    }
+                });
+            } catch (error) {
+                console.log(error)
             }
         },
     },
 
     reducers: {
         characterInfoUpdate: (state, { payload }) => {
+            return state.merge(payload.character)
+        },
+        characterCreated: (state, { payload }) => {
             return state.merge(payload.character)
         }
     },

@@ -1,0 +1,28 @@
+.radioGroup {
+    height: 100%;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    :first-child {
+        margin-left: 0 !important;
+    }
+    .radioOption {
+        margin-left: 10%;
+        height: 20px;
+        line-height: 20px;
+        input {
+            display: none;
+        }
+        div {
+            color: silver;
+            background: black;
+            border-radius: 10px;
+            min-width: 30px;
+            text-align: center;
+        }
+        input:checked+div {
+            color: black;
+            background: silver;
+        }
+    }
+}

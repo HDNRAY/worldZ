@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { CHARACTER_SELECT } from '../routes'
-import Input from '../../components/form/input/input';
-import Button from '../../components/form/button/button';
+import Input from '../../components/control/input/input';
+import Button from '../../components/control/button/button';
 import { loginStates } from '../../models/user';
 
 import styles from './login.less'
@@ -50,14 +50,14 @@ class Login extends PureComponent {
     }
 
     render() {
-        const { message } = this.props
+        const { message, isLogging } = this.props
         const { username, password } = this.state
 
         return (<div className={styles.page}>
             <div className={styles.loginPanel}>
                 <Input value={username} type='text' placeholder='用户名' onChange={this.onUsernameChange} />
                 <Input value={password} onChange={this.onPasswordChange} type='password' placeholder='密码' />
-                <Button message={message} text='登录' onClick={this.doLogin} />
+                <Button message={message} text='登录' isLoading={isLogging} onClick={this.doLogin} />
             </div>
         </div>)
     }
@@ -70,6 +70,7 @@ const mapStateToProps = (state, props) => {
     return {
         message: state.user.get('message'),
         hasLogin: state.user.get('loginState') === loginStates.LOGGED_IN,
+        isLogging: state.user.get('isLogging'),
         ...props
     }
 }

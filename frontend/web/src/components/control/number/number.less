@@ -1,0 +1,30 @@
+.numberWrapper {
+    height: 80px;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    >div {
+        display: flex;
+        justify-content: center;
+    }
+    .triangle {
+        width: 0;
+        height: 0;
+        border: solid transparent 10px;
+    }
+    .upper {
+        .triangle();
+        border-bottom-color: silver;
+    }
+    .theValue {
+        text-align: center;
+        height: 20px;
+        line-height: 20px;
+        font-weight: 500;
+    }
+    .lower {
+        .triangle();
+        border-top-color: silver;
+    }
+}

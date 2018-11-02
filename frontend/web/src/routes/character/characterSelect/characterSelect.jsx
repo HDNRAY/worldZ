@@ -11,7 +11,7 @@ class CharacterSelect extends PureComponent {
     }
 
     selectCharacter = (id) => {
-        this.dispatch({
+        this.props.dispatch({
             type: 'character/load',
             payload: {
                 id

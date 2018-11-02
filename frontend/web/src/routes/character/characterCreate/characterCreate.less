@@ -3,10 +3,40 @@
     justify-content: center;
     align-items: center;
     .content {
-        max-width: 800px;
+        max-width: 600px;
         width: 80%;
         .createLine {
             display: flex;
+            justify-content: space-around;
+        }
+        .nameLine {
+            .createLine();
+            height: 120px;
+            .nicknamePanel {
+                width: 40%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                >div {
+                    margin-top: 20px;
+                }
+            }
+            .genderPanel {
+                width: 40%;
+            }
+        }
+        .attributeLine {
+            .createLine();
+            height: 120px;
+            .attributeName{
+                text-align: center;
+            }
+        }
+        .submitLine {
+            .createLine();
+            Button {
+                width: 30%;
+            }
         }
     }
 }

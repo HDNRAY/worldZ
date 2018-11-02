@@ -12,6 +12,7 @@ export default {
     namespace: 'user',
 
     state: fromJS({
+        isLogging: false,
         characters: [],
         username: '',
         _id: null,
@@ -27,6 +28,12 @@ export default {
     effects: {
         * login({ payload }, { call, put }) { // eslint-disable-line
             try {
+                yield put({
+                    type: 'userInfoUpdate',
+                    payload: {
+                        isLogging: true
+                    }
+                })
                 const response = yield call(loginRequest, payload)
                 yield put({
                     type: 'userInfoUpdate',

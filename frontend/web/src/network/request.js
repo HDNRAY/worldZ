@@ -58,7 +58,18 @@ export const post = (url, { body, params }) => {
 }
 
 export const get = (url, { query, params }) => {
-    url += jsonToQuery(query)
+    url += query ? jsonToQuery(query) : ''
     const fullUrl = params ? jsonToParams(url, params) : url
     return request(fullUrl)
+}
+
+export const apiRequest = (api, { query, body, params }) => {
+    console.log(query, body, params)
+    const url = api.url + query ? jsonToQuery(query) : ''
+    const fullUrl = params ? jsonToParams(url, params) : url
+    const options = {
+        method: api.method,
+        body: JSON.stringify(body)
+    }
+    return request(fullUrl, options)
 }
