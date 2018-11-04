@@ -16,6 +16,14 @@ const checkStatus = (response) => {
     throw error;
 }
 
+// const getToken = (response) => {
+//     console.log(response.headers.get('wztoken'))
+//     if (!wztoken) wztoken = response.headers.get('wztoken')
+//     return response;
+// }
+
+// let wztoken
+
 /**
  * Requests a URL, returning a promise.
  *
@@ -24,14 +32,19 @@ const checkStatus = (response) => {
  * @return {object}           An object containing either "data" or "err"
  */
 const request = (url, options = {}) => {
-    options.credentials = 'same-origin'
+    // options.credentials = 'same-origin'
+    options.mode = 'cors'
+    options.credentials = 'include'
     options.headers = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        // 'wztoken': wztoken
     }
     return fetch(domain + url, options)
         .then(checkStatus)
+        // .then(getToken)
         .then(parseJSON)
         .then(data => {
+
             if (data.status === 'success') {
                 return data.data
             }
@@ -63,9 +76,9 @@ export const get = (url, { query, params }) => {
     return request(fullUrl)
 }
 
-export const apiRequest = (api, { query, body, params }) => {
+export const apiRequest = (api, { query, body, params } = {}) => {
     console.log(query, body, params)
-    const url = api.url + query ? jsonToQuery(query) : ''
+    const url = api.path + (query ? jsonToQuery(query) : '')
     const fullUrl = params ? jsonToParams(url, params) : url
     const options = {
         method: api.method,

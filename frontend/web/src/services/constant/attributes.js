@@ -1,7 +1,8 @@
 
-export const volumeAttributes = {
+export const mainAttributes = {
     health: { name: '鲜血', description: '' },
     spirit: { name: '精力', description: '' },
+    experience: { name: '经验', description: '' },
 }
 
 export const basicAttributes = {
@@ -10,7 +11,6 @@ export const basicAttributes = {
     dexterity: { name: '技巧', description: '' },
     stamina: { name: '耐力', description: '' },
     mind: { name: '念力', description: '' },
-    experience: { name: '经验', description: '' },
     intelligence: { name: '智慧', description: '' },
 }
 

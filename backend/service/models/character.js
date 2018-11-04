@@ -8,6 +8,11 @@ const schema = new Schema({
         unique: true
     },
 
+    gender: {
+        type: Number,
+        required: true
+    },
+
     attribute: {
         spirit: Number,
         strength: Number,

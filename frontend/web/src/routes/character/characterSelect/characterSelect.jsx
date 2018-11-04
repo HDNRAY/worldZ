@@ -6,6 +6,12 @@ import { CHARACTER_CREATE } from '../../routes';
 
 class CharacterSelect extends PureComponent {
 
+    componentWillMount = () => {
+        this.props.dispatch({
+            type: 'user/loadCharacters'
+        })
+    }
+
     goCreate = () => {
         this.props.history.push(CHARACTER_CREATE)
     }
@@ -56,16 +62,16 @@ const CharacterCard = (props) => {
     let content
     if (props.create) {
         content = (<div className={styles.create}>
-            <div className={styles.plus}></div>
+            <div onClick={props.onClick} className={styles.plus}></div>
         </div>)
     } else {
         const { name } = props
         content = (<div className={styles.detail}>
-            <div>{name}</div>
+            <div onClick={props.onClick} className={styles.badge}>{name}</div>
         </div>)
     }
 
-    return (<div className={styles.card} onClick={props.onClick}>
+    return (<div className={styles.card} >
         {content}
     </div>)
 }

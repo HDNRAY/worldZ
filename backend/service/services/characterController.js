@@ -1,36 +1,41 @@
 const characterRepository = require('../repositories/characterRepository')
 const userRepository = require('../repositories/userRepository')
-const { buildSuccessResponse, buildCatchError } = require('./responseBuilder')
+const { buildSuccessResponse, buildCatchError, buildFailureResponse } = require('./responseBuilder')
 const { checkAttributes } = require('../common/util');
 const { ERROR_INVALID_PARAMETER } = require('./exceptions');
 
 const controller = {}
 
-const characterAttributes = ['spirit', 'strength', 'agility', 'dexterity', 'stamina', 'mind', 'intelligence']
+const characterAttributes = ['strength', 'agility', 'dexterity', 'stamina', 'mind', 'intelligence']
 
 const attributeBaseValue = 10
 
 controller.create = (req, res) => {
-    
-    if (!checkAttributes({ target: req.body, attributes: ['name', 'attributes'] })) {
+    console.log(req.body)
+    if (!checkAttributes({ target: req.body, attributes: ['name', 'gender', 'attributes'] })) {
         res.send(buildFailureResponse(ERROR_INVALID_PARAMETER))
+        return
     }
 
-    const { name, attributes } = req.body
+    const { name, attributes, gender } = req.body
 
     if (!checkAttributes({ target: attributes, attributes: characterAttributes })) {
         res.send(buildFailureResponse(ERROR_INVALID_PARAMETER))
+        return
     }
 
-    if (characterAttributes.reduce((sum, item) => sum + item, 0) !== characterAttributes.length * attributeBaseValue) {
+    if (Object.keys(attributes).reduce((sum, item) => sum + attributes[item], 0) !== characterAttributes.length * attributeBaseValue) {
         res.send(buildFailureResponse(ERROR_INVALID_PARAMETER))
+        return
     }
 
-    const userId = req.params.id
+    const userId = req.user.id
     const character = {
         name,
+        gender,
         attributes: {
             ...attributes,
+            spirit: 100,
             experience: 0
         }
     }

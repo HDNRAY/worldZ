@@ -8,7 +8,10 @@ export default {
     LOAD_CHARACTER: {
         path: '/character/:id', method: 'GET'
     },
+    LOAD_ALL_CHARACTERS: {
+        path: '/user/characters', method: 'GET'
+    },
     CREATE_CHARACTER: {
-        path: '/character/:id', method: 'POST'
+        path: '/character/create', method: 'PUT'
     }
 }

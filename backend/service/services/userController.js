@@ -1,7 +1,7 @@
 const userRepository = require('../repositories/userRepository')
 const { buildFailureResponse, buildSuccessResponse, buildCatchError } = require('./responseBuilder')
 const { ERROR_NO_USER } = require('./exceptions');
-const { generateSalt, encryptWithSalt } = require('../common/crypto')
+// const { generateSalt, encryptWithSalt } = require('../common/crypto')
 const controller = {}
 
 controller.getUserById = (req, res) => {
@@ -16,6 +16,24 @@ controller.getUserById = (req, res) => {
             } else {
                 response = buildSuccessResponse({
                     user: result
+                })
+            }
+            res.send(response)
+        }).catch(err => res.send(buildCatchError(err)))
+}
+
+controller.getAllCharacters = (req, res) => {
+    const userId = req.user.id
+
+    userRepository
+        .findUserById(userId)
+        .then(result => {
+            let response
+            if (!result) {
+                response = buildFailureResponse(ERROR_NO_USER)
+            } else {
+                response = buildSuccessResponse({
+                    characters: result.characters
                 })
             }
             res.send(response)

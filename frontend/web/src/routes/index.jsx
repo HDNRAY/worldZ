@@ -9,8 +9,25 @@ import Character from './character/character'
 import style from './index.less';
 
 import { GAME, LOGIN, REGISTER, CHARACTER } from './routes'
+// import { loginStates } from '../models/user';
 
 class Index extends PureComponent {
+
+    // componentDidMount = ()=>{
+    //     const {loginState,dispatch}=this.props
+    //     if(loginState === loginStates.NOT_DECIDED){
+    //         dispatch({
+    //             type:'user/info'
+    //         })
+    //     }
+    // }
+
+    // componentWillReceiveProps = (props)=>{
+    //     const {loginState, history} = this.props
+    //     if(props.loginState === loginStates.LOGGED_IN && loginState === loginStates.NOT_DECIDED){
+
+    //     }
+    // }
 
     render = () => {
         return (<div className={style.layout}>
@@ -32,7 +49,9 @@ class Index extends PureComponent {
 Index.propTypes = {};
 
 const mapStateToProps = (state) => {
-    return {}
+    return {
+        loginState:state.user.get('loginState')
+    }
 }
 
 export default connect(mapStateToProps)(Index);

@@ -25,14 +25,24 @@ const getUserSecret = () => {
 
 module.exports = {
     userAuth: (req, res, next) => {
-        const token = req.getHeader('Cookie')
+        const token = req.cookies.wztoken
+        // console.log('token', req.cookies)
         getUserSecret().then(secret => {
             jwt.verify(token, secret, (err, result) => {
                 if (err) {
+                    console.log(err)
                     res.send(buildFailureResponse(ERROR_NOT_AUTHORIZED))
                 } else {
-                    console.log(result)
-                    next()
+                    const now = Date.now()
+                    if (result.exp * 1000 < now) {
+                        res.send(buildFailureResponse(ERROR_NOT_AUTHORIZED))
+                    } else {
+                        req.user = {
+                            id: result.userId
+                        }
+                        next()
+                    }
+
                 }
             })
         })

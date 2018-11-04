@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable'
 import { loginRequest } from '../services/user'
+import { loadAllCharacters } from '../services/character';
 
 export const loginStates = {
     NOT_DECIDED: 0,
@@ -20,12 +21,26 @@ export default {
         message: ''
     }),
 
-    // subscriptions: {
-    //     setup({ dispatch, history }) { // eslint-disable-line
-    //     },
-    // },
+    subscriptions: {
+        setup({ dispatch, history }) { // eslint-disable-line
+        },
+    },
 
     effects: {
+        *loadCharacters({ payload }, { call, put }) {
+            try {
+                const result = yield call(loadAllCharacters)
+                console.log(result)
+                yield put({
+                    type: 'userInfoUpdate',
+                    payload: {
+                        characters: result.characters
+                    }
+                });
+            } catch (error) {
+                console.log(error)
+            }
+        },
         * login({ payload }, { call, put }) { // eslint-disable-line
             try {
                 yield put({

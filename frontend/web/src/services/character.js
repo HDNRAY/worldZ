@@ -2,11 +2,15 @@ import { get, apiRequest } from '../network/request';
 import api from '../network/api';
 
 export const loadCharacter = (id) => {
-    return get(api.LOAD_CHARACTER.url, {
+    return get(api.LOAD_CHARACTER.path, {
         params: {
             id
         }
     });
+}
+
+export const loadAllCharacters = () => {
+    return apiRequest(api.LOAD_ALL_CHARACTERS)
 }
 
 export const createCharacter = (params) => {

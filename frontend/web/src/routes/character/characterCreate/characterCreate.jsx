@@ -60,7 +60,11 @@ class CharacterCreate extends PureComponent {
             this.props.dispatch({
                 type: 'character/create',
                 payload: {
-                    character: this.state
+                    character: {
+                        name: this.state.nickname,
+                        attributes: this.state.attributes,
+                        gender: this.state.gender
+                    }
                 }
             })
         }
