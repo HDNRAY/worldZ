@@ -24,8 +24,7 @@ controller.loginByUsername = (req, res) => {
                     user = {
                         ...result
                     }
-                    console.log(result)
-                    return generate(result._id)
+                    return generate({ userId: result._id })
                 } else {
                     res.send(buildFailureResponse(ERROR_INVALID_CREDENTIALS))
                 }
@@ -35,11 +34,9 @@ controller.loginByUsername = (req, res) => {
         }
 
     }).then(token => {
-        console.log('in controller', token)
-        // res.setHeader('wztoken', token)
         res.setHeader('Set-Cookie', `wztoken=${token};path=/`)
-        res.setHeader('Access-Control-Allow-Credentials', true)
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000')
+        // res.setHeader('Access-Control-Allow-Credentials', true)
+        // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000')
         res.send(buildSuccessResponse(user))
     }).catch(err => res.send(buildCatchError(err)))
 }

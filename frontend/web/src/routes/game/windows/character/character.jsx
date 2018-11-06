@@ -8,77 +8,68 @@ import { is } from 'immutable';
 
 class Character extends Component {
 
-	componentDidMount = () => {
-		const { dispatch } = this.props;
+    shouldComponentUpdate = (nextProps) => {
+        const { window, attributes } = this.props;
+        return !is(window, nextProps.window) || !is(attributes, nextProps.attributes);
+    }
 
-		dispatch({
-			type: 'character/fetch',
-		})
-	}
+    render = () => {
+        const { attributes, window, name } = this.props;
 
-	shouldComponentUpdate = (nextProps) => {
-		const { window, attributes } = this.props;
-		return !is(window, nextProps.window) || !is(attributes, nextProps.attributes);
-	}
+        const basicAttributes = attributes.get('basic').reduce((result, value, attribute) => {
+            result.push(<Attribute key={'attribute' + result.length} attribute={attribute} value={value} />)
+            return result;
+        }, [])
 
+        const powerAttributes = attributes.get('power').reduce((result, value, attribute) => {
+            result.push(<Attribute key={'attribute' + result.length} attribute={attribute} value={value} />)
+            return result;
+        }, [])
 
-	render = () => {
-		const { attributes, window, name } = this.props;
+        // const advancedAttributes = attributes.get('advanced').reduce((result, value, attribute) => {
+        // 	result.push(<Attribute key={'attribute' + result.length} attribute={attribute} value={value} />)
+        // 	return result;
+        // },[])
 
-		const basicAttributes = attributes.get('basic').reduce((result, value, attribute) => {
-			result.push(<Attribute key={'attribute' + result.length} attribute={attribute} value={value} />)
-			return result;
-		}, [])
-
-		const powerAttributes = attributes.get('power').reduce((result,value,attribute)=>{
-			result.push(<Attribute key={'attribute' + result.length} attribute={attribute} value={value} />)
-			return result;
-		},[])
-
-		const advancedAttributes = attributes.get('advanced').reduce((result, value, attribute) => {
-			result.push(<Attribute key={'attribute' + result.length} attribute={attribute} value={value} />)
-			return result;
-		},[])
-
-		return (
-			<Window title={name} id={1} position={{ x: 90, y: 90 }} window={window}
-				nameToClose='character'>
-				<div className={style.attributes}>
-					<div className={style.basicAttributes}>
-						<div className={style.subTitle}>
-							基础属性
+        return (
+            <Window title={name} id={1} position={{ x: 90, y: 90 }} window={window}
+                nameToClose='character'>
+                <div className={style.attributes}>
+                    <div className={style.basicAttributes}>
+                        <div className={style.subTitle}>
+                            基础属性
 						</div>
-						{basicAttributes}
-					</div>
-					<div className={style.powerAttributes}>
-						<div className={style.subTitle}>
-							念能属性
+                        {basicAttributes}
+                    </div>
+                    <div className={style.powerAttributes}>
+                        <div className={style.subTitle}>
+                            念能属性
 						</div>
-						{powerAttributes}
-					</div>
-					<div className={style.advancedAttributes}>
-						<div className={style.subTitle}>
-							进阶属性
+                        {powerAttributes}
+                    </div>
+                    {/* <div className={style.advancedAttributes}>
+                        <div className={style.subTitle}>
+                            进阶属性
 						</div>
-						{advancedAttributes}
-					</div>
+                        {advancedAttributes}
+                    </div> */}
+                </div>
 
-
-				</div>
-				
-			</Window>)
-	}
+            </Window>)
+    }
 }
 
 const mapStateToProps = (state, props) => {
 
-	return {
-		window: state.game.getIn(['windows', 'character']),
-		name: state.character.get('name'),
-		id: state.character.get('id'),
-		attributes: state.character.get('attributes'),
-		...props
-	}
+    const attributes = state.character.get('attributes')
+
+    return {
+        window: state.game.getIn(['windows', 'character']),
+        name: state.character.get('nickname'),
+        id: state.character.get('id'),
+        attributes: attributes,
+        ...props
+    }
 }
 
 export default connect(mapStateToProps)(Character);

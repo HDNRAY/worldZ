@@ -17,31 +17,35 @@ class CharacterSelect extends PureComponent {
     }
 
     selectCharacter = (id) => {
-        this.props.dispatch({
-            type: 'character/load',
+        const { history, dispatch } = this.props
+        dispatch({
+            type: 'character/selectCharacter',
             payload: {
                 id
             }
         })
+        history.push('/game')
     }
 
     render = () => {
-        const { characters } = this.props
+        const { characters, characterLimit } = this.props
         const characterCards = characters.toJS().map(character => {
             return <CharacterCard onClick={() => this.selectCharacter(character._id)}
-                key={character.id} {...character} />
+                key={character._id} {...character} />
         })
 
-        characterCards.push(<CharacterCard key={'character_create'} onClick={this.goCreate} create={true} />)
+        while (characterCards.length < characterLimit) {
+            characterCards.push(<CharacterCard key={'character_create_' + characterCards.length} onClick={this.goCreate} create={true} />)
+        }
 
         return (<div className={styles.page}>
             <div className={styles.content}>
                 <div className={styles.controls}>
                     <div className={styles.controlsLeft}>
-                        <div className={styles.button} onClick={this.goCreate}>新建角色</div>
+                        {characters.size < characterLimit ? <div className={styles.button} onClick={this.goCreate}>新建角色</div> : null}
                     </div>
                     <div className={styles.controlsRight}>
-                        <div className={styles.display}>{`角色槽位 ${characters.size}/${6}`}</div>
+                        <div className={styles.display}>{`角色槽位 ${characters.size}/${characterLimit}`}</div>
                     </div>
                 </div>
                 <div className={styles.cards}>
@@ -54,7 +58,8 @@ class CharacterSelect extends PureComponent {
 
 const mapStateToProps = (state) => {
     return {
-        characters: state.user.get('characters')
+        characters: state.user.get('characters'),
+        characterLimit: state.user.get('characterLimit')
     }
 }
 

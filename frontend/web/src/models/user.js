@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable'
-import { loginRequest } from '../services/user'
+import { loginRequest, userInfoRequest } from '../services/user'
 import { loadAllCharacters } from '../services/character';
 
 export const loginStates = {
@@ -15,6 +15,7 @@ export default {
     state: fromJS({
         isLogging: false,
         characters: [],
+        characterLimit: 6,
         username: '',
         _id: null,
         loginState: loginStates.NOT_DECIDED,
@@ -30,7 +31,6 @@ export default {
         *loadCharacters({ payload }, { call, put }) {
             try {
                 const result = yield call(loadAllCharacters)
-                console.log(result)
                 yield put({
                     type: 'userInfoUpdate',
                     payload: {
@@ -67,11 +67,24 @@ export default {
                 })
             }
         },
+        *info({ payload }, { call, put }) {
+            try {
+                const result = yield call(userInfoRequest)
+                yield put({
+                    type: 'userInfoUpdate',
+                    payload: {
+                        ...result.user,
+                        loginState: loginStates.LOGGED_IN
+                    }
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        }
     },
 
     reducers: {
         userInfoUpdate(state, { payload }) {
-            console.log(payload)
             return state.merge(payload)
         },
         userMessageUpdate(state, { payload }) {

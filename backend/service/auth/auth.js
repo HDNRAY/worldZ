@@ -37,9 +37,7 @@ module.exports = {
                     if (result.exp * 1000 < now) {
                         res.send(buildFailureResponse(ERROR_NOT_AUTHORIZED))
                     } else {
-                        req.user = {
-                            id: result.userId
-                        }
+                        req.cookies = result
                         next()
                     }
 
@@ -50,9 +48,9 @@ module.exports = {
     adminAuth: (req, res, next) => {
         next()
     },
-    generate: (userId) => {
+    generate: (content) => {
         return getUserSecret().then(secret => {
-            return jwt.sign({ userId }, secret, {
+            return jwt.sign(content, secret, {
                 expiresIn: '30d'
             })
         })

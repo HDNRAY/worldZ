@@ -13,15 +13,26 @@ const schema = new Schema({
         required: true
     },
 
-    attribute: {
-        spirit: Number,
-        strength: Number,
-        agility: Number,
-        dexterity: Number,
-        stamina: Number,
-        mind: Number,
-        experience: Number,
-        intelligence: Number,
+    attributes: {
+        main: {
+            blood: { type: Number, default: 5000 },
+            spirit: { type: Number, default: 100 },
+            experience: { type: Number, default: 0 },
+        },
+        basic: {
+            strength: Number,
+            agility: Number,
+            dexterity: Number,
+            stamina: Number,
+            mind: Number,
+            intelligence: Number,
+        },
+        power: {
+            burnning: { type: Number, default: 0 },
+            voltage: { type: Number, default: 0 },
+            freeze: { type: Number, default: 0 },
+            telekinetic: { type: Number, default: 0 },
+        },
     },
 
     wearings: [{

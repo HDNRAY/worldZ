@@ -5,6 +5,9 @@ const characterController = require('../services/characterController')
 
 router.put('/create', auth.userAuth, characterController.create)
 
-router.get('/:id', characterController.getCharacterById)
+router.get('/:id', auth.userAuth, characterController.loadCharacterById)
+
+router.post('/gear/equip', auth.userAuth, characterController.equipGear)
+router.post('/gear/unequip', auth.userAuth, characterController.unequipGear)
 
 module.exports = router;

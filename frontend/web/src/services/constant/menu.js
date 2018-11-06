@@ -3,5 +3,4 @@ export const menuTypes = {
     ABILITY: 'abilities',
     SPENDABLE: 'spandables',
     CONFIRM: 'confirm'
-
 }

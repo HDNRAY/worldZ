@@ -31,8 +31,8 @@ constants.itemQuality = {
 }
 
 constants.itemType = {
-    GEAR: 0,
-    SPENDABLE: 1
+    GEAR: 'Gear',
+    SPENDABLE: 'Spendable'
 }
 
 module.exports = constants

@@ -1,47 +1,42 @@
 .tips {
-  display: flex;
-
-  .equiped {
-    color: #777777;
-    height: 15px;
-    line-height: 15px;
-    font-size: 12px;
-    text-align: center;
-    border: 1px solid #777777;
-    border-bottom: none;
-  }
-
-  .tip {
-    width: 200px;
-    background-color: #000000dd;
-    border: 1px solid #777777;
-    padding: 3px;
-
-    .oneLine {
-      height: 16px;
-      line-height: 16px;
-      display: flex;
-      align-items: center;
+    display: flex;
+    .equiped {
+        color: #777777;
+        height: 15px;
+        line-height: 15px;
+        font-size: 12px;
+        text-align: center;
+        border: 1px solid #777777;
+        border-bottom: none;
     }
-
-    .name {
-      .oneLine();
+    .tip {
+        width: 200px;
+        color: #dddddd;
+        background-color: #000000dd;
+        border: 1px solid #777777;
+        padding: 3px;
+        .oneLine {
+            height: 16px;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .name {
+            .oneLine();
+            font-weight: 600;
+        }
+        .type {
+            .oneLine();
+            justify-content: space-between;
+        }
+        .effects {
+            div {
+                .oneLine()
+            }
+        }
+        .description {
+            padding: 5px;
+            color: goldenrod;
+        }
     }
-
-    .type {
-      .oneLine();
-      justify-content: space-between;
-    }
-
-    .effects {
-      div {
-        .oneLine()
-      }
-    }
-
-    .description {
-      padding: 5px;
-      color: goldenrod;
-    }
-  }
 }

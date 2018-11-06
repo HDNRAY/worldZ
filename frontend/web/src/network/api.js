@@ -8,10 +8,19 @@ export default {
     LOAD_CHARACTER: {
         path: '/character/:id', method: 'GET'
     },
+    GET_USER_INFO: {
+        path: '/user/info', method: 'GET'
+    },
     LOAD_ALL_CHARACTERS: {
         path: '/user/characters', method: 'GET'
     },
     CREATE_CHARACTER: {
         path: '/character/create', method: 'PUT'
+    },
+    EQUIP_GEAR: {
+        path: '/character/gear/equip', method: 'POST'
+    },
+    UNEQUIP_GEAR: {
+        path: '/character/gear/unequip', method: 'POST'
     }
 }

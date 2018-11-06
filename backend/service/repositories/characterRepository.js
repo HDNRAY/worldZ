@@ -10,16 +10,21 @@ repository.findById = id => {
     return characterModal.findById(id)
 }
 
-repository.findByIdWithGears = id => {
-    return characterModal.findById(id).populate('gears')
-}
+// repository.findByIdWithGears = id => {
+//     return characterModal.findById(id).populate('wearings.gear')
+// }
 
 repository.findByIdWithAllInfos = id => {
-    return characterModal.findById(id).populate('wearings inventory')
+    return characterModal.findById(id).populate({
+        path: 'wearings inventory',
+        populate: {
+            path: 'object'
+        }
+    })
 }
 
 repository.findByIdsWithAllInfos = ids => {
-    return characterModal.where('id').in(ids).populate('wearings inventory').exec()
+    return characterModal.where('id').in(ids).populate('inventory').exec()
 }
 
 repository.addItem = (id, itemId) => {
@@ -28,8 +33,17 @@ repository.addItem = (id, itemId) => {
             inventory: itemId
         }
     }, {
-        new: true
-    })
+            new: true
+        }).populate('inventory')
+}
+
+repository.updateWearings = (id, wearings) => {
+    return characterModal.findByIdAndUpdate(id, {
+        wearings: wearings
+    }, {
+            new: true,
+            upsert: true
+        })
 }
 
 // 穿/脱装备
@@ -47,12 +61,12 @@ repository.updateGearByPosition = (id, itemId, position) => {
             }
         }
     }, {
-        $set: {
-            "wearings.$": data
-        }
-    }, {
-        new: true
-    })
+            $set: {
+                "wearings.$": data
+            }
+        }, {
+            new: true
+        })
 }
 
 module.exports = repository

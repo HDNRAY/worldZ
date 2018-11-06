@@ -22,8 +22,26 @@ controller.getUserById = (req, res) => {
         }).catch(err => res.send(buildCatchError(err)))
 }
 
+controller.getUserInfo = (req, res) => {
+    const id = req.cookies.userId
+
+    userRepository
+        .findUserById(id)
+        .then(result => {
+            let response
+            if (!result) {
+                response = buildFailureResponse(ERROR_NO_USER)
+            } else {
+                response = buildSuccessResponse({
+                    user: result
+                })
+            }
+            res.send(response)
+        }).catch(err => res.send(buildCatchError(err)))
+}
+
 controller.getAllCharacters = (req, res) => {
-    const userId = req.user.id
+    const userId = req.cookies.userId
 
     userRepository
         .findUserById(userId)

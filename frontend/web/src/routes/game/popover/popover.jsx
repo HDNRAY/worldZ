@@ -4,7 +4,7 @@ import style from './menu.less'
 import { menuTypes } from '../../../services/constant/menu'
 
 
-class Menu extends React.PureComponent {
+class Popover extends React.PureComponent {
 
     optimizePosition = () => {
         const { operations, position } = this.props
@@ -140,4 +140,4 @@ const mapStateToProps = (state, props) => {
     }
 }
 
-export default connect(mapStateToProps)(Menu);
+export default connect(mapStateToProps)(Popover);

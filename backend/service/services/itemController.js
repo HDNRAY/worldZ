@@ -5,27 +5,19 @@ const { itemType } = require('../common/constants')
 
 const item = {}
 
-item.createGearItemByBuy = (req, res) => {
-    const characterId = req.params.id
-    const { gearId } = req
+item.createToCharacter = (req, res) => {
+    const characterId = req.params.character
+    const type = req.params.type
+    const { objectId } = req.body
     itemRepository.create({
-        itemType: itemType.GEAR,
+        itemType: type,
         itemAttributes: {},
-        object: gearId
+        object: objectId
     }).then(item => {
-        return characterRepository.addItem(characterId, item.Id)
+        return characterRepository.addItem(characterId, item._id)
     }).then(result => {
         res.send(buildSuccessResponse({
-            item: result
-        }))
-    }).catch(err => res.send(buildCatchError(err)))
-}
-
-item.update = (req, res) => {
-    const { body } = req
-    itemRepository.create(body).then(result => {
-        res.send(buildSuccessResponse({
-            item: result
+            inventory: result.inventory
         }))
     }).catch(err => res.send(buildCatchError(err)))
 }

@@ -1,5 +1,5 @@
 import immutable from 'immutable'
-import { menuTypes } from '../routes/game/menu/constant'
+import { menuTypes } from '../services/constant/menu'
 
 export default {
 
