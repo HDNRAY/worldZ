@@ -1,8 +1,8 @@
-import { get, apiRequest } from '../network/request';
+import { apiRequest } from '../network/request';
 import api from '../network/api';
 
 export const loadCharacter = (id) => {
-    return get(api.LOAD_CHARACTER.path, {
+    return apiRequest(api.LOAD_CHARACTER, {
         params: {
             id
         }

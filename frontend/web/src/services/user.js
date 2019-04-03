@@ -1,4 +1,4 @@
-import { post, apiRequest } from '../network/request'
+import { apiRequest } from '../network/request'
 import api from '../network/api'
 
 export const userInfoRequest = () => {
@@ -6,9 +6,9 @@ export const userInfoRequest = () => {
 }
 
 export const loginRequest = (params) => {
-    return post(api.LOGIN_BY_USERNAME.path, { body: params });
+    return apiRequest(api.LOGIN_BY_USERNAME, { body: params });
 }
 
 export const registerRequest = (params) => {
-    return post(api.REGISTER_BY_USERNAME.path, { body: params });
+    return apiRequest(api.REGISTER_BY_USERNAME, { body: params });
 }
